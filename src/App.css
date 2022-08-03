@@ -1,0 +1,49 @@
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    background-color: black;
+}
+
+.appContainer {
+    display: flex;
+    flex-direction: row;
+}
+
+.konvaContainer {
+    background-color: aliceblue;
+    display: flex;
+    justify-content: flex-start;
+    width: 65vw;
+    z-index: 0;
+}
+.iconBarContainer {
+    background-color: black;
+    padding: 1rem;
+    width: 35vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.iconToolbarRow {
+    font-size: 2rem;
+    background-color: rgb(97, 86, 86);
+    padding: 1rem;
+    display: flex;
+    max-width: 35vw;
+    width: 32vw;
+    height: 5rem;
+    cursor: grab;
+    border: 1px solid red;
+    border-radius: 5px;
+    z-index: 1;
+}
+
+svg {
+    cursor: pointer;
+}

@@ -6,20 +6,28 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "svgr": "svgr  --config-file svgr-config.json  src/assets/svg  -d src/assets/svgr_output"
   },
   "dependencies": {
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
+    "@fortawesome/fontawesome-svg-core": "^6.1.2",
+    "@fortawesome/free-brands-svg-icons": "^6.1.2",
+    "@fortawesome/free-regular-svg-icons": "^6.1.2",
+    "@fortawesome/free-solid-svg-icons": "^6.1.2",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@mui/material": "^5.9.3",
+    "babel-plugin-macros": "^3.1.0",
     "konva": "^8.3.10",
     "nodemon": "^2.0.19",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-indiana-drag-scroll": "^2.2.0",
     "react-konva": "^18.2.1"
   },
   "devDependencies": {
-    "@svgr/core": "^6.3.1",
+    "@svgr/cli": "^6.3.1",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
     "@vitejs/plugin-react": "^2.0.0",

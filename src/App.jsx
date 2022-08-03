@@ -1,13 +1,16 @@
-import { useState } from 'react'
+import { useState } from "react";
+import "./App.css";
+import KonvaCanvas from "./components/KonvaCanvas";
+import Iconbar from "./components/Iconbar";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <div className="App">
-      
+    <div className="appContainer">
+      <KonvaCanvas />
+      <Iconbar />
     </div>
-  )
+    
+  );
 }
 
-export default App
+export default App;

@@ -6,7 +6,7 @@
     box-sizing: border-box;
 }
 body {
-    background-color: black;
+    background-color: rgb(255, 255, 255);
 }
 
 .appContainer {
@@ -20,30 +20,38 @@ body {
     justify-content: flex-start;
     width: 65vw;
     z-index: 0;
+    border-radius: 25px;
 }
 .iconBarContainer {
-    background-color: black;
+    background-color: rgb(236, 236, 236);
     padding: 1rem;
     width: 35vw;
     height: 100vh;
     display: flex;
     flex-direction: column;
+    border-radius: 25px;
     justify-content: space-around;
 }
 .iconToolbarRow {
-    font-size: 2rem;
-    background-color: rgb(97, 86, 86);
+
+    background-color: none;
     padding: 1rem;
-    display: flex;
-    max-width: 35vw;
     width: 32vw;
-    height: 5rem;
+    /* height: 5rem; */
     cursor: grab;
-    border: 1px solid red;
-    border-radius: 5px;
+    border: 1px solid rgb(168, 168, 168);
+    border-radius: 25px;
     z-index: 1;
+    overflow: hidden !important;
+    overflow-x: scroll !important;
+    flex-wrap: nowrap;
+    display: flex;
 }
 
 svg {
+    flex-shrink: 0;
     cursor: pointer;
+    margin: 0 2rem;
+    height: 5rem;
+    width: 5rem;
 }

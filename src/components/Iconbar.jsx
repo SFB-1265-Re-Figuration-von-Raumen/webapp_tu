@@ -1,5 +1,6 @@
 import React from "react";
 import ScrollContainer from "react-indiana-drag-scroll";
+
 import {
   personen,
   aktis,
@@ -23,16 +24,11 @@ export default function Iconbar() {
             className={`scroll-container iconToolbarRow ${object}`}
             id="xDragToolbar"
           >
-            {Object.keys(object).map(function (icon, j) {
-              return React.createElement(
-                object[icon],
-                {
-                  key: j,
-                  onClick: () => {
-                    svgConvaEvent(icon);
-                  },
-                },
-                null
+            {Object.keys(object).map(function (key, j) {
+              return (
+                <div onClick={() => svgConvaEvent(key)}>
+                  {React.createElement(object[key], { key: j }, key)}
+                </div>
               );
             })}
           </ScrollContainer>

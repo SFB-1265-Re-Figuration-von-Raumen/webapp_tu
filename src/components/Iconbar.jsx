@@ -26,7 +26,7 @@ export default function Iconbar() {
           >
             {Object.keys(object).map(function (key, j) {
               return (
-                <div onClick={() => svgConvaEvent(key)}>
+                <div onClick={() => svgConvaEvent(key)} key={key}>
                   {React.createElement(object[key], { key: j }, key)}
                 </div>
               );
@@ -37,3 +37,4 @@ export default function Iconbar() {
     </div>
   );
 }
+

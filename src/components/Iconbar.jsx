@@ -1,41 +1,50 @@
 import React from "react";
 import ScrollContainer from "react-indiana-drag-scroll";
 
-// import {
-//   personen,
-//   aktis,
-//   orte,
-//   atmos,
-// } from "../assets/svgr_output/ObjectIcons";
-
-// console.log(svgArray);
-
-// const objectIconArray = [personen, aktis, orte, atmos];
-
-const svgArray = import.meta.glob("../assets/svg/*.svg", {
+const aktis = import.meta.glob("../assets/svg/categories/aktis/*.svg", {
+  as: "raw",
+}); /* wrong highlighting*/
+const atmos = import.meta.glob("../assets/svg/categories/atmos/*.svg", {
+  as: "raw",
+}); /* wrong highlighting*/
+const orte = import.meta.glob("../assets/svg/categories/orte/*.svg", {
+  as: "raw",
+}); /* wrong highlighting*/
+const personen = import.meta.glob("../assets/svg/categories/personen/*.svg", {
   as: "raw",
 }); /* wrong highlighting*/
 
+const svgArray = [aktis, orte, personen, atmos];
 function getSvgUrl(name) {
   return new URL(`../svg/${name}`, import.meta.url).href;
 }
 
 export default function Iconbar() {
   const svgConvaEvent = (i) => {
-    // console.log(`hii ${i}`);
+    console.log(`hii ${i}`);
   };
 
   return (
     <div className="iconBarContainer">
-      {Object.keys(svgArray).map((key, i) => {
+      {svgArray.map((index, key) => {
         return (
-          <img
-            key={i}
-            src={getSvgUrl(key)}
-            alt={key}
-            className="icon"
-            onClick={() => svgConvaEvent(i)}
-          />
+          <ScrollContainer
+            className={`scroll-container iconToolbarRow ${index}`}
+            id="xDragToolbar"
+            key={key}
+          >
+            {Object.keys(index).map((key, i) => {
+              return (
+                <img
+                  key={i}
+                  src={getSvgUrl(key)}
+                  alt={key}
+                  className="icon"
+                  onClick={() => svgConvaEvent(key)}
+                />
+              );
+            })}
+          </ScrollContainer>
         );
       })}
     </div>

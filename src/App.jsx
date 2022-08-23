@@ -4,11 +4,12 @@ import KonvaCanvas from "./components/KonvaCanvas";
 import Iconbar from "./components/Iconbar";
 
 function App() {
+  const [image, setImage] = useState("")
   return (
     <div className="appContainer">
 
       <KonvaCanvas />
-      <Iconbar />
+
     </div>
   );
 }

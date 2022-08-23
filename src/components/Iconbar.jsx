@@ -3,25 +3,41 @@ import ScrollContainer from "react-indiana-drag-scroll";
 
 const aktis = import.meta.glob("../assets/svg/categories/aktis/*.svg", {
   as: "raw",
-}); /* wrong highlighting*/
+});
 const atmos = import.meta.glob("../assets/svg/categories/atmos/*.svg", {
   as: "raw",
-}); /* wrong highlighting*/
+});
 const orte = import.meta.glob("../assets/svg/categories/orte/*.svg", {
   as: "raw",
-}); /* wrong highlighting*/
+});
 const personen = import.meta.glob("../assets/svg/categories/personen/*.svg", {
   as: "raw",
-}); /* wrong highlighting*/
+});
 
 const svgArray = [aktis, orte, personen, atmos];
 function getSvgUrl(name) {
   return new URL(`../svg/${name}`, import.meta.url).href;
 }
 
-export default function Iconbar() {
+export default function Iconbar({
+  injectImage,
+  dragUrl,
+  images,
+  setImages,
+  stageRef,
+}) {
   const svgConvaEvent = (i) => {
-    console.log(`hii ${i}`);
+    injectImage(getSvgUrl(i));
+    stageRef.current.setPointersPositions(i.src);
+    setImages(
+      images.concat([
+        {
+          ...stageRef.current.getPointerPosition(),
+          src: dragUrl.current,
+          id: images.toString(),
+        },
+      ])
+    );
   };
 
   return (
@@ -41,6 +57,10 @@ export default function Iconbar() {
                   alt={key}
                   className="icon"
                   onClick={() => svgConvaEvent(key)}
+                  draggable="true"
+                  onDragStart={(e) => {
+                    dragUrl.current = e.target.src;
+                  }}
                 />
               );
             })}

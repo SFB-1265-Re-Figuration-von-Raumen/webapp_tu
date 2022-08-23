@@ -1,55 +1,43 @@
 import React from "react";
 import ScrollContainer from "react-indiana-drag-scroll";
 
-import {
-  personen,
-  aktis,
-  orte,
-  atmos,
-} from "../assets/svgr_output/ObjectIcons";
-
-// const svgArray = import.meta.glob(
-//   "../assets/svg/*.svg"
-// ); /* wrong highlighting*/
+// import {
+//   personen,
+//   aktis,
+//   orte,
+//   atmos,
+// } from "../assets/svgr_output/ObjectIcons";
 
 // console.log(svgArray);
 
-// export default function Images() {
-//   const svgGallery = [];
-//   for (const path in svgArray) {
-//     svgArray[path]().then((mod) => {
-//       console.log(path, mod);
-//     });
-//   }
+// const objectIconArray = [personen, aktis, orte, atmos];
 
+const svgArray = import.meta.glob("../assets/svg/*.svg", {
+  as: "raw",
+}); /* wrong highlighting*/
 
-const objectIconArray = [personen, aktis, orte, atmos];
+function getSvgUrl(name) {
+  return new URL(`../svg/${name}`, import.meta.url).href;
+}
 
 export default function Iconbar() {
   const svgConvaEvent = (i) => {
-    console.log(`hii ${i}`);
+    // console.log(`hii ${i}`);
   };
 
   return (
     <div className="iconBarContainer">
-      {objectIconArray.map((object, i) => {
+      {Object.keys(svgArray).map((key, i) => {
         return (
-          <ScrollContainer
+          <img
             key={i}
-            className={`scroll-container iconToolbarRow ${object}`}
-            id="xDragToolbar"
-          >
-            {Object.keys(object).map(function (key, j) {
-              return (
-                <div onClick={() => svgConvaEvent(key)} key={key}>
-                  {React.createElement(object[key], { key: j }, key)}
-                </div>
-              );
-            })}
-          </ScrollContainer>
+            src={getSvgUrl(key)}
+            alt={key}
+            className="icon"
+            onClick={() => svgConvaEvent(i)}
+          />
         );
       })}
     </div>
   );
 }
-

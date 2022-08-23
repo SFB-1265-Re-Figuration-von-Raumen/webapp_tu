@@ -8,6 +8,21 @@ import {
   atmos,
 } from "../assets/svgr_output/ObjectIcons";
 
+// const svgArray = import.meta.glob(
+//   "../assets/svg/*.svg"
+// ); /* wrong highlighting*/
+
+// console.log(svgArray);
+
+// export default function Images() {
+//   const svgGallery = [];
+//   for (const path in svgArray) {
+//     svgArray[path]().then((mod) => {
+//       console.log(path, mod);
+//     });
+//   }
+
+
 const objectIconArray = [personen, aktis, orte, atmos];
 
 export default function Iconbar() {

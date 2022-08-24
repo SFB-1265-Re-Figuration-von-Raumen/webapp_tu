@@ -30,6 +30,7 @@ const KonvaCanvas = () => {
   const stageRef = useRef();
   // this is the state for setting the icon from iconBar.jsx onclick
   const [images, setImages] = useState([]);
+  const [canvasPos, setCanvasPos] = useState({x: percentWidth / 2, y: window.innerHeight / 2});
 
 
   const URLImage = ({ image }) => {
@@ -38,11 +39,18 @@ const KonvaCanvas = () => {
     return (
       <Image
         image={img}
-
         draggable="true"
         // I will use offset to set origin to the center of the image
         offsetX={img ? img.width / 2 : 0}
         offsetY={img ? img.height / 2 : 0}
+        x={canvasPos.x}
+        y={canvasPos.y}
+        onDragEnd={(e) => {
+          // setCanvasPos({x: e.target.attrs.x, y: e.target.attrs.y});
+          console.log(e.target.attrs.x);
+          console.log(e.target.attrs.y);
+        }
+        }
       />
     );
   };
@@ -53,7 +61,7 @@ const KonvaCanvas = () => {
         <Stage width={percentWidth} height={window.innerHeight} ref={stageRef}>
           <Layer >
             {images.map((image) => {
-              return <URLImage image={image} />;
+              return <URLImage image={image} key={image.indexOf} />;
             })}
           </Layer>
         </Stage>

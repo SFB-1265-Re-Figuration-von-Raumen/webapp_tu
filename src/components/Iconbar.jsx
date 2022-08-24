@@ -19,25 +19,9 @@ function getSvgUrl(name) {
   return new URL(`../svg/${name}`, import.meta.url).href;
 }
 
-export default function Iconbar({
-  injectImage,
-  dragUrl,
-  images,
-  setImages,
-  stageRef,
-}) {
-  const svgConvaEvent = (i) => {
-    injectImage(getSvgUrl(i));
-    stageRef.current.setPointersPositions(i.src);
-    setImages(
-      images.concat([
-        {
-          ...stageRef.current.getPointerPosition(),
-          src: dragUrl.current,
-          id: images.toString(),
-        },
-      ])
-    );
+export default function Iconbar({ injectIcon }) {
+  const svgKonvaEvent = (icon) => {
+    injectIcon(icon);
   };
 
   return (
@@ -56,11 +40,7 @@ export default function Iconbar({
                   src={getSvgUrl(key)}
                   alt={key}
                   className="icon"
-                  onClick={() => svgConvaEvent(key)}
-                  draggable="true"
-                  onDragStart={(e) => {
-                    dragUrl.current = e.target.src;
-                  }}
+                  onClick={() => svgKonvaEvent(key)}
                 />
               );
             })}

@@ -25,19 +25,35 @@ function getSvgUrl(name) {
   return new URL(`../svg/${name}`, import.meta.url).href;
 }
 
-const KonvaCanvas = () => {
-  // const dragUrl = useRef();
-  const stageRef = useRef();
-  // this is the state for setting the icon from iconBar.jsx onclick
-  const [images, setImages] = useState([]);
-  const [canvasPos, setCanvasPos] = useState({x: percentWidth / 2, y: window.innerHeight / 2});
 
+const KonvaCanvas = () => {
+  const stageRef = useRef();
+  const [images, setImages] = useState([]);
+
+  let posHist = [
+    {
+      x: 0,
+      y: 0
+    },
+  ]
+  const [pos, setPos] = useState({
+    position: posHist[0]
+  })
 
   const URLImage = ({ image }) => {
     const [img] = useImage(image);
+    const [canvasPos, setCanvasPos] = useState({ x: percentWidth / 2, y: window.innerHeight / 2 });
+
+    const imgRef = useRef();
+    function dragRef() {
+      // this.position.x = offsetX
+      console.log(imgRef.current)
+    }
+
 
     return (
       <Image
+        ref={imgRef}
         image={img}
         draggable="true"
         // I will use offset to set origin to the center of the image
@@ -45,19 +61,21 @@ const KonvaCanvas = () => {
         offsetY={img ? img.height / 2 : 0}
         x={canvasPos.x}
         y={canvasPos.y}
-        onDragEnd={(e) => {
-          // setCanvasPos({x: e.target.attrs.x, y: e.target.attrs.y});
-          console.log(e.target.attrs.x);
-          console.log(e.target.attrs.y);
-        }
-        }
+        // onDragEnd={(e) => {
+        //   // setCanvasPos({ x: e.target.attrs.x, y: e.target.attrs.y });
+        //   console.log(e.target.attrs.x);
+        //   console.log(e.target.attrs.y);
+        // }
+        // }
+        onDragEnd={dragRef()}
       />
     );
   };
+
   return (
     <>
-      <div className="konvaContainer">
 
+      <div className="konvaContainer">
         <Stage width={percentWidth} height={window.innerHeight} ref={stageRef}>
           <Layer >
             {images.map((image) => {
@@ -65,8 +83,8 @@ const KonvaCanvas = () => {
             })}
           </Layer>
         </Stage>
-        {/* </div> */}
       </div>
+
       <div className="iconBarContainer">
         {svgArray.map((index, key) => {
           return (

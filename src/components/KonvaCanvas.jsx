@@ -22,7 +22,7 @@ function getSvgUrl(name) {
 }
 
 const KonvaCanvas = () => {
-  const dragUrl = useRef();
+  // const dragUrl = useRef();
   const stageRef = useRef();
   // this is the state for setting the icon from iconBar.jsx onclick
   const [images, setImages] = useState([]);
@@ -30,11 +30,12 @@ const KonvaCanvas = () => {
 
   const URLImage = ({ image }) => {
     const [img] = useImage(image);
+    // console.log(img);
+    
     return (
       <Image
-        image={import(image)}
-        x={image.x}
-        y={image.y}
+        image={img}
+        
         draggable="true"
         // I will use offset to set origin to the center of the image
         offsetX={img ? img.width / 2 : 0}
@@ -42,12 +43,13 @@ const KonvaCanvas = () => {
       />
     );
   };
-  console.log(images);
+  // console.log(images);
   return (
     <>
       <div className="konvaContainer">
-        <Stage width={65} height={100} ref={stageRef}>
-          <Layer>
+        
+        <Stage width={window.innerWidth} height={window.innerHeight} ref={stageRef}>
+          <Layer >
             {images.map((image) => {
               return <URLImage image={image} />;
             })}
@@ -70,7 +72,7 @@ const KonvaCanvas = () => {
                     src={getSvgUrl(key)}
                     alt={key}
                     className="icon"
-                    onClick={() => setImages(current => [...current, key])}
+                    onClick={() => setImages(current => [...current, getSvgUrl(key)])}
                   />
                 );
               })}

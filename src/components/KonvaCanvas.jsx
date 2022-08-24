@@ -16,6 +16,10 @@ const personen = import.meta.glob("../assets/svg/categories/personen/*.svg", {
   as: "raw",
 });
 
+/* */
+const percentWidth = (window.innerWidth / 100) * 65;
+console.log(Math.round(percentWidth));
+
 const svgArray = [aktis, orte, personen, atmos];
 function getSvgUrl(name) {
   return new URL(`../svg/${name}`, import.meta.url).href;
@@ -26,16 +30,15 @@ const KonvaCanvas = () => {
   const stageRef = useRef();
   // this is the state for setting the icon from iconBar.jsx onclick
   const [images, setImages] = useState([]);
-  
+
 
   const URLImage = ({ image }) => {
     const [img] = useImage(image);
-    // console.log(img);
-    
+
     return (
       <Image
         image={img}
-        
+
         draggable="true"
         // I will use offset to set origin to the center of the image
         offsetX={img ? img.width / 2 : 0}
@@ -43,12 +46,11 @@ const KonvaCanvas = () => {
       />
     );
   };
-  // console.log(images);
   return (
     <>
       <div className="konvaContainer">
-        
-        <Stage width={window.innerWidth} height={window.innerHeight} ref={stageRef}>
+
+        <Stage width={percentWidth} height={window.innerHeight} ref={stageRef}>
           <Layer >
             {images.map((image) => {
               return <URLImage image={image} />;

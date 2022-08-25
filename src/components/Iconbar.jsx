@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ScrollContainer from "react-indiana-drag-scroll";
 
 const aktis = import.meta.glob("../assets/svg/categories/aktis/*.svg", {
@@ -19,34 +19,37 @@ function getSvgUrl(name) {
   return new URL(`../svg/${name}`, import.meta.url).href;
 }
 
-const Iconbar = ({images, setImages})=> {
+const Iconbar = ({ images, addImages }) => {
   return (
     <div className="iconBarContainer">
-        {svgArray.map((index, key) => {
-          return (
-            <ScrollContainer
-              className={`scroll-container iconToolbarRow ${index}`}
-              id="xDragToolbar"
-              key={key}
-            >
-              {Object.keys(index).map((key, i) => {
-                return (
-                  <img
-                    key={i}
-                    src={getSvgUrl(key)}
-                    alt={key}
-                    className="icon"
-                    onClick={() =>
-                      setImages((current) => [...current, getSvgUrl(key)])
-                    }
-                  />
-                );
-              })}
-            </ScrollContainer>
-          );
-        })}
-      </div>
-  )
-}
+      {svgArray.map((index, key) => {
+        return (
+          <ScrollContainer
+            className={`scroll-container iconToolbarRow ${index}`}
+            id="xDragToolbar"
+            key={key}
+          >
+            {Object.keys(index).map((key, i) => {
+              return (
+                <img
+                  key={i}
+                  src={getSvgUrl(key)}
+                  alt={key}
+                  className="icon"
+                  onClick={() => {
+                    addImages({
+                      id: images.at(-1).id + 1,
+                      icon: getSvgUrl(key),
+                    });
+                  }}
+                />
+              );
+            })}
+          </ScrollContainer>
+        );
+      })}
+    </div>
+  );
+};
 
-export default Iconbar
+export default Iconbar;

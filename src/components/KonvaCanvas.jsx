@@ -1,19 +1,18 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Stage, Layer, Image } from "react-konva";
 import useImage from "use-image";
-import Iconbar from "./Iconbar"
+import Iconbar from "./Iconbar";
 
-/* */
 const percentWidth = (window.innerWidth / 100) * 65;
-console.log(Math.round(percentWidth));
-
-function getSvgUrl(name) {
-  return new URL(`../svg/${name}`, import.meta.url).href;
-}
 
 const KonvaCanvas = () => {
   const stageRef = useRef();
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState([{ id: 0, icon: "" }]);
+  console.log(images);
+
+  const addImages = (obj) => {
+    setImages((current) => [...current, obj]);
+  };
 
   let posHist = [
     {
@@ -31,14 +30,12 @@ const KonvaCanvas = () => {
       x: percentWidth / 2,
       y: window.innerHeight / 2,
     });
-    console.log(images.indexOf(image));
 
     return (
       <Image
         // ref={imgRef}
         image={img}
         draggable="true"
-        key={images.indexOf(image)}
         // I will use offset to set origin to the center of the image
         offsetX={img ? img.width / 2 : 0}
         offsetY={img ? img.height / 2 : 0}
@@ -59,16 +56,17 @@ const KonvaCanvas = () => {
   return (
     <>
       <div className="konvaContainer">
+            
         <Stage width={percentWidth} height={window.innerHeight} ref={stageRef}>
           <Layer>
-            {images.map((image) => {
-              return <URLImage image={image} key={image.indexOf} />;
-            })}
+            {images.map((img) => {
+              return <URLImage image={img.icon} key={img.id} />;
+            })} 
           </Layer>
         </Stage>
       </div>
 
-      <Iconbar images={images} setImages={setImages}/>
+      <Iconbar images={images} setImages={setImages} addImages={addImages} />
     </>
   );
 };

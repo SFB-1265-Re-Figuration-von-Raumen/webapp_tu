@@ -20,12 +20,7 @@ function getSvgUrl(name) {
   return new URL(`../svg/${name}`, import.meta.url).href;
 }
 
-
 const Iconbar = ({ images, addImages, percentWidth }) => {
-  const defaultPos = {
-    x: percentWidth / 2,
-    y: window.innerHeight / 2,
-  }
   return (
     <div className="iconBarContainer">
       {svgArray.map((index, key) => {
@@ -46,8 +41,8 @@ const Iconbar = ({ images, addImages, percentWidth }) => {
                     addImages({
                       id: images.at(-1).id + 1,
                       icon: getSvgUrl(key),
-                      x: defaultPos.x,
-                      y: defaultPos.y,
+                      x: 300,
+                      y: 300,
                     });
                   }}
                 />

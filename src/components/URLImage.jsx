@@ -2,10 +2,58 @@ import React from "react";
 import { Image } from "react-konva";
 import useImage from "use-image";
 
-const URLImage = ({ handleDragStart, handleDragEnd, imgPos, image, id, x, y }) => {
 
-    const [img] = useImage(image);
-
+const URLImage = ({ images, setImages, image, id, x, y }) => {
+  function savePosition(pos, x, y) {
+    console.log(`arrayPos is ${pos}, x is ${x}, y is ${y}`);
+    
+    const newImage = images[pos];
+    newImage.x = x;
+    newImage.y = y;
+    console.log(newImage);
+    const updatedImages = Object.keys(images).map((key, i) => {
+      if (key === pos) {
+        return newImage;
+      }
+      return images[key];
+    });
+    // console.log(images)
+    console.log(updatedImages);
+    setImages(updatedImages);
+    console.log(images);
+  }
+  const imgPos = {
+    x: 300,
+    y: 300,
+  };
+  
+  const handleDragStart = (e) => {
+    e.target.setAttrs({
+      scaleX: 1.1,
+      scaleY: 1.1,
+    });
+  };
+  
+  const handleDragEnd = (e) => {
+    e.target.to({
+      duration: 0.2,
+      easing: Konva.Easings.EaseInOut,
+      scaleX: 1,
+      scaleY: 1,
+    });
+  
+    
+  
+      // here we need to update the images state
+      // with the new x and y values
+      // for the current image
+      // respective to the index "arrayPos"
+  
+      savePosition(e.target.attrs.arrayPos, e.target.attrs.x, e.target.attrs.y);
+    };
+  
+  const [img] = useImage(image);
+  
     return (
       <Image
         imagePos={imgPos}
@@ -19,6 +67,7 @@ const URLImage = ({ handleDragStart, handleDragEnd, imgPos, image, id, x, y }) =
         offsetY={img ? img.height / 2 : 0}
         shadowBlur={3}
         onDragStart={handleDragStart}
+
         onDragEnd={handleDragEnd}
         scaleX={Image.isDragging ? 1.5 : 1}
       />

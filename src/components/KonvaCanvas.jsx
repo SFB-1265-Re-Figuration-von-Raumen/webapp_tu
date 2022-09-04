@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Stage, Layer, Image } from "react-konva";
+import { Stage, Layer } from "react-konva";
 import URLImage from "./URLImage"
 import Iconbar from "./Iconbar";
 

@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Stage, Layer, Image } from "react-konva";
 import useImage from "use-image";
 import Iconbar from "./Iconbar";
+import URLImage from "./URLImage";
 
 //  at the moment we need to find a way to position the image
 //  id in state when added. when we move an image, we want
@@ -67,28 +68,7 @@ const KonvaCanvas = () => {
     setImages((current) => [...current, obj]);
   };
 
-  const URLImage = ({ image, id, x, y }) => {
-
-    const [img] = useImage(image);
-
-    return (
-      <Image
-        imagePos={imgPos}
-        arrayPos={id}
-        image={img}
-        draggable="true"
-        x={x}
-        y={y}
-        // I will use offset to set origin to the center of the image
-        offsetX={img ? img.width / 2 : 0}
-        offsetY={img ? img.height / 2 : 0}
-        shadowBlur={3}
-        onDragStart={handleDragStart}
-        onDragEnd={handleDragEnd}
-        scaleX={Image.isDragging ? 1.5 : 1}
-      />
-    );
-  };
+  
 
   return (
     <>
@@ -99,6 +79,9 @@ const KonvaCanvas = () => {
             {images.map((img) => {
               return (
                 <URLImage
+                handleDragStart={handleDragStart}
+                imgPos={imgPos}
+                handleDragEnd={handleDragEnd}
                   image={img.icon}
                   key={img.id}
                   id={img.id}

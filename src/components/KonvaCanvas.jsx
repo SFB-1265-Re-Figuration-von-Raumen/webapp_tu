@@ -13,7 +13,6 @@ const KonvaCanvas = () => {
   const percentWidth = (window.innerWidth / 100) * 65;
   const [images, setImages] = useState([{ id: 0, icon: "", x: 300, y: 300 }]);
 
-  
 
   const addImages = (obj) => {
     setImages((current) => [...current, obj]);

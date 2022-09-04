@@ -12,14 +12,15 @@ const orte = import.meta.glob("../assets/svg/categories/orte/*.svg", {
 });
 const personen = import.meta.glob("../assets/svg/categories/personen/*.svg", {
   as: "raw",
-});
+}); /* */
+
 const svgArray = [aktis, orte, personen, atmos];
 
 function getSvgUrl(name) {
   return new URL(`../svg/${name}`, import.meta.url).href;
 }
 
-const Iconbar = ({ images, addImages, percentWidth}) => {
+const Iconbar = ({ images, addImages, percentWidth }) => {
   return (
     <div className="iconBarContainer">
       {svgArray.map((index, key) => {
@@ -40,8 +41,8 @@ const Iconbar = ({ images, addImages, percentWidth}) => {
                     addImages({
                       id: images.at(-1).id + 1,
                       icon: getSvgUrl(key),
-                      x: percentWidth / 2,
-                      y: window.innerHeight / 2,
+                      x: 300,
+                      y: 300,
                     });
                   }}
                 />

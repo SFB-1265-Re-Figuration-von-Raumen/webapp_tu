@@ -12,13 +12,8 @@ const KonvaCanvas = () => {
   const stageRef = useRef();
   const percentWidth = (window.innerWidth / 100) * 65;
   const [images, setImages] = useState([
-    { id: 0, icon: "", x: 300, y: 300 },
+    { id: 0, icon: "", x: 0, y: 0 },
   ]);
-
-  const imgPos = {
-    x: 300,
-    y: 300,
-  }
 
   const handleDragStart = (e) => {
     e.target.setAttrs({
@@ -56,10 +51,7 @@ const KonvaCanvas = () => {
       }
       return images[key]
     })
-    // console.log(images)
-    console.log(updatedImages)
     setImages(updatedImages)
-    console.log(images);
   }
 
 
@@ -73,7 +65,6 @@ const KonvaCanvas = () => {
 
     return (
       <Image
-        imagePos={imgPos}
         arrayPos={id}
         image={img}
         draggable="true"

@@ -1,38 +1,56 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ScrollContainer from "react-indiana-drag-scroll";
-import {
-  personen,
-  aktis,
-  orte,
-  atmos,
-} from "../assets/svgr_output/ObjectIcons";
 
-const objectIconArray = [personen, aktis, orte, atmos];
+const aktis = import.meta.glob("../assets/svg/categories/aktis/*.svg", {
+  as: "raw",
+});
+const atmos = import.meta.glob("../assets/svg/categories/atmos/*.svg", {
+  as: "raw",
+});
+const orte = import.meta.glob("../assets/svg/categories/orte/*.svg", {
+  as: "raw",
+});
+const personen = import.meta.glob("../assets/svg/categories/personen/*.svg", {
+  as: "raw",
+}); /* */
 
-export default function Iconbar() {
-  const svgConvaEvent = (i) => {
-    console.log(`hii ${i}`);
-  };
+const svgArray = [aktis, orte, personen, atmos];
+
+function getSvgUrl(name) {
+  return new URL(`../svg/${name}`, import.meta.url).href;
+}
+
+const Iconbar = ({ images, addImages, percentWidth }) => {
+  const defaultPos = {
+    x: percentWidth / 2,
+    y: window.innerHeight / 2,
+  }
 
   return (
     <div className="iconBarContainer">
-      {objectIconArray.map((object, i) => {
+      {svgArray.map((index, key) => {
         return (
           <ScrollContainer
-            key={i}
-            className={`scroll-container iconToolbarRow ${object}`}
+            className={`scroll-container iconToolbarRow ${index}`}
             id="xDragToolbar"
+            key={key}
           >
-            {Object.keys(object).map(function (icon, j) {
-              return React.createElement(
-                object[icon],
-                {
-                  key: j,
-                  onClick: () => {
-                    svgConvaEvent(icon);
-                  },
-                },
-                null
+            {Object.keys(index).map((key, i) => {
+              return (
+                <img
+                  key={i}
+                  src={getSvgUrl(key)}
+                  alt={key}
+                  className="icon"
+                  onClick={() => {
+                    addImages({
+                      id: images.at(-1).id + 1,
+                      icon: getSvgUrl(key),
+                      x: defaultPos.x,
+                      y: defaultPos.y,
+                    });
+                  }}
+                />
               );
             })}
           </ScrollContainer>
@@ -40,4 +58,6 @@ export default function Iconbar() {
       })}
     </div>
   );
-}
+};
+
+export default Iconbar;

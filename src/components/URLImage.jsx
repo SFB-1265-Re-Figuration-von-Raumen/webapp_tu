@@ -47,19 +47,23 @@ const URLImage = ({
   }
 
   const handleDragStart = (e) => {
-    e.target.setAttrs({
-      scaleX: 1.1,
-      scaleY: 1.1,
-    });
+    isSelected
+      ? null
+      : e.target.setAttrs({
+          scaleX: 1.1,
+          scaleY: 1.1,
+        });
   };
 
   const handleDragEnd = (e) => {
-    e.target.to({
-      duration: 0.2,
-      easing: Konva.Easings.EaseInOut,
-      scaleX: 1,
-      scaleY: 1,
-    });
+    isSelected
+      ? null
+      : e.target.to({
+          duration: 0.2,
+          easing: Konva.Easings.EaseInOut,
+          scaleX: 1,
+          scaleY: 1,
+        });
     onChange({
       ...shapeProps,
       x: e.target.x(),

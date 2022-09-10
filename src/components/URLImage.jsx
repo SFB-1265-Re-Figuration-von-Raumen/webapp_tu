@@ -3,10 +3,11 @@ import { Image, Transformer } from "react-konva";
 import useImage from "use-image";
 
 const URLImage = ({
+  selectShape,
+  selectedId,
   shapeProps,
-  isSelected,
   onSelect,
-  onChange,
+  isSelected,
   images,
   setImages,
   image,
@@ -14,41 +15,34 @@ const URLImage = ({
   x,
   y,
 }) => {
-  const [selectedId, selectShape] = useState(null);
   const shapeRef = useRef();
   const trRef = useRef();
   useEffect(() => {
     if (isSelected) {
+      console.log("isSelected");
+
       // we need to attach transformer manually
       trRef.current.nodes([shapeRef.current]);
       trRef.current.getLayer().batchDraw();
     }
   }, [isSelected]);
 
-  const checkDeselect = (e) => {
-    // deselect when clicked on empty area
-    const clickedOnEmpty = e.target === e.target.getStage();
-    if (clickedOnEmpty) {
-      selectShape(null);
-    }
-  };
-
   function savePosition(pos, x, y) {
-    console.log(`arrayPos is ${pos}, x is ${x}, y is ${y}`);
+    // console.log(`arrayPos is ${pos}, x is ${x}, y is ${y}`);
 
     const newImage = images[pos];
     newImage.x = x;
     newImage.y = y;
-    console.log(newImage);
+    // console.log(newImage);
     const updatedImages = Object.keys(images).map((key, i) => {
       if (key === pos) {
         return newImage;
       }
       return images[key];
     });
-    console.log(updatedImages);
+    // console.log(updatedImages);
     setImages(updatedImages);
-    console.log(images);
+    // console.log(images);
   }
 
   const handleDragStart = (e) => {
@@ -80,7 +74,7 @@ const URLImage = ({
   };
 
   const [img] = useImage(image);
-
+  // console.log(isSelected);
   return (
     <>
       <Image
@@ -90,15 +84,18 @@ const URLImage = ({
         image={img}
         draggable="true"
         isSelected={id === selectedId}
+        onClick={() => {
+          selectShape(id);
+        }}
         onSelect={() => {
           selectShape(id);
         }}
-        onClick={id ? isSelected = id : isSelected = null}
+        // onClick={id ? isSelected = id : isSelected = null}
         onTap={onSelect}
         onChange={(newAttrs) => {
-          const rects = rectangles.slice();
-          rects[i] = newAttrs;
-          setRectangles(rects);
+          const imgs = images.slice();
+          imgs[i] = newAttrs;
+          setImages(imgs);
         }}
         x={x}
         y={y}

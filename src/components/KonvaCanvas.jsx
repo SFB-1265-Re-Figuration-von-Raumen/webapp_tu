@@ -3,6 +3,7 @@ import { Stage, Layer } from "react-konva";
 import URLImage from "./URLImage";
 import Iconbar from "./Iconbar";
 
+
 //  at the moment we need to find a way to position the image
 //  id in state when added. when we move an image, we want
 //  to update its x and y in images state.
@@ -13,6 +14,15 @@ const KonvaCanvas = () => {
   const [images, setImages] = useState([{ id: 0, icon: "", x: 300, y: 300 }]);
   const [lastDist, setLastDist] = useState(0);
   const [lastCenter, setLastCenter] = useState(null);
+  const [selectedId, selectShape] = useState(null);
+  const checkDeselect = (e) => {
+    // deselect when clicked on empty area
+    const clickedOnEmpty = e.target === e.target.getStage();
+    if (clickedOnEmpty) {
+      selectShape(null);
+    }
+  };
+  console.log(selectedId);
 
   const addImages = (obj) => {
     setImages((current) => [...current, obj]);
@@ -27,7 +37,7 @@ const KonvaCanvas = () => {
       y: (p1.y + p2.y) / 2,
     };
   };
-
+  
   return (
     <>
       <div className="konvaContainer">
@@ -98,6 +108,8 @@ const KonvaCanvas = () => {
             setLastDist();
             setLastCenter(null);
           }}
+          onMouseDown={checkDeselect}
+          onTouchStart={checkDeselect}
         >
           <Layer>
             {images.map((img) => {
@@ -110,11 +122,15 @@ const KonvaCanvas = () => {
                   y={img.y}
                   images={images}
                   setImages={setImages}
+                  checkDeselect={checkDeselect}
+                  selectedId={selectedId}
+                  selectShape={selectShape}
+                  isSelected={img.id === selectedId}
+
                   // shapeProps={shapeProps}
                   // isSelected={isSelected}
                   // onSelect={onSelect}
                   // onChange={onChange}
-                  
                 />
               );
             })}

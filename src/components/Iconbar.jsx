@@ -2,16 +2,16 @@ import React, { useEffect } from "react";
 import ScrollContainer from "react-indiana-drag-scroll";
 
 const aktis = import.meta.glob("../assets/svg/categories/aktis/*.svg", {
-  as: "raw",
+  eager: true,
 });
 const atmos = import.meta.glob("../assets/svg/categories/atmos/*.svg", {
-  as: "raw",
+  eager: true,
 });
 const orte = import.meta.glob("../assets/svg/categories/orte/*.svg", {
-  as: "raw",
+  eager: true,
 });
 const personen = import.meta.glob("../assets/svg/categories/personen/*.svg", {
-  as: "raw",
+  eager: true,
 }); /* */
 
 const svgArray = [aktis, orte, personen, atmos];
@@ -24,7 +24,7 @@ const Iconbar = ({ images, addImages, percentWidth }) => {
   const defaultPos = {
     x: percentWidth / 2,
     y: window.innerHeight / 2,
-  }
+  };
 
   return (
     <div className="iconBarContainer">

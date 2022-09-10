@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect } from "react";
 import { Image, Transformer } from "react-konva";
 import useImage from "use-image";
 
@@ -93,7 +93,6 @@ const URLImage = ({
         }}
         // onClick={id ? isSelected = id : isSelected = null}
         onTap={onSelect}
-       
         x={x}
         y={y}
         // I will use offset to set origin to the center of the image

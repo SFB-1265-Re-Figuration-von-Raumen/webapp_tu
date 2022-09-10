@@ -8,6 +8,7 @@ const URLImage = ({
   shapeProps,
   onSelect,
   isSelected,
+  onChange,
   images,
   setImages,
   image,
@@ -59,11 +60,11 @@ const URLImage = ({
       scaleX: 1,
       scaleY: 1,
     });
-    // onChange({
-    //   ...shapeProps,
-    //   x: e.target.x(),
-    //   y: e.target.y(),
-    // });
+    onChange({
+      ...shapeProps,
+      x: e.target.x(),
+      y: e.target.y(),
+    });
 
     // here we need to update the images state
     // with the new x and y values
@@ -92,16 +93,12 @@ const URLImage = ({
         }}
         // onClick={id ? isSelected = id : isSelected = null}
         onTap={onSelect}
-        onChange={(newAttrs) => {
-          const imgs = images.slice();
-          imgs[i] = newAttrs;
-          setImages(imgs);
-        }}
+       
         x={x}
         y={y}
         // I will use offset to set origin to the center of the image
-        offsetX={img ? img.width / 2 : 0}
-        offsetY={img ? img.height / 2 : 0}
+        // offsetX={img ? img.width / 2 : 0}
+        // offsetY={img ? img.height / 2 : 0}
         shadowBlur={3}
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
@@ -117,7 +114,7 @@ const URLImage = ({
           // we will reset it back
           node.scaleX(1);
           node.scaleY(1);
-          Image.onChange({
+          onChange({
             ...shapeProps,
             x: node.x(),
             y: node.y(),

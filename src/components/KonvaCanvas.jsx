@@ -3,7 +3,6 @@ import { Stage, Layer } from "react-konva";
 import URLImage from "./URLImage";
 import Iconbar from "./Iconbar";
 
-
 //  at the moment we need to find a way to position the image
 //  id in state when added. when we move an image, we want
 //  to update its x and y in images state.
@@ -22,7 +21,6 @@ const KonvaCanvas = () => {
       selectShape(null);
     }
   };
-  console.log(selectedId);
 
   const addImages = (obj) => {
     setImages((current) => [...current, obj]);
@@ -37,7 +35,7 @@ const KonvaCanvas = () => {
       y: (p1.y + p2.y) / 2,
     };
   };
-  
+
   return (
     <>
       <div className="konvaContainer">
@@ -112,25 +110,26 @@ const KonvaCanvas = () => {
           onTouchStart={checkDeselect}
         >
           <Layer>
-            {images.map((img) => {
+            {images.map((img, i) => {
               return (
                 <URLImage
                   image={img.icon}
-                  key={img.id}
+                  key={i}
                   id={img.id}
                   x={img.x}
                   y={img.y}
                   images={images}
+                  shapeProps={img}
                   setImages={setImages}
                   checkDeselect={checkDeselect}
                   selectedId={selectedId}
                   selectShape={selectShape}
                   isSelected={img.id === selectedId}
-
-                  // shapeProps={shapeProps}
-                  // isSelected={isSelected}
-                  // onSelect={onSelect}
-                  // onChange={onChange}
+                  onChange={(newAttrs) => {
+                    const imgs = images.slice();
+                    imgs[i] = newAttrs;
+                    setImages(imgs);
+                  }}
                 />
               );
             })}

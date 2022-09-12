@@ -20,8 +20,6 @@ const URLImage = ({
   const trRef = useRef();
   useEffect(() => {
     if (isSelected) {
-      console.log("isSelected");
-
       // we need to attach transformer manually
       trRef.current.nodes([shapeRef.current]);
       trRef.current.getLayer().batchDraw();

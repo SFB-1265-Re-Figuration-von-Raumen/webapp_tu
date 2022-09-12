@@ -14,21 +14,33 @@ import { DeleteRounded, TextFields } from "@mui/icons-material";
 const ControlPanel = ({
   textAnnotations,
   setTextAnnotations,
-  injectTextNode,
+  percentWidth,
 }) => {
   const [open, setOpen] = useState(false);
   const [textInput, setTextInput] = useState("");
-  console.log(textInput);
-
+  const defaultPos = {
+    x: percentWidth / 2,
+    y: window.innerHeight / 2,
+  };
   const handleClose = () => {
     setOpen(false);
   };
   const handleOpen = () => {
     setOpen(true);
   };
-  console.log(textAnnotations);
   const handleSubmit = () => {
-    setTextAnnotations((current) => [...current, {id: current.at(-1).id + 1, text: textInput}]);
+    console.log(textAnnotations);
+
+    setTextAnnotations((current) => [
+      ...current,
+      {
+        id: current.at(-1).id + 1,
+        text: textInput,
+        x: defaultPos.x,
+        y: defaultPos.y,
+      },
+    ]);
+    console.log(textAnnotations);
   };
 
   return (

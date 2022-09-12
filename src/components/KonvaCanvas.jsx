@@ -142,19 +142,21 @@ const KonvaCanvas = () => {
             {textAnnotations.map((annotation, i) => {
               return (
                 <TextModal
-                  textAnnotations={textAnnotations}
-                  setTextAnnotations={setTextAnnotations}
                   text={annotation.text}
                   key={i}
-                  shapeProps={annotation}
-                  checkDeselect={checkDeselect}
                   id={annotation.id}
-                  selectedId={selectedId}
                   x={annotation.x}
                   y={annotation.y}
+                  textAnnotations={textAnnotations}
+                  setTextAnnotations={setTextAnnotations}
+                  shapeProps={annotation}
+                  checkDeselect={checkDeselect}
+                  selectedId={selectedId}
                   selectShape={selectShape}
                   isSelected={annotation.id === selectedId}
                   onChange={(newAttrs) => {
+                    console.log("first");
+
                     const text = textAnnotations.slice();
                     text[i] = newAttrs;
                     setTextAnnotations(text);
@@ -169,6 +171,7 @@ const KonvaCanvas = () => {
         <ControlPanel
           textAnnotations={textAnnotations}
           setTextAnnotations={setTextAnnotations}
+          percentWidth={percentWidth}
         />
         <Iconbar
           images={images}

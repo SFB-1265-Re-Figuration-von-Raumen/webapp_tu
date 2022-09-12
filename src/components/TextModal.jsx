@@ -2,16 +2,15 @@ import React, { useState, useRef, useEffect } from "react";
 import { Transformer, Text } from "react-konva";
 
 const TextModal = ({
-  textAnnotations,
-  setTextAnnotations,
-  shapeProps,
-  checkDeselect,
-  selectedId,
   selectShape,
+  selectedId,
+  shapeProps,
   onSelect,
   isSelected,
-  text,
   onChange,
+  textAnnotations,
+  setTextAnnotations,
+  text,
   id,
   x,
   y,
@@ -20,22 +19,12 @@ const TextModal = ({
   const trRef = useRef();
   useEffect(() => {
     if (isSelected) {
-      console.log("isSelected");
-
       // we need to attach transformer manually
       trRef.current.nodes([shapeRef.current]);
       trRef.current.getLayer().batchDraw();
     }
   }, [isSelected]);
 
-  const handleDragStart = (e) => {
-    isSelected
-      ? null
-      : e.target.setAttrs({
-          scaleX: 1.1,
-          scaleY: 1.1,
-        });
-  };
   function savePosition(pos, x, y) {
     // console.log(`arrayPos is ${pos}, x is ${x}, y is ${y}`);
 
@@ -53,6 +42,15 @@ const TextModal = ({
     setTextAnnotations(updatedTexts);
     // console.log(Texts);
   }
+
+  const handleDragStart = (e) => {
+    isSelected
+      ? null
+      : e.target.setAttrs({
+          scaleX: 1.1,
+          scaleY: 1.1,
+        });
+  };
   const handleDragEnd = (e) => {
     isSelected
       ? null
@@ -94,41 +92,49 @@ const TextModal = ({
         text={text}
         x={x}
         y={y}
+        borderStroke={"black"}
         fontSize={20}
-        width={200}
+        width={text.length * 14}
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
         onTransformEnd={(e) => {
-          // transformer is changing scale of the node
-          // and NOT its width or height
-          // but in the store we have only width and height
-          // to match the data better we will reset scale on transform end
-          const node = shapeRef.current;
-          const scaleX = node.scaleX();
-          const scaleY = node.scaleY();
-
-          // we will reset it back
-          node.scaleX(1);
-          node.scaleY(1);
-          onChange({
-            ...shapeProps,
-            x: node.x(),
-            y: node.y(),
-            // set minimal value
-            width: Math.max(5, node.width() * scaleX),
-            height: Math.max(node.height() * scaleY),
+        //   // transformer is changing scale of the node
+        //   // and NOT its width or height
+        //   // but in the store we have only width and height
+        //   // to match the data better we will reset scale on transform end
+        //   const node = shapeRef.current;
+        //   const scaleX = node.scaleX();
+        //   const scaleY = node.scaleY();
+        text.setAttrs({
+            width: Math.max(text.width() * text.scaleX(), 20),
+            height: Math.max(text.height() * text.scaleY(), 40),
+            scaleX: 1,
+            scaleY: 1,
           });
+        //   // we will reset it back
+        //   node.scaleX(1);
+        //   node.scaleY(1);
+        //   onChange({
+        //     ...shapeProps,
+        //     x: node.x(),
+        //     y: node.y(),
+        //     fontSize: Math.max(5, node.width() * scaleX),
+        //     // set minimal value
+        //     width: Math.max(5, node.width() * scaleX),
+        //     height: Math.max(node.height() * scaleY),
+        //   });
         }}
       />
       {isSelected && (
         <Transformer
           ref={trRef}
+          padding={5}
           anchorCornerRadius={5}
-          enabledAnchors={"middle-left, middle-right"}
+        //   enabledAnchors={"middle-left, middle-right, bottom-center, top-center"}
           borderStroke={"black"}
           boundBoxFunc={(oldBox, newBox) => {
             // limit resize
-            if (newBox.width < 5 || newBox.height < 5) {
+            if (newBox.width < 20) {
               return oldBox;
             }
             return newBox;

@@ -155,8 +155,6 @@ const KonvaCanvas = () => {
                   selectShape={selectShape}
                   isSelected={annotation.id === selectedId}
                   onChange={(newAttrs) => {
-                    console.log("first");
-
                     const text = textAnnotations.slice();
                     text[i] = newAttrs;
                     setTextAnnotations(text);

@@ -29,8 +29,6 @@ const ControlPanel = ({
     setOpen(true);
   };
   const handleSubmit = () => {
-    console.log(textAnnotations);
-
     setTextAnnotations((current) => [
       ...current,
       {
@@ -40,7 +38,6 @@ const ControlPanel = ({
         y: defaultPos.y,
       },
     ]);
-    console.log(textAnnotations);
   };
 
   return (

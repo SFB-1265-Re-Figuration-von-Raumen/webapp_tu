@@ -129,7 +129,12 @@ const URLImage = ({
         <Transformer
           ref={trRef}
           anchorCornerRadius={5}
-          enabledAnchors={"top-left, top-right, bottom-left, bottom-right"}
+          enabledAnchors={[
+            "top-left",
+            "top-right",
+            "bottom-left",
+            "bottom-right",
+          ]}
           borderStroke={"black"}
           boundBoxFunc={(oldBox, newBox) => {
             // limit resize

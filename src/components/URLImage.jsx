@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import { Image, Transformer } from "react-konva";
 import useImage from "use-image";
+import theme from "../Themes";
 
 const URLImage = ({
   selectShape,
@@ -135,7 +136,7 @@ const URLImage = ({
             "bottom-left",
             "bottom-right",
           ]}
-          borderStroke={"black"}
+          borderStroke={theme.palette.primary.main}
           boundBoxFunc={(oldBox, newBox) => {
             // limit resize
             if (newBox.width < 5 || newBox.height < 5) {

@@ -1,3 +1,4 @@
+import { Box, Button, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import ScrollContainer from "react-indiana-drag-scroll";
 
@@ -28,8 +29,19 @@ const Iconbar = ({ images, addImages, percentWidth }) => {
 
   return (
     <>
-      {svgArray.map((index, key) => {
-        return (
+      {svgArray.map((index, key) => (
+        <Box sx={{
+          display: "flex",
+          flexDirection: "row",
+          borderBottom: "2px solid",
+          borderColor: "primary.main",
+          padding: "1rem",
+        }}>
+          <Typography>
+            <Button variant="outlined">
+              New Icon
+            </Button>
+          </Typography>
           <ScrollContainer
             className={`scroll-container iconToolbarRow ${index}`}
             id="xDragToolbar"
@@ -49,13 +61,12 @@ const Iconbar = ({ images, addImages, percentWidth }) => {
                       x: defaultPos.x,
                       y: defaultPos.y,
                     });
-                  }}
-                />
+                  }} />
               );
             })}
           </ScrollContainer>
-        );
-      })}
+        </Box>
+      ))}
     </>
   );
 };

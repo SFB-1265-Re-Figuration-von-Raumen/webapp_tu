@@ -8,6 +8,7 @@ import {
   DialogTitle,
   TextField,
   Button,
+  Box,
 } from "@mui/material";
 import { DeleteRounded, TextFields } from "@mui/icons-material";
 
@@ -41,7 +42,16 @@ const ControlPanel = ({
   };
 
   return (
-    <Card sx={{ display: "flex", justifyContent: "space-around" }}>
+    <Box sx={{
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "space-between",
+      borderBottom: "2px solid",
+      borderColor: "primary.main",
+      padding: "1rem",
+
+    }}>
+      {/* <Card sx={{ display: "flex", justifyContent: "space-around" }}> */}
       <TextFields onClick={handleOpen} sx={{ cursor: "pointer" }} />
       <DeleteRounded />
       <Dialog open={open} onClose={handleClose}>
@@ -73,7 +83,8 @@ const ControlPanel = ({
           </Button>
         </DialogActions>
       </Dialog>
-    </Card>
+      {/* </Card> */}
+    </Box>
   );
 };
 

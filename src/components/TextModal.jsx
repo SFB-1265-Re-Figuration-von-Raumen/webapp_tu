@@ -1,6 +1,7 @@
 import Konva from "konva";
 import React, { useState, useRef, useEffect } from "react";
 import { Transformer, Text } from "react-konva";
+import theme from "../Themes";
 
 const TextModal = ({
   selectShape,
@@ -43,19 +44,19 @@ const TextModal = ({
     isSelected
       ? null
       : e.target.setAttrs({
-          scaleX: 1.1,
-          scaleY: 1.1,
-        });
+        scaleX: 1.1,
+        scaleY: 1.1,
+      });
   };
   const handleDragEnd = (e) => {
     isSelected
       ? null
       : e.target.to({
-          duration: 0.2,
-          easing: Konva.Easings.EaseInOut,
-          scaleX: 1,
-          scaleY: 1,
-        });
+        duration: 0.2,
+        easing: Konva.Easings.EaseInOut,
+        scaleX: 1,
+        scaleY: 1,
+      });
     onChange({
       ...shapeProps,
       x: e.target.x(),
@@ -82,9 +83,9 @@ const TextModal = ({
         onSelect={() => {
           selectShape(id);
         }}
-        fill={"green"}
-        lineCap={"butt"}
-        lineJoin={"bevel"}
+        fill={theme.palette.primary.main}
+        // lineCap={"butt"}
+        // lineJoin={"bevel"}
         strokeEnabled={true}
         wrap={"word"}
         // onClick={id ? isSelected = id : isSelected = null}
@@ -95,6 +96,7 @@ const TextModal = ({
         y={y}
         borderStroke={"black"}
         fontSize={20}
+        fontFamily={theme.typography.fontFamily}
         height={undefined}
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
@@ -169,7 +171,7 @@ const TextModal = ({
           padding={5}
           anchorCornerRadius={5}
           enabledAnchors={["middle-left", "middle-right"]}
-          //   borderStroke={"black"}
+          borderStroke={theme.palette.primary.main}
           boundBoxFunc={(oldBox, newBox) => {
             // limit resize
             if (newBox.width < 20) {
@@ -177,7 +179,7 @@ const TextModal = ({
             }
             return newBox;
           }}
-          //   onDblClick={Transformer.hide()}
+        //   onDblClick={Transformer.hide()}
         />
       )}
     </>

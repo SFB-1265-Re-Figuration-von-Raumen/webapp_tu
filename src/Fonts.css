@@ -1,5 +1,25 @@
 /* Poppins */
 
+@font-face {
+  font-family: "Poppins";
+  src: url("../public/fonts/poppins/Poppins-Regular.ttf");
+  font-style: normal;
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("../public/fonts/poppins/Poppins-Black.ttf");
+  font-style: normal;
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("../public/fonts/poppins/Poppins-Regular.ttf");
+  font-style: normal;
+  font-weight: normal;
+}
 
 /* Space Mono */
 

@@ -21,6 +21,8 @@ const theme = createTheme({
     },
     typography: {
         fontFamily: [
+            // Poppins Here
+            "Poppins",
             "Space Mono",
             "Arial"
             // "Ark-Es",

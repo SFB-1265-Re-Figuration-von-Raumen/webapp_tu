@@ -20,8 +20,6 @@ const URLImage = ({
   const trRef = useRef();
   useEffect(() => {
     if (isSelected) {
-      console.log("isSelected");
-
       // we need to attach transformer manually
       trRef.current.nodes([shapeRef.current]);
       trRef.current.getLayer().batchDraw();
@@ -130,6 +128,14 @@ const URLImage = ({
       {isSelected && (
         <Transformer
           ref={trRef}
+          anchorCornerRadius={5}
+          enabledAnchors={[
+            "top-left",
+            "top-right",
+            "bottom-left",
+            "bottom-right",
+          ]}
+          borderStroke={"black"}
           boundBoxFunc={(oldBox, newBox) => {
             // limit resize
             if (newBox.width < 5 || newBox.height < 5) {

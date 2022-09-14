@@ -27,7 +27,7 @@ const Iconbar = ({ images, addImages, percentWidth }) => {
   };
 
   return (
-    <div className="iconBarContainer">
+    <>
       {svgArray.map((index, key) => {
         return (
           <ScrollContainer
@@ -56,7 +56,7 @@ const Iconbar = ({ images, addImages, percentWidth }) => {
           </ScrollContainer>
         );
       })}
-    </div>
+    </>
   );
 };
 

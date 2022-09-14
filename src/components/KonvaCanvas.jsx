@@ -2,6 +2,8 @@ import React, { useState, useRef } from "react";
 import { Stage, Layer } from "react-konva";
 import URLImage from "./URLImage";
 import Iconbar from "./Iconbar";
+import ControlPanel from "./ControlPanel";
+import TextModal from "./TextModal";
 
 //  at the moment we need to find a way to position the image
 //  id in state when added. when we move an image, we want
@@ -14,6 +16,10 @@ const KonvaCanvas = () => {
   const [lastDist, setLastDist] = useState(0);
   const [lastCenter, setLastCenter] = useState(null);
   const [selectedId, selectShape] = useState(null);
+  const [textAnnotations, setTextAnnotations] = useState([
+    { id: 0, text: "", x: 300, y: 300 },
+  ]);
+
   const checkDeselect = (e) => {
     // deselect when clicked on empty area
     const clickedOnEmpty = e.target === e.target.getStage();
@@ -119,8 +125,8 @@ const KonvaCanvas = () => {
                   x={img.x}
                   y={img.y}
                   images={images}
-                  shapeProps={img}
                   setImages={setImages}
+                  shapeProps={img}
                   checkDeselect={checkDeselect}
                   selectedId={selectedId}
                   selectShape={selectShape}
@@ -133,16 +139,45 @@ const KonvaCanvas = () => {
                 />
               );
             })}
+            {textAnnotations.map((annotation, i) => {
+              return (
+                <TextModal
+                  text={annotation.text}
+                  key={i}
+                  id={annotation.id}
+                  x={annotation.x}
+                  y={annotation.y}
+                  textAnnotations={textAnnotations}
+                  setTextAnnotations={setTextAnnotations}
+                  shapeProps={annotation}
+                  checkDeselect={checkDeselect}
+                  selectedId={selectedId}
+                  selectShape={selectShape}
+                  isSelected={annotation.id === selectedId}
+                  onChange={(newAttrs) => {
+                    const text = textAnnotations.slice();
+                    text[i] = newAttrs;
+                    setTextAnnotations(text);
+                  }}
+                />
+              );
+            })}
           </Layer>
         </Stage>
       </div>
-
-      <Iconbar
-        images={images}
-        setImages={setImages}
-        addImages={addImages}
-        percentWidth={percentWidth}
-      />
+      <div className="iconBarContainer">
+        <ControlPanel
+          textAnnotations={textAnnotations}
+          setTextAnnotations={setTextAnnotations}
+          percentWidth={percentWidth}
+        />
+        <Iconbar
+          images={images}
+          setImages={setImages}
+          addImages={addImages}
+          percentWidth={percentWidth}
+        />
+      </div>
     </>
   );
 };

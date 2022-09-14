@@ -4,6 +4,7 @@ import URLImage from "./URLImage";
 import Iconbar from "./Iconbar";
 import ControlPanel from "./ControlPanel";
 import TextModal from "./TextModal";
+import { Box } from "@mui/material";
 
 //  at the moment we need to find a way to position the image
 //  id in state when added. when we move an image, we want
@@ -166,17 +167,26 @@ const KonvaCanvas = () => {
         </Stage>
       </div>
       <div className="iconBarContainer">
-        <ControlPanel
-          textAnnotations={textAnnotations}
-          setTextAnnotations={setTextAnnotations}
-          percentWidth={percentWidth}
-        />
-        <Iconbar
-          images={images}
-          setImages={setImages}
-          addImages={addImages}
-          percentWidth={percentWidth}
-        />
+        <Box
+          sx={{
+            borderLeft: "1px solid",
+            borderColor: "primary.main",
+            height: "100%",
+            // padding: "0.25rem",
+          }}
+        >
+          <ControlPanel
+            textAnnotations={textAnnotations}
+            setTextAnnotations={setTextAnnotations}
+            percentWidth={percentWidth}
+          />
+          <Iconbar
+            images={images}
+            setImages={setImages}
+            addImages={addImages}
+            percentWidth={percentWidth}
+          />
+        </Box>
       </div>
     </>
   );

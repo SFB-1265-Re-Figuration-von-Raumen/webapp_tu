@@ -25,12 +25,12 @@ body {
 
 .iconBarContainer {
   background-color: rgb(236, 236, 236);
-  border-left: 1px solid orange;
+  /* border-left: 1px solid orange; */
   /* padding: 1rem; */
   width: 35vw;
   height: 100vh;
-  display: flex;
-  flex-direction: column;
+  /* display: flex; */
+  /* flex-direction: column; */
   /* border-radius: 25px; */
   justify-content: space-around;
 }
@@ -41,7 +41,7 @@ body {
   width: 32vw;
   /*height: 5rem;
   */cursor: grab;
-  border: 1px solid rgb(168, 168, 168);
+  /* border: 1px solid rgb(168, 168, 168); */
   /* border-top: 1px solid; */
   /* border-radius: 25px; */
   z-index: 1;
@@ -52,9 +52,17 @@ body {
 }
 
 .icon {
+  background-color: rgb(219, 211, 211);
+  border: 1px solid #7dd1a4;
+  border-radius: 20px;
   flex-shrink: 0;
   cursor: pointer;
-  margin: 0 2rem;
-  height: 4rem;
-  width: 4rem;
+  margin: 0 0.5rem;
+  padding: 0.25rem;
+  height: 4.5rem;
+  width: 4.5rem;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
 }

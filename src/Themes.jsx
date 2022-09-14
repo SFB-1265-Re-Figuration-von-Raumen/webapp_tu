@@ -13,7 +13,7 @@ import "./Fonts.css"
 const theme = createTheme({
     palette: {
         primary: {
-            main: red[500],
+            main: "#7dd1a4",
         },
         secondary: {
             main: "#ffffff",
@@ -31,7 +31,6 @@ const theme = createTheme({
 const darktheme = createTheme({
     palette: {
         primary: {
-
             main: "#ffffff",
         },
         secondary: {

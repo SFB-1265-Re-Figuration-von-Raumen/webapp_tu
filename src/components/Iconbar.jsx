@@ -17,6 +17,7 @@ const personen = import.meta.glob("../assets/svg/categories/personen/*.svg", {
 
 const svgArray = [aktis, orte, personen, atmos];
 const categories = ["AKTIVITÄTEN", "ORTE", "PERSONEN", "ATMOSPHÄREN"];
+// const addIcon = import.meta.glob("")
 
 function getSvgUrl(name) {
   return new URL(`../svg/${name}`, import.meta.url).href;
@@ -34,11 +35,11 @@ const Iconbar = ({ images, addImages, percentWidth }) => {
         <Box sx={{
           // display: "flex",
           // flexDirection: "row",
-          borderTop: "2px solid",
+          borderTop: "1px solid",
           borderColor: "primary.main",
           padding: "0.25rem",
         }}>
-          <Typography>
+          <Typography color="primary" fontWeight="bold">
             {categories[key]}
           </Typography>
           <Box sx={{
@@ -47,11 +48,13 @@ const Iconbar = ({ images, addImages, percentWidth }) => {
             alignItems: "center",
             overflowX: "hidden",
           }}>
-            <Typography>
-              <Button variant="outlined">
-                New Icon
-              </Button>
-            </Typography>
+            <Box>
+              <Typography>
+                {/* <Button variant="outlined"> */}
+                  <img src="../public/svg/ux-icon_custom-icon.svg" alt=""/>
+                {/* </Button> */}
+              </Typography>
+            </Box>
             <ScrollContainer
               className={`scroll-container iconToolbarRow ${index}`}
               id="xDragToolbar"

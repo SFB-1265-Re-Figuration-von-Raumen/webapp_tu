@@ -9,6 +9,7 @@ import {
   TextField,
   Button,
   Box,
+  Grid,
 } from "@mui/material";
 import { DeleteRounded, TextFields } from "@mui/icons-material";
 
@@ -46,30 +47,47 @@ const ControlPanel = ({
       display: "flex",
       flexDirection: "row",
       justifyContent: "space-between",
+      height: "10%",
       // borderBottom: "2px solid",
-      borderColor: "primary.main",
-      padding: "1rem",
+      // borderColor: "primary.main",
+      // padding: "1rem",
 
     }}>
       {/* <Card sx={{ display: "flex", justifyContent: "space-around" }}> */}
-      <Box>
-        <Button
-          variant="outlined"
-        >
-          Edit
-        </Button>
-        <Button
-          variant="outlined"
-        >
-          Node
-        </Button>
-        <Button
-          variant="outlined"
-        >
-          Erase
-        </Button>
-      </Box>
-      <TextFields onClick={handleOpen} sx={{ cursor: "pointer" }} />
+      <Grid container spacing={2}
+        sx={{
+          borderRight: "1px solid",
+          borderColor: "primary.main",
+        }}>
+        <Grid item xs={2}
+          sx={{
+            borderRight: "1px solid",
+            borderColor: "primary.main",
+          }}>
+        </Grid>
+        <Grid item xs={2} sx={{
+          borderRight: "1px solid",
+          borderColor: "primary.main",
+        }}>
+          {/* Node */}
+        </Grid>
+        <Grid item xs={2} sx={{
+          borderRight: "1px solid",
+          borderColor: "primary.main",
+        }}>
+        </Grid>
+        <Grid item xs={4} sx={{
+          borderRight: "1px solid",
+          borderColor: "primary.main",
+        }}>
+        </Grid>
+        <Grid item xs={2} sx={{
+        }}>
+        </Grid>
+      </Grid>
+      {/* <br /> */}
+
+      {/* <TextFields onClick={handleOpen} sx={{ cursor: "pointer" }} />
       <DeleteRounded />
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>
@@ -99,7 +117,7 @@ const ControlPanel = ({
             Fertig
           </Button>
         </DialogActions>
-      </Dialog>
+      </Dialog> */}
       {/* </Card> */}
     </Box>
   );

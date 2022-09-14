@@ -15,6 +15,7 @@ const ControlPanel = ({
   textAnnotations,
   setTextAnnotations,
   percentWidth,
+  selectShape,
 }) => {
   const [open, setOpen] = useState(false);
   const [textInput, setTextInput] = useState("");
@@ -26,6 +27,7 @@ const ControlPanel = ({
     setOpen(false);
   };
   const handleOpen = () => {
+    selectShape(null);
     setOpen(true);
   };
   const handleSubmit = () => {

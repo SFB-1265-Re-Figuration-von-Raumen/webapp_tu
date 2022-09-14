@@ -170,6 +170,7 @@ const KonvaCanvas = () => {
           textAnnotations={textAnnotations}
           setTextAnnotations={setTextAnnotations}
           percentWidth={percentWidth}
+          selectShape={selectShape}
         />
         <Iconbar
           images={images}

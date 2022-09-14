@@ -11,7 +11,6 @@ const TextModal = ({
   onChange,
   textAnnotations,
   setTextAnnotations,
-  text,
   id,
   x,
   y,

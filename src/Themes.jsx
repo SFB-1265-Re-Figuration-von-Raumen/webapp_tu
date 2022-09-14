@@ -2,6 +2,14 @@ import { createTheme } from "@mui/material";
 import { orange, red } from "@mui/material/colors";
 import "./Fonts.css"
 
+// We will have a total of 3 themes🧮
+
+// Regular Theme
+// Soft Ice Theme
+// Space Theme
+
+
+// Regular Theme
 const theme = createTheme({
     palette: {
         primary: {

@@ -22,24 +22,28 @@ body {
   z-index: 0;
   border-radius: 25px;
 }
+
 .iconBarContainer {
   background-color: rgb(236, 236, 236);
-  padding: 1rem;
+  border-left: 1px solid orange;
+  /* padding: 1rem; */
   width: 35vw;
   height: 100vh;
   display: flex;
   flex-direction: column;
-  border-radius: 25px;
+  /* border-radius: 25px; */
   justify-content: space-around;
 }
+
 .iconToolbarRow {
   background-color: none;
   padding: 1rem;
   width: 32vw;
-  /* height: 5rem; */
-  cursor: grab;
+  /*height: 5rem;
+  */cursor: grab;
   border: 1px solid rgb(168, 168, 168);
-  border-radius: 25px;
+  /* border-top: 1px solid; */
+  /* border-radius: 25px; */
   z-index: 1;
   overflow: hidden !important;
   overflow-x: scroll !important;
@@ -51,6 +55,6 @@ body {
   flex-shrink: 0;
   cursor: pointer;
   margin: 0 2rem;
-  height: 5rem;
-  width: 5rem;
+  height: 4rem;
+  width: 4rem;
 }

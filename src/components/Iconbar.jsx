@@ -16,6 +16,7 @@ const personen = import.meta.glob("../assets/svg/categories/personen/*.svg", {
 }); /* */
 
 const svgArray = [aktis, orte, personen, atmos];
+const categories = ["AKTIVITÄTEN", "ORTE", "PERSONEN", "ATMOSPHÄREN"];
 
 function getSvgUrl(name) {
   return new URL(`../svg/${name}`, import.meta.url).href;
@@ -31,40 +32,50 @@ const Iconbar = ({ images, addImages, percentWidth }) => {
     <>
       {svgArray.map((index, key) => (
         <Box sx={{
-          display: "flex",
-          flexDirection: "row",
-          borderBottom: "2px solid",
+          // display: "flex",
+          // flexDirection: "row",
+          borderTop: "2px solid",
           borderColor: "primary.main",
-          padding: "1rem",
+          padding: "0.25rem",
         }}>
           <Typography>
-            <Button variant="outlined">
-              New Icon
-            </Button>
+            {categories[key]}
           </Typography>
-          <ScrollContainer
-            className={`scroll-container iconToolbarRow ${index}`}
-            id="xDragToolbar"
-            key={key}
-          >
-            {Object.keys(index).map((key, i) => {
-              return (
-                <img
-                  key={i}
-                  src={getSvgUrl(key)}
-                  alt={key}
-                  className="icon"
-                  onClick={() => {
-                    addImages({
-                      id: images.at(-1).id + 1,
-                      icon: getSvgUrl(key),
-                      x: defaultPos.x,
-                      y: defaultPos.y,
-                    });
-                  }} />
-              );
-            })}
-          </ScrollContainer>
+          <Box sx={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            overflowX: "hidden",
+          }}>
+            <Typography>
+              <Button variant="outlined">
+                New Icon
+              </Button>
+            </Typography>
+            <ScrollContainer
+              className={`scroll-container iconToolbarRow ${index}`}
+              id="xDragToolbar"
+              key={key}
+            >
+              {Object.keys(index).map((key, i) => {
+                return (
+                  <img
+                    key={i}
+                    src={getSvgUrl(key)}
+                    alt={key}
+                    className="icon"
+                    onClick={() => {
+                      addImages({
+                        id: images.at(-1).id + 1,
+                        icon: getSvgUrl(key),
+                        x: defaultPos.x,
+                        y: defaultPos.y,
+                      });
+                    }} />
+                );
+              })}
+            </ScrollContainer>
+          </Box>
         </Box>
       ))}
     </>

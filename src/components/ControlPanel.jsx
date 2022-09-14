@@ -46,12 +46,29 @@ const ControlPanel = ({
       display: "flex",
       flexDirection: "row",
       justifyContent: "space-between",
-      borderBottom: "2px solid",
+      // borderBottom: "2px solid",
       borderColor: "primary.main",
       padding: "1rem",
 
     }}>
       {/* <Card sx={{ display: "flex", justifyContent: "space-around" }}> */}
+      <Box>
+        <Button
+          variant="outlined"
+        >
+          Edit
+        </Button>
+        <Button
+          variant="outlined"
+        >
+          Node
+        </Button>
+        <Button
+          variant="outlined"
+        >
+          Erase
+        </Button>
+      </Box>
       <TextFields onClick={handleOpen} sx={{ cursor: "pointer" }} />
       <DeleteRounded />
       <Dialog open={open} onClose={handleClose}>

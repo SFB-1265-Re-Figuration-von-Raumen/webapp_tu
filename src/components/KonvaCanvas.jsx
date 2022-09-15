@@ -12,6 +12,11 @@ import { Box, Button } from "@mui/material";
 
 const KonvaCanvas = () => {
   const stageRef = useRef();
+  const [stageScale, setStageScale] = useState({
+    scale: 1,
+    x: 0,
+    y: 0,
+  });
   const percentWidth = (window.innerWidth / 100) * 65;
   const [images, setImages] = useState([{ id: 0, icon: "", x: 300, y: 300 }]);
 
@@ -33,18 +38,49 @@ const KonvaCanvas = () => {
     setImages((current) => [...current, obj]);
   };
 
-  const handleZoomOutClick = () =>
-    setStageScale((prev)=>Object.keys(prev).map(Math.min(10.0, Math.ceil(prev * 1.1 * 10) / 10)
-    )
-    );
+  function handleWheel(e) {
+    e.evt.preventDefault();
 
+    const scaleBy = 1.02;
+    const stage = e.target.getStage();
+    const oldScale = stage.scaleX();
+    const mousePointTo = {
+      x: stage.getPointerPosition().x / oldScale - stage.x() / oldScale,
+      y: stage.getPointerPosition().y / oldScale - stage.y() / oldScale,
+    };
 
+    const newScale = e.evt.deltaY < 0 ? oldScale * scaleBy : oldScale / scaleBy;
 
+    setStageScale({
+      scale: newScale,
+      x: (stage.getPointerPosition().x / newScale - mousePointTo.x) * newScale,
+      y: (stage.getPointerPosition().y / newScale - mousePointTo.y) * newScale,
+    });
+  }
+
+  const handleZoomIn = () => {
+    setStageScale({
+      scale: stageScale.scale + 0.1,
+      x: stageScale.x + 0.1,
+      y: stageScale.y + 0.1,
+    });
+  };
+  const handleZoomOut = () => {
+    setStageScale({
+      scale: stageScale.scale - 0.1,
+      x: stageScale.x - 0.1,
+      y: stageScale.y - 0.1,
+    });
+  };
   return (
     <>
       <div className="konvaContainer">
         <Stage
-
+          onWheel={handleWheel}
+          scaleX={stageScale.scale}
+          scaleY={stageScale.scale}
+          x={stageScale.x}
+          y={stageScale.y}
           width={percentWidth}
           height={window.innerHeight}
           ref={stageRef}
@@ -104,12 +140,12 @@ const KonvaCanvas = () => {
           className="zommContainer"
           style={{ position: "absolute", bottom: "2rem", left: "1rem" }}
         >
-          {/* <Button variant="outlined" onClick={handleZoomInClick}>
+          <Button variant="outlined" onClick={handleZoomIn}>
             <img src="../public/svg/plus.svg" alt="plus zoom" />
           </Button>
-          <Button variant="outlined" onClick={handleZoomOutClick}>
+          <Button variant="outlined" onClick={handleZoomOut}>
             <img src="../public/svg/minus.svg" alt="minus zoom" />
-          </Button> */}
+          </Button>
         </div>
       </div>
       <div className="iconBarContainer">

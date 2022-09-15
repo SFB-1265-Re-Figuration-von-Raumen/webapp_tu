@@ -19,168 +19,126 @@ const KonvaCanvas = () => {
   const [textAnnotations, setTextAnnotations] = useState([
     { id: 0, text: "", x: 300, y: 300 },
   ]);
+  
+  const [stage, setStage] = useState({
+    scale: 1,
+    x: 0,
+    y: 0
+  });
 
-  const checkDeselect = (e) => {
-    // deselect when clicked on empty area
-    const clickedOnEmpty = e.target === e.target.getStage();
-    if (clickedOnEmpty) {
-      selectShape(null);
-    }
-  };
+  function handleWheel(e) {
+    e.evt.preventDefault();
 
-  const addImages = (obj) => {
-    setImages((current) => [...current, obj]);
-  };
-  const getDistance = (p1, p2) => {
-    return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2));
-  };
-
-  const getCenter = (p1, p2) => {
-    return {
-      x: (p1.x + p2.x) / 2,
-      y: (p1.y + p2.y) / 2,
+    const scaleBy = 1.02;
+    const stage = e.target.getStage();
+    const oldScale = stage.scaleX();
+    const mousePointTo = {
+      x: stage.getPointerPosition().x / oldScale - stage.x() / oldScale,
+      y: stage.getPointerPosition().y / oldScale - stage.y() / oldScale
     };
-  };
 
-  return (
-    <>
-      <div className="konvaContainer">
-        <Stage
-          width={percentWidth}
-          height={window.innerHeight}
-          ref={stageRef}
-          onTouchMove={(e) => {
-            e.evt.preventDefault();
-            var touch1 = e.evt.touches[0];
-            var touch2 = e.evt.touches[1];
+    const newScale = e.evt.deltaY < 0 ? oldScale * scaleBy : oldScale / scaleBy;
 
-            if (touch1 && touch2) {
-              // if the stage was under Konva's drag&drop
-              // we need to stop it, and implement our own pan logic with two pointers
-              if (isDragging()) {
-                stopDrag();
-              }
+    setStage({
+      scale: newScale,
+      x: (stage.getPointerPosition().x / newScale - mousePointTo.x) * newScale,
+      y: (stage.getPointerPosition().y / newScale - mousePointTo.y) * newScale
+    });
+  }
 
-              var p1 = {
-                x: touch1.clientX,
-                y: touch1.clientY,
-              };
-              var p2 = {
-                x: touch2.clientX,
-                y: touch2.clientY,
-              };
 
-              if (!lastCenter) {
-                setLastCenter(getCenter(p1, p2));
-                return;
-              }
-              const newCenter = getCenter(p1, p2);
+    function checkDeselect(e) {
+      // deselect when clicked on empty area
+      const clickedOnEmpty = e.target === e.target.getStage();
+      if (clickedOnEmpty) {
+        selectShape(null);
+      }
+    }
 
-              const dist = getDistance(p1, p2);
+    const addImages = (obj) => {
+      setImages((current) => [...current, obj]);
+    };
 
-              if (!lastDist) {
-                setLastDist(dist);
-              }
 
-              // local coordinates of center point
-              var pointTo = {
-                x: (newCenter.x - x()) / scaleX(),
-                y: (newCenter.y - y()) / scaleX(),
-              };
-
-              var scale = scaleX() * (dist / lastDist);
-
-              scaleX(scale);
-              scaleY(scale);
-
-              // calculate new position of the stage
-              var dx = newCenter.x - lastCenter.x;
-              var dy = newCenter.y - lastCenter.y;
-
-              var newPos = {
-                x: newCenter.x - pointTo.x * scale + dx,
-                y: newCenter.y - pointTo.y * scale + dy,
-              };
-
-              position(newPos);
-
-              setLastDist(dist);
-              setLastCenter(newCenter);
-            }
-          }}
-          onTouchEnd={() => {
-            setLastDist();
-            setLastCenter(null);
-          }}
-          onMouseDown={checkDeselect}
-          onTouchStart={checkDeselect}
-        >
-          <Layer>
-            {images.map((img, i) => {
-              return (
-                <URLImage
-                  image={img.icon}
-                  key={i}
-                  id={img.id}
-                  x={img.x}
-                  y={img.y}
-                  images={images}
-                  setImages={setImages}
-                  shapeProps={img}
-                  checkDeselect={checkDeselect}
-                  selectedId={selectedId}
-                  selectShape={selectShape}
-                  isSelected={img.id === selectedId}
-                  onChange={(newAttrs) => {
-                    const imgs = images.slice();
-                    imgs[i] = newAttrs;
-                    setImages(imgs);
-                  }}
-                />
-              );
-            })}
-            {textAnnotations.map((annotation, i) => {
-              return (
-                <TextModal
-                  text={annotation.text}
-                  key={i}
-                  id={annotation.id}
-                  x={annotation.x}
-                  y={annotation.y}
-                  textAnnotations={textAnnotations}
-                  setTextAnnotations={setTextAnnotations}
-                  shapeProps={annotation}
-                  checkDeselect={checkDeselect}
-                  selectedId={selectedId}
-                  selectShape={selectShape}
-                  isSelected={annotation.id === selectedId}
-                  onChange={(newAttrs) => {
-                    const text = textAnnotations.slice();
-                    text[i] = newAttrs;
-                    setTextAnnotations(text);
-                  }}
-                />
-              );
-            })}
-          </Layer>
-        </Stage>
-      </div>
-      <div className="iconBarContainer">
-        <ControlPanel
-          textAnnotations={textAnnotations}
-          setTextAnnotations={setTextAnnotations}
-          percentWidth={percentWidth}
-          selectShape={selectShape}
-        />
-        <Iconbar
-          images={images}
-          setImages={setImages}
-          addImages={addImages}
-          percentWidth={percentWidth}
-        />
-      </div>
-    </>
-  );
-};
+    return (
+      <>
+        <div className="konvaContainer">
+          <Stage
+            width={percentWidth}
+            height={window.innerHeight}
+            ref={stageRef}
+            onMouseDown={checkDeselect}
+            onTouchStart={checkDeselect}
+            onWheel={handleWheel}
+            scaleX={stage.scale}
+            scaleY={stage.scale}
+            x={stage.x}
+            y={stage.y}
+          >
+            <Layer>
+              {images.map((img, i) => {
+                return (
+                  <URLImage
+                    image={img.icon}
+                    key={i}
+                    id={img.id}
+                    x={img.x}
+                    y={img.y}
+                    images={images}
+                    setImages={setImages}
+                    shapeProps={img}
+                    checkDeselect={checkDeselect}
+                    selectedId={selectedId}
+                    selectShape={selectShape}
+                    isSelected={img.id === selectedId}
+                    onChange={(newAttrs) => {
+                      const imgs = images.slice();
+                      imgs[i] = newAttrs;
+                      setImages(imgs);
+                    } } />
+                );
+              })}
+            </Layer>
+            <Layer>
+              {textAnnotations.map((annotation, i) => {
+                return (
+                  <TextModal
+                    text={annotation.text}
+                    key={i}
+                    id={annotation.id}
+                    x={annotation.x}
+                    y={annotation.y}
+                    textAnnotations={textAnnotations}
+                    setTextAnnotations={setTextAnnotations}
+                    shapeProps={annotation}
+                    checkDeselect={checkDeselect}
+                    selectedId={selectedId}
+                    selectShape={selectShape}
+                    isSelected={annotation.id === selectedId}
+                    onChange={(newAttrs) => {
+                      const text = textAnnotations.slice();
+                      text[i] = newAttrs;
+                      setTextAnnotations(text);
+                    } } />
+                );
+              })}
+            </Layer>
+          </Stage>
+        </div>
+        <div className="iconBarContainer">
+          <ControlPanel
+            textAnnotations={textAnnotations}
+            setTextAnnotations={setTextAnnotations}
+            percentWidth={percentWidth}
+            selectShape={selectShape} />
+          <Iconbar
+            images={images}
+            setImages={setImages}
+            addImages={addImages}
+            percentWidth={percentWidth} />
+        </div>
+      </>
+    );
+  }
 
 export default KonvaCanvas;

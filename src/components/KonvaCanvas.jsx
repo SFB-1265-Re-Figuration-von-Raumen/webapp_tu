@@ -14,7 +14,9 @@ const KonvaCanvas = () => {
   const stageRef = useRef();
   const percentWidth = (window.innerWidth / 100) * 65;
   const [images, setImages] = useState([{ id: 0, icon: "", x: 300, y: 300 }]);
+
   const [selectedId, selectShape] = useState(null);
+
   const [textAnnotations, setTextAnnotations] = useState([
     { id: 0, text: "", x: 300, y: 300 },
   ]);
@@ -32,15 +34,17 @@ const KonvaCanvas = () => {
   };
 
   const handleZoomOutClick = () =>
-    setStageScale((prev) =>
-      Object.keys(prev).map(Math.min(10.0, Math.ceil(prev * 1.1 * 10) / 10))
+    setStageScale((prev)=>Object.keys(prev).map(Math.min(10.0, Math.ceil(prev * 1.1 * 10) / 10)
+    )
     );
+
+
 
   return (
     <>
       <div className="konvaContainer">
         <Stage
-          scale={stageScale}
+
           width={percentWidth}
           height={window.innerHeight}
           ref={stageRef}
@@ -100,12 +104,12 @@ const KonvaCanvas = () => {
           className="zommContainer"
           style={{ position: "absolute", bottom: "2rem", left: "1rem" }}
         >
-          <Button variant="outlined" onClick={handleZoomInClick}>
+          {/* <Button variant="outlined" onClick={handleZoomInClick}>
             <img src="../public/svg/plus.svg" alt="plus zoom" />
           </Button>
           <Button variant="outlined" onClick={handleZoomOutClick}>
             <img src="../public/svg/minus.svg" alt="minus zoom" />
-          </Button>
+          </Button> */}
         </div>
       </div>
       <div className="iconBarContainer">

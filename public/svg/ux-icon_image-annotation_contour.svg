@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="uuid-894172a4-29ca-4db5-abf2-c52d46385def" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" width="68.67" height="69.52" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 68.67 69.52">
+  <defs>
+    <clipPath id="uuid-91213a68-3101-435e-9916-8d50c763ffb8">
+      <rect y="0" width="68.67" height="69.52" style="fill: none;"/>
+    </clipPath>
+  </defs>
+  <g style="clip-path: url(#uuid-91213a68-3101-435e-9916-8d50c763ffb8);">
+    <rect x=".56" y=".56" width="67.55" height="68.39" style="fill: none; stroke: #ec2832;"/>
+  </g>
+  <polyline points="57.92 52.92 40.19 29.01 25.94 46.71 18.64 38.24 10.27 53.98" style="fill: none; stroke: #000;"/>
+  <rect x="9.86" y="17.58" width="48.63" height="36.01" style="fill: none; stroke: #000;"/>
+</svg>

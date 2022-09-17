@@ -16,6 +16,7 @@ const URLImage = ({
   id,
   x,
   y,
+  arrayPos
 }) => {
   const shapeRef = useRef();
   const trRef = useRef();
@@ -28,12 +29,11 @@ const URLImage = ({
   }, [isSelected]);
 
 
-  
   function savePosition(pos, x, y) {
-    console.log(`arrayPos is ${pos}, x is ${x}, y is ${y}`);
-    
+    // console.log(`arrayPos is ${pos}, x is ${x}, y is ${y}`);
+
     const newImage = images[pos];
-    console.log(newImage);
+    // console.log(newImage);
     newImage.x = x;
     newImage.y = y;
     const updatedImages = Object.keys(images).map((key, i) => {
@@ -42,45 +42,43 @@ const URLImage = ({
       }
       return images[key];
     });
-    console.log(updatedImages);
+    // console.log(updatedImages);
     setImages(updatedImages);
-    console.log(images);
+    // console.log(images);
   }
-  
+
   const handleDragStart = (e) => {
     isSelected
-    ? null
-    : e.target.setAttrs({
-      scaleX: 1.1,
-      scaleY: 1.1,
-    });
+      ? null
+      : e.target.setAttrs({
+          scaleX: 1.1,
+          scaleY: 1.1,
+        });
   };
-  
+
   const handleDragEnd = (e) => {
     isSelected
-    ? null
-    : e.target.to({
-      duration: 0.2,
-      easing: Konva.Easings.EaseInOut,
-      scaleX: 1,
-      scaleY: 1,
-    });
+      ? null
+      : e.target.to({
+          duration: 0.2,
+          easing: Konva.Easings.EaseInOut,
+          scaleX: 1,
+          scaleY: 1,
+        });
     onChange({
       ...shapeProps,
       x: e.target.x(),
       y: e.target.y(),
     });
-    
+
     // here we need to update the images state
     // with the new x and y values
     // for the current image
     // respective to the index "arrayPos"
-    
+
     savePosition(e.target.attrs.arrayPos, e.target.attrs.x, e.target.attrs.y);
   };
-  
-
-  
+  console.log(images.indexOf(id))
   const [img] = useImage(image);
 
   return (
@@ -88,7 +86,7 @@ const URLImage = ({
       <Image
         ref={shapeRef}
         {...shapeProps}
-        arrayPos={images.indexOf(id)}
+        arrayPos={arrayPos}
         image={img}
         draggable="true"
         isSelected={id === selectedId}
@@ -133,7 +131,7 @@ const URLImage = ({
       {isSelected && (
         <Transformer
           ref={trRef}
-          anchorCornerRadius={5}
+          anchorCornerRadius={50}
           enabledAnchors={[
             "top-left",
             "top-right",
@@ -141,6 +139,9 @@ const URLImage = ({
             "bottom-right",
           ]}
           borderStroke={theme.palette.primary.main}
+          anchorStroke={theme.palette.primary.main}
+          anchorSize={25}
+          
           boundBoxFunc={(oldBox, newBox) => {
             // limit resize
             if (newBox.width < 5 || newBox.height < 5) {

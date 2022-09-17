@@ -28,52 +28,63 @@ const Iconbar = ({ images, addImages, percentWidth }) => {
     x: percentWidth / 2,
     y: window.innerHeight / 2,
   };
-console.log(defaultPos);
+
 
   return (
     <>
       {svgArray.map((index, key) => (
-        <Grid item  height>
-
-          <Box key={key} sx={{
-            // display: "flex",
-            // flexDirection: "ro w",
-            borderTop: "1px solid",
-            borderColor: "primary.main",
-            // padding: "0.25rem",
-            height: "100%",
-            display: "flex",
-            flexDirection: "column",
-            // backgroundImage: "linear-gradient(to left, #000000, #ffffff)",
-          }}>
-            <Typography color="primary" fontWeight="bold" key={key+1} p>
+        <Grid item height>
+          <Box
+            key={key}
+            sx={{
+              // display: "flex",
+              // flexDirection: "ro w",
+              borderTop: "1px solid",
+              borderColor: "primary.main",
+              // padding: "0.25rem",
+              height: "100%",
+              display: "flex",
+              flexDirection: "column",
+              // backgroundImage: "linear-gradient(to left, #000000, #ffffff)",
+            }}
+          >
+            <Typography color="primary" fontWeight="bold" key={key + 1} p>
               {categories[key]}
             </Typography>
-            <Box key={key+3}sx={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-              // borderLeft: "1px solid",
-              overflowX: "hidden",
-              height: "100%",
-            }}>
-
-              <img src="../public/svg/ux-icon_custom-icon.svg" alt="" className="iconBar--customIconBtn" />
+            <Box
+              key={key + 3}
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                // borderLeft: "1px solid",
+                overflowX: "hidden",
+                height: "100%",
+              }}
+            >
+              <img
+                src="../public/svg/ux-icon_custom-icon.svg"
+                alt=""
+                className="iconBar--customIconBtn"
+              />
 
               <ScrollContainer
                 className={`scroll-container iconToolbarRow ${index}`}
                 id="xDragToolbar"
-                key={key+2}
+                key={key + 2}
               >
                 {Object.keys(index).map((key, i) => {
                   return (
-                    <Box sx={{
-                      height: "100%",
-                      // borderLeft: "1px solid",
-                      width: "auto"
-                    }}>
+                    <Box
+                      sx={{
+                        height: "100%",
+                        // borderLeft: "1px solid",
+                        width: "auto",
+                      }}
+                      key={i+4}
+                    >
                       <img
-                        key={i+3}
+                        key={i + 3}
                         src={getSvgUrl(key)}
                         alt={key}
                         className="icon"
@@ -85,12 +96,12 @@ console.log(defaultPos);
                             x: defaultPos.x,
                             y: defaultPos.y,
                           });
-                        }} />
+                        }}
+                      />
                     </Box>
                   );
                 })}
               </ScrollContainer>
-
             </Box>
           </Box>
         </Grid>

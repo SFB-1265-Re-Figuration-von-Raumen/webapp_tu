@@ -18,7 +18,7 @@ const KonvaCanvas = () => {
     y: 0,
   });
   const percentWidth = (window.innerWidth / 100) * 65;
-  const [images, setImages] = useState([{}]);
+  const [images, setImages] = useState([{ x: 300, y: 300 }]);
   const [textAnnotations, setTextAnnotations] = useState([{}]);
   const [selectedId, selectShape] = useState(null);
 
@@ -30,8 +30,11 @@ const KonvaCanvas = () => {
     }
   };
 
+
   const addImages = (obj) => {
-    obj.id = obj.id + `${images.length + 1}`;
+    images.length >= 0
+      ? (obj.id = obj.id + `${images.length + 1}`)
+      : (obj.id = obj.id + `1`);
     setImages((current) => [...current, obj]);
   };
 
@@ -90,7 +93,8 @@ const KonvaCanvas = () => {
                 <URLImage
                   image={img.icon}
                   key={i}
-                  id={`${img.id}`}
+                  arrayPos={images.indexOf(img)}
+                  id={img.id}
                   x={img.x}
                   y={img.y}
                   images={images}

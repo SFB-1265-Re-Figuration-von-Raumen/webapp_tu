@@ -69,6 +69,10 @@ const TextModal = ({
 
     savePosition(e.target.attrs.arrayPos, e.target.attrs.x, e.target.attrs.y);
   };
+
+  const handleEdit = (e) => {
+    setTextAnnotations(current => [current = e.target.value])
+  }
   return (
     <>
       <Text
@@ -99,6 +103,7 @@ const TextModal = ({
         height={undefined}
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
+        onDblClick={handleEdit}
         onTransform={
           () => {
             const node = shapeRef.current;

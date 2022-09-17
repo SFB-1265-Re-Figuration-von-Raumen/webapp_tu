@@ -28,13 +28,14 @@ const Iconbar = ({ images, addImages, percentWidth }) => {
     x: percentWidth / 2,
     y: window.innerHeight / 2,
   };
+console.log(defaultPos);
 
   return (
     <>
       {svgArray.map((index, key) => (
-        <Grid item sx={1} height>
+        <Grid item  height>
 
-          <Box sx={{
+          <Box key={key} sx={{
             // display: "flex",
             // flexDirection: "ro w",
             borderTop: "1px solid",
@@ -45,10 +46,10 @@ const Iconbar = ({ images, addImages, percentWidth }) => {
             flexDirection: "column",
             // backgroundImage: "linear-gradient(to left, #000000, #ffffff)",
           }}>
-            <Typography color="primary" fontWeight="bold" p>
+            <Typography color="primary" fontWeight="bold" key={key+1} p>
               {categories[key]}
             </Typography>
-            <Box sx={{
+            <Box key={key+3}sx={{
               display: "flex",
               flexDirection: "row",
               alignItems: "center",
@@ -62,7 +63,7 @@ const Iconbar = ({ images, addImages, percentWidth }) => {
               <ScrollContainer
                 className={`scroll-container iconToolbarRow ${index}`}
                 id="xDragToolbar"
-                key={key}
+                key={key+2}
               >
                 {Object.keys(index).map((key, i) => {
                   return (
@@ -72,13 +73,14 @@ const Iconbar = ({ images, addImages, percentWidth }) => {
                       width: "auto"
                     }}>
                       <img
-                        key={i}
+                        key={i+3}
                         src={getSvgUrl(key)}
                         alt={key}
                         className="icon"
                         onClick={() => {
                           addImages({
-                            id: images.at(-1).id + 1,
+                            // id: images.at(-1).id + 1,
+                            id: `${key}`,
                             icon: getSvgUrl(key),
                             x: defaultPos.x,
                             y: defaultPos.y,

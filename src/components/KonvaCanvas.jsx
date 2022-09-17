@@ -18,13 +18,9 @@ const KonvaCanvas = () => {
     y: 0,
   });
   const percentWidth = (window.innerWidth / 100) * 65;
-  const [images, setImages] = useState([{ id: 0, icon: "", x: 300, y: 300 }]);
-
+  const [images, setImages] = useState([{}]);
+  const [textAnnotations, setTextAnnotations] = useState([{}]);
   const [selectedId, selectShape] = useState(null);
-
-  const [textAnnotations, setTextAnnotations] = useState([
-    { id: 0, text: "", x: 300, y: 300 },
-  ]);
 
   const checkDeselect = (e) => {
     // deselect when clicked on empty area
@@ -35,6 +31,7 @@ const KonvaCanvas = () => {
   };
 
   const addImages = (obj) => {
+    obj.id = obj.id + `${images.length + 1}`;
     setImages((current) => [...current, obj]);
   };
 
@@ -93,7 +90,7 @@ const KonvaCanvas = () => {
                 <URLImage
                   image={img.icon}
                   key={i}
-                  id={img.id}
+                  id={`${img.id}`}
                   x={img.x}
                   y={img.y}
                   images={images}

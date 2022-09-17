@@ -27,64 +27,68 @@ const URLImage = ({
     }
   }, [isSelected]);
 
-  function savePosition(pos, x, y) {
-    // console.log(`arrayPos is ${pos}, x is ${x}, y is ${y}`);
 
+  
+  function savePosition(pos, x, y) {
+    console.log(`arrayPos is ${pos}, x is ${x}, y is ${y}`);
+    
     const newImage = images[pos];
+    console.log(newImage);
     newImage.x = x;
     newImage.y = y;
-    // console.log(newImage);
     const updatedImages = Object.keys(images).map((key, i) => {
       if (key === pos) {
         return newImage;
       }
       return images[key];
     });
-    // console.log(updatedImages);
+    console.log(updatedImages);
     setImages(updatedImages);
-    // console.log(images);
+    console.log(images);
   }
-
+  
   const handleDragStart = (e) => {
     isSelected
-      ? null
-      : e.target.setAttrs({
-          scaleX: 1.1,
-          scaleY: 1.1,
-        });
+    ? null
+    : e.target.setAttrs({
+      scaleX: 1.1,
+      scaleY: 1.1,
+    });
   };
-
+  
   const handleDragEnd = (e) => {
     isSelected
-      ? null
-      : e.target.to({
-          duration: 0.2,
-          easing: Konva.Easings.EaseInOut,
-          scaleX: 1,
-          scaleY: 1,
-        });
+    ? null
+    : e.target.to({
+      duration: 0.2,
+      easing: Konva.Easings.EaseInOut,
+      scaleX: 1,
+      scaleY: 1,
+    });
     onChange({
       ...shapeProps,
       x: e.target.x(),
       y: e.target.y(),
     });
-
+    
     // here we need to update the images state
     // with the new x and y values
     // for the current image
     // respective to the index "arrayPos"
-
+    
     savePosition(e.target.attrs.arrayPos, e.target.attrs.x, e.target.attrs.y);
   };
+  
 
+  
   const [img] = useImage(image);
-  // console.log(isSelected);
+
   return (
     <>
       <Image
         ref={shapeRef}
         {...shapeProps}
-        arrayPos={id}
+        arrayPos={images.indexOf(id)}
         image={img}
         draggable="true"
         isSelected={id === selectedId}

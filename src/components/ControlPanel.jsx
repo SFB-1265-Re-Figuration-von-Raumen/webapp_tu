@@ -36,7 +36,7 @@ const ControlPanel = ({
     setTextAnnotations((current) => [
       ...current,
       {
-        id: current.at(-1).id + 1,
+        id: `${textInput}${current.indexOf() + 1}`,
         text: textInput,
         x: defaultPos.x,
         y: defaultPos.y,

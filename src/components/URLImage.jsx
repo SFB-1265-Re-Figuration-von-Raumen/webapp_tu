@@ -137,6 +137,9 @@ const URLImage = ({
             "bottom-left",
             "bottom-right",
           ]}
+          borderStroke={theme.palette.primary.main}
+          anchorStroke={theme.palette.primary.main}
+          anchorSize={15}
           boundBoxFunc={(oldBox, newBox) => {
             // limit resize
             if (newBox.width < 5 || newBox.height < 5) {

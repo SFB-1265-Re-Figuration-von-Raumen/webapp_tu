@@ -1,6 +1,7 @@
 import Konva from "konva";
 import React, { useState, useRef, useEffect } from "react";
 import { Transformer, Text } from "react-konva";
+import TextInput from "./TextInput";
 import theme from "../Themes";
 
 const TextModal = ({
@@ -12,10 +13,12 @@ const TextModal = ({
   onChange,
   textAnnotations,
   setTextAnnotations,
+  text,
   id,
   x,
   y,
   arrayPos,
+  isEditing, setIsEditing
 }) => {
   const shapeRef = useRef();
   const trRef = useRef();
@@ -25,7 +28,9 @@ const TextModal = ({
       trRef.current.nodes([shapeRef.current]);
       trRef.current.getLayer().batchDraw();
     }
-  }, [isSelected]);
+    if (isEditing) {
+    }
+  }, [isSelected, isEditing]);
 
   function savePosition(pos, x, y) {
     const newText = textAnnotations[pos];
@@ -71,11 +76,24 @@ const TextModal = ({
     savePosition(e.target.attrs.arrayPos, e.target.attrs.x, e.target.attrs.y);
   };
 
-  const handleEdit = (e) => {
-    setTextAnnotations((current) => [(current = e.target.value)]);
-  };
   return (
     <>
+      {isEditing && (
+        <TextInput
+          x={x}
+          y={y}
+          text={text}
+          textAnnotations={textAnnotations}
+          setTextAnnotations={setTextAnnotations}
+          isEditing={isEditing}
+          setIsEditing={setIsEditing}
+          id={id}
+          arrayPos={arrayPos}
+          width={shapeProps.scaleX}
+          height={shapeProps.scaleY}
+          placeholder={text}
+        />
+      )}
       <Text
         ref={shapeRef}
         {...shapeProps}
@@ -87,7 +105,7 @@ const TextModal = ({
         onSelect={() => {
           selectShape(id);
         }}
-        fill={theme.palette.primary.main}
+        fill={isEditing ? "transparent" : theme.palette.primary.main}
         // lineCap={"butt"}
         // lineJoin={"bevel"}
         strokeEnabled={true}
@@ -104,7 +122,10 @@ const TextModal = ({
         height={undefined}
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
-        onDblClick={handleEdit}
+        onDblClick={() => {
+          setIsEditing(true);
+        }}
+        onDblTap={() => setIsEditing(true)}
         onTransform={
           () => {
             const node = shapeRef.current;
@@ -178,7 +199,7 @@ const TextModal = ({
           enabledAnchors={["middle-left", "middle-right"]}
           borderStroke={theme.palette.primary.main}
           anchorStroke={theme.palette.primary.main}
-          anchorSize={25}
+          anchorSize={15}
           boundBoxFunc={(oldBox, newBox) => {
             // limit resize
             if (newBox.width < 20) {

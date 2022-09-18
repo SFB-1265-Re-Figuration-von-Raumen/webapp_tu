@@ -20,6 +20,7 @@ const KonvaCanvas = () => {
   const percentWidth = (window.innerWidth / 100) * 65;
   const [images, setImages] = useState([{ x: 300, y: 300 }]);
   const [textAnnotations, setTextAnnotations] = useState([{}]);
+  const [isEditing, setIsEditing] = useState(false);
   const [selectedId, selectShape] = useState(null);
 
   const checkDeselect = (e) => {
@@ -27,9 +28,9 @@ const KonvaCanvas = () => {
     const clickedOnEmpty = e.target === e.target.getStage();
     if (clickedOnEmpty) {
       selectShape(null);
+      setIsEditing(false);
     }
   };
-
 
   const addImages = (obj) => {
     images.length >= 0
@@ -128,6 +129,8 @@ const KonvaCanvas = () => {
                   selectedId={selectedId}
                   selectShape={selectShape}
                   isSelected={annotation.id === selectedId}
+                  isEditing={isEditing}
+                  setIsEditing={setIsEditing}
                   onChange={(newAttrs) => {
                     const text = textAnnotations.slice();
                     text[i] = newAttrs;

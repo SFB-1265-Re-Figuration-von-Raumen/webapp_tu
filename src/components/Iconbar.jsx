@@ -29,11 +29,10 @@ const Iconbar = ({ images, addImages, percentWidth }) => {
     y: window.innerHeight / 2,
   };
 
-
   return (
     <>
       {svgArray.map((index, key) => (
-        <Grid item height>
+        <Grid key={key * 0.77} item height>
           <Box
             key={key}
             sx={{
@@ -81,7 +80,7 @@ const Iconbar = ({ images, addImages, percentWidth }) => {
                         // borderLeft: "1px solid",
                         width: "auto",
                       }}
-                      key={i+4}
+                      key={i + 4}
                     >
                       <img
                         key={i + 3}

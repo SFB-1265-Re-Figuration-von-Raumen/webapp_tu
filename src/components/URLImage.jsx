@@ -16,7 +16,7 @@ const URLImage = ({
   id,
   x,
   y,
-  arrayPos
+  arrayPos,
 }) => {
   const shapeRef = useRef();
   const trRef = useRef();
@@ -27,7 +27,6 @@ const URLImage = ({
       trRef.current.getLayer().batchDraw();
     }
   }, [isSelected]);
-
 
   function savePosition(pos, x, y) {
     // console.log(`arrayPos is ${pos}, x is ${x}, y is ${y}`);
@@ -78,7 +77,7 @@ const URLImage = ({
 
     savePosition(e.target.attrs.arrayPos, e.target.attrs.x, e.target.attrs.y);
   };
-  console.log(images.indexOf(id))
+
   const [img] = useImage(image);
 
   return (
@@ -138,10 +137,6 @@ const URLImage = ({
             "bottom-left",
             "bottom-right",
           ]}
-          borderStroke={theme.palette.primary.main}
-          anchorStroke={theme.palette.primary.main}
-          anchorSize={25}
-          
           boundBoxFunc={(oldBox, newBox) => {
             // limit resize
             if (newBox.width < 5 || newBox.height < 5) {

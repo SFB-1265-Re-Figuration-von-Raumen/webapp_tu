@@ -120,6 +120,7 @@ const KonvaCanvas = () => {
                   id={annotation.id}
                   x={annotation.x}
                   y={annotation.y}
+                  arrayPos={textAnnotations.indexOf(annotation)}
                   textAnnotations={textAnnotations}
                   setTextAnnotations={setTextAnnotations}
                   shapeProps={annotation}

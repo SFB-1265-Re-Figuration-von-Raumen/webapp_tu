@@ -15,6 +15,7 @@ const TextModal = ({
   id,
   x,
   y,
+  arrayPos,
 }) => {
   const shapeRef = useRef();
   const trRef = useRef();
@@ -43,19 +44,19 @@ const TextModal = ({
     isSelected
       ? null
       : e.target.setAttrs({
-        scaleX: 1.1,
-        scaleY: 1.1,
-      });
+          scaleX: 1.1,
+          scaleY: 1.1,
+        });
   };
   const handleDragEnd = (e) => {
     isSelected
       ? null
       : e.target.to({
-        duration: 0.2,
-        easing: Konva.Easings.EaseInOut,
-        scaleX: 1,
-        scaleY: 1,
-      });
+          duration: 0.2,
+          easing: Konva.Easings.EaseInOut,
+          scaleX: 1,
+          scaleY: 1,
+        });
     onChange({
       ...shapeProps,
       x: e.target.x(),
@@ -71,14 +72,14 @@ const TextModal = ({
   };
 
   const handleEdit = (e) => {
-    setTextAnnotations(current => [current = e.target.value])
-  }
+    setTextAnnotations((current) => [(current = e.target.value)]);
+  };
   return (
     <>
       <Text
         ref={shapeRef}
         {...shapeProps}
-        arrayPos={id}
+        arrayPos={arrayPos}
         isSelected={id === selectedId}
         onClick={() => {
           selectShape(id);
@@ -173,9 +174,11 @@ const TextModal = ({
         <Transformer
           ref={trRef}
           padding={5}
-          anchorCornerRadius={5}
+          anchorCornerRadius={50}
           enabledAnchors={["middle-left", "middle-right"]}
           borderStroke={theme.palette.primary.main}
+          anchorStroke={theme.palette.primary.main}
+          anchorSize={25}
           boundBoxFunc={(oldBox, newBox) => {
             // limit resize
             if (newBox.width < 20) {
@@ -183,7 +186,7 @@ const TextModal = ({
             }
             return newBox;
           }}
-        //   onDblClick={Transformer.hide()}
+          //   onDblClick={Transformer.hide()}
         />
       )}
     </>

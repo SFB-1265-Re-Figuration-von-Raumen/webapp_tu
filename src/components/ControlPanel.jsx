@@ -12,12 +12,15 @@ import {
   Grid,
   Paper,
 } from "@mui/material";
+import theme from "../Themes";
 
 const ControlPanel = ({
   textAnnotations,
   setTextAnnotations,
   percentWidth,
   selectShape,
+  deleteMode,
+  setDeleteMode,
 }) => {
   const [open, setOpen] = useState(false);
   const [textInput, setTextInput] = useState("");
@@ -109,7 +112,16 @@ const ControlPanel = ({
             borderColor: "primary.main",
           }}
         >
-          <Button>
+          <Button
+            onClick={() =>
+              deleteMode ? setDeleteMode(false) : setDeleteMode(true)
+            }
+            style={{
+              backgroundColor: `${
+                deleteMode ? 'pink' : 'transparent'
+              }`,
+            }}
+          >
             <img
               src="../public/svg/ux-icon_erase-mode.svg"
               alt="Erase Mode"

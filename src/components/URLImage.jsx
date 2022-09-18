@@ -17,6 +17,7 @@ const URLImage = ({
   x,
   y,
   arrayPos,
+  deleteMode
 }) => {
   const shapeRef = useRef();
   const trRef = useRef();
@@ -90,6 +91,9 @@ const URLImage = ({
         draggable="true"
         isSelected={id === selectedId}
         onClick={() => {
+          if (deleteMode) {
+            images.splice(arrayPos, 1);
+          }
           selectShape(id);
         }}
         onSelect={() => {

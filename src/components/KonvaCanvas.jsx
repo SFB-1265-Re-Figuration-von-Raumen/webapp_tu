@@ -18,10 +18,11 @@ const KonvaCanvas = () => {
     y: 0,
   });
   const percentWidth = (window.innerWidth / 100) * 65;
-  const [images, setImages] = useState([{ x: 300, y: 300 }]);
+  const [images, setImages] = useState([{}]);
   const [textAnnotations, setTextAnnotations] = useState([{}]);
   const [isEditing, setIsEditing] = useState(false);
   const [selectedId, selectShape] = useState(null);
+  const [deleteMode, setDeleteMode] = useState(false);
 
   const checkDeselect = (e) => {
     // deselect when clicked on empty area
@@ -110,6 +111,8 @@ const KonvaCanvas = () => {
                     imgs[i] = newAttrs;
                     setImages(imgs);
                   }}
+                  deleteMode={deleteMode}
+                  setDeleteMode={setDeleteMode}
                 />
               );
             })}
@@ -131,6 +134,8 @@ const KonvaCanvas = () => {
                   isSelected={annotation.id === selectedId}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
+                  deleteMode={deleteMode}
+                  setDeleteMode={setDeleteMode}
                   onChange={(newAttrs) => {
                     const text = textAnnotations.slice();
                     text[i] = newAttrs;
@@ -170,6 +175,8 @@ const KonvaCanvas = () => {
             setTextAnnotations={setTextAnnotations}
             percentWidth={percentWidth}
             selectShape={selectShape}
+            deleteMode={deleteMode}
+            setDeleteMode={setDeleteMode}
           />
           <Iconbar
             images={images}

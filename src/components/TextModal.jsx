@@ -18,7 +18,9 @@ const TextModal = ({
   x,
   y,
   arrayPos,
-  isEditing, setIsEditing
+  isEditing,
+  setIsEditing,
+  deleteMode
 }) => {
   const shapeRef = useRef();
   const trRef = useRef();
@@ -29,6 +31,11 @@ const TextModal = ({
       trRef.current.getLayer().batchDraw();
     }
     if (isEditing) {
+      const cursorInput = document.getElementById("editInput");
+      console.log(cursorInput);
+      const end = cursorInput.value.length;
+      cursorInput.setSelectionRange(end, end);
+      cursorInput.focus();
     }
   }, [isSelected, isEditing]);
 
@@ -100,6 +107,9 @@ const TextModal = ({
         arrayPos={arrayPos}
         isSelected={id === selectedId}
         onClick={() => {
+          if (deleteMode) {
+            textAnnotations.splice(arrayPos, 1);
+          }
           selectShape(id);
         }}
         onSelect={() => {
@@ -120,12 +130,14 @@ const TextModal = ({
         fontSize={20}
         fontFamily={theme.typography.fontFamily}
         height={undefined}
-        onDragStart={handleDragStart}
-        onDragEnd={handleDragEnd}
+        onDragStart={() => handleDragStart}
+        onDragEnd={() => handleDragEnd}
         onDblClick={() => {
           setIsEditing(true);
         }}
-        onDblTap={() => setIsEditing(true)}
+        onDblTap={() => {
+          setIsEditing(true);
+        }}
         onTransform={
           () => {
             const node = shapeRef.current;

@@ -13,7 +13,7 @@ const TextInput = ({
   arrayPos,
   width,
   height,
-  text
+  text,
 }) => {
   const [input, setInput] = useState(text);
   const RETURN_KEY = 13;
@@ -38,6 +38,7 @@ const TextInput = ({
         onKeyDown={handleEscapeKeys}
         x={x}
         y={y}
+        id="editInput"
         value={input}
         style={{
           background: "transparent",

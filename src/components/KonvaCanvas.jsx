@@ -1,9 +1,10 @@
 import React, { useState, useRef } from "react";
-import { Stage, Layer } from "react-konva";
+import { Stage, Layer, Line} from "react-konva";
 import URLImage from "./URLImage";
 import Iconbar from "./Iconbar";
 import ControlPanel from "./ControlPanel";
 import TextModal from "./TextModal";
+import { Slider } from "@mui/material";
 
 //  at the moment we need to find a way to position the image
 //  id in state when added. when we move an image, we want
@@ -13,13 +14,12 @@ const KonvaCanvas = () => {
   const stageRef = useRef();
   const percentWidth = (window.innerWidth / 100) * 65;
   const [images, setImages] = useState([{ id: 0, icon: "", x: 300, y: 300 }]);
-  const [lastDist, setLastDist] = useState(0);
-  const [lastCenter, setLastCenter] = useState(null);
-  const [selectedId, selectShape] = useState(null);
+  const [selectedId, selectShape] =  useState(null);
   const [textAnnotations, setTextAnnotations] = useState([
     { id: 0, text: "", x: 300, y: 300 },
   ]);
-  
+
+  //ZOOM STUFF 
   const [stage, setStage] = useState({
     scale: 1,
     x: 0,
@@ -45,7 +45,7 @@ const KonvaCanvas = () => {
       y: (stage.getPointerPosition().y / newScale - mousePointTo.y) * newScale
     });
   }
-
+// END OF ZOOM FUNCTIONS
 
     function checkDeselect(e) {
       // deselect when clicked on empty area
@@ -55,25 +55,60 @@ const KonvaCanvas = () => {
       }
     }
 
+    // PENTOOL ##############################
+
+      const [tool, setTool] = useState('pen');
+      const [lines, setLines] = useState([]);
+      const isDrawing = useRef(false);
+      const [strokeSlide, setStroke] = React.useState(5); //experimental
+      const shapeInUse = useRef(false);
+      const handleMouseDown = (e) => {
+        isDrawing.current = true;
+        const pos = e.target.getStage().getPointerPosition();
+        setLines([...lines, { tool, points: [pos.x, pos.y] }]);
+      };
+
+      const handleMouseMove = (e) => {
+        // no drawing - skipping
+        if (!isDrawing.current) {
+          return;
+        }
+        const stage = e.target.getStage();
+        const point = stage.getPointerPosition();
+        let lastLine = lines[lines.length - 1];
+        // add point
+        lastLine.points = lastLine.points.concat([point.x, point.y]);
+    
+        // replace last
+        lines.splice(lines.length - 1, 1, lastLine);
+        setLines(lines.concat());
+      };
+    
+      const handleMouseUp = () => {
+        isDrawing.current = false;
+      };
     const addImages = (obj) => {
       setImages((current) => [...current, obj]);
     };
-
-
     return (
+
+      
       <>
         <div className="konvaContainer">
           <Stage
             width={percentWidth}
             height={window.innerHeight}
             ref={stageRef}
-            onMouseDown={checkDeselect}
+            //onMouseDown={checkDeselect} -- Temporary disabled
             onTouchStart={checkDeselect}
             onWheel={handleWheel}
             scaleX={stage.scale}
             scaleY={stage.scale}
             x={stage.x}
             y={stage.y}
+            onMousemove={handleMouseMove}
+            onMouseup={handleMouseUp}
+            onMouseDown={handleMouseDown}
           >
             <Layer>
               {images.map((img, i) => {
@@ -89,6 +124,7 @@ const KonvaCanvas = () => {
                     shapeProps={img}
                     checkDeselect={checkDeselect}
                     selectedId={selectedId}
+                    OnDragStart={shapeInUse === true}
                     selectShape={selectShape}
                     isSelected={img.id === selectedId}
                     onChange={(newAttrs) => {
@@ -123,6 +159,21 @@ const KonvaCanvas = () => {
                 );
               })}
             </Layer>
+            <Layer>
+          {lines.map((line, i) => (
+            <Line
+              key={i}
+              points={line.points}
+              stroke="black"
+              strokeWidth={strokeSlide}
+              tension={0.5}
+              lineCap="round"
+              lineJoin="round"
+              globalCompositeOperation={
+                line.tool === 'eraser' ? 'destination-out' : 'source-over'}
+            />
+          ))}
+        </Layer>
           </Stage>
         </div>
         <div className="iconBarContainer">
@@ -131,6 +182,29 @@ const KonvaCanvas = () => {
             setTextAnnotations={setTextAnnotations}
             percentWidth={percentWidth}
             selectShape={selectShape} />
+        <div>
+        <select
+        value={tool}
+        onChange={(e) => {
+        setTool(e.target.value);
+        }}
+        >
+        <option value="nodraw"></option>
+        <option value="pen">FreeDraw</option>
+        <option value="eraser">Erase</option>
+        
+      </select>
+      <Slider
+  size="small"
+  defaultValue={5}
+  value={strokeSlide}
+  onChange={(e) => {
+    setStroke(e.target.value);
+    }}
+  getaria-label="Small"
+  valueLabelDisplay="auto"
+/>
+          </div>
           <Iconbar
             images={images}
             setImages={setImages}
@@ -141,4 +215,7 @@ const KonvaCanvas = () => {
     );
   }
 
+
+
 export default KonvaCanvas;
+

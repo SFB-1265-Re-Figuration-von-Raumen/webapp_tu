@@ -8,7 +8,6 @@ import CustomThemeProvider from './themes/CustomThemeProvider'
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <CustomThemeProvider>
-      {/* <CssBaseline /> */}
       <App />
     </CustomThemeProvider>
   </React.StrictMode>

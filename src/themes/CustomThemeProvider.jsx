@@ -8,8 +8,7 @@ export const CustomThemeContext = createContext({
     setTheme: null,
 });
 
-const CustomThemeProvider = (props) => {
-    const { children } = props;
+const CustomThemeProvider = ({ children }) => {
 
     // read local storage for theme
     const currentTheme = localStorage.getItem("theme") || "regular";

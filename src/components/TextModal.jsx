@@ -83,7 +83,6 @@ const TextModal = ({
           selectShape(id);
         }}
 
-
         // lineCap={"butt"}
         // lineJoin={"bevel"}
         strokeEnabled={true}
@@ -96,9 +95,7 @@ const TextModal = ({
         y={y}
         borderStroke={"black"}
         fontSize={20}
-
         fontFamily={theme.typography.fontFamily}
-
         height={undefined}
 
         onDragStart={handleDragStart}
@@ -117,7 +114,8 @@ const TextModal = ({
               // width: Math.max(5, node.width() * scaleX),
               // height: Math.max(node.height() * scaleY),
             });
-            //   // we will reset it back
+
+            // we will reset it back
             node.scaleX(1);
             node.scaleY(1);
             onChange({

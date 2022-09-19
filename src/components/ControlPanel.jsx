@@ -10,7 +10,6 @@ import {
   Grid,
 } from "@mui/material";
 
-
 const ControlPanel = ({
   textAnnotations,
   setTextAnnotations,
@@ -18,6 +17,8 @@ const ControlPanel = ({
   selectShape,
   deleteMode,
   setDeleteMode,
+  freeDraw,
+  setFreeDraw,
 }) => {
   const [open, setOpen] = useState(false);
   const [textInput, setTextInput] = useState("");
@@ -77,7 +78,14 @@ const ControlPanel = ({
         >
           {/* Z:\dev\gh\webapp_tu\public\svg\ux_icon_free-draw-mode.svg */}
 
-          <Button>
+          <Button
+            onClick={() => {
+              freeDraw ? setFreeDraw(false) : setFreeDraw(true);
+            }}
+            style={{
+              backgroundColor: `${freeDraw ? "pink" : "transparent"}`,
+            }}
+          >
             <img
               src="../public/svg/ux_icon_free-draw-mode.svg"
               alt="Free Draw Mode"
@@ -114,9 +122,7 @@ const ControlPanel = ({
               deleteMode ? setDeleteMode(false) : setDeleteMode(true)
             }
             style={{
-              backgroundColor: `${
-                deleteMode ? 'pink' : 'transparent'
-              }`,
+              backgroundColor: `${deleteMode ? "pink" : "transparent"}`,
             }}
           >
             <img
@@ -179,9 +185,7 @@ const ControlPanel = ({
           borderRight: "1px solid",
           borderColor: "primary.main",
         }}
-      >
-
-      </Grid>
+      ></Grid>
 
       {/* <br /> */}
 

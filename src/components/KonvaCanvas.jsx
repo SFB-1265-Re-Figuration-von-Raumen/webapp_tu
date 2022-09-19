@@ -14,7 +14,7 @@ import { Box, Button, Slider, useTheme } from "@mui/material";
 //  to update its x and y in images state.
 
 const KonvaCanvas = () => {
-  const theme = useTheme()
+  const theme = useTheme();
   const stageRef = useRef();
 
   const percentWidth = (window.innerWidth / 100) * 65;
@@ -22,9 +22,8 @@ const KonvaCanvas = () => {
   const [textAnnotations, setTextAnnotations] = useState([{}]);
   const [isEditing, setIsEditing] = useState(false);
   const [deleteMode, setDeleteMode] = useState(false);
-  const [lastDist, setLastDist] = useState(0);
-  const [lastCenter, setLastCenter] = useState(null);
   const [selectedId, selectShape] = useState(null);
+  const [freeDraw, setFreeDraw] = useState(false);
 
   //ZOOM STUFF
   const [stageScale, setStageScale] = useState({
@@ -83,20 +82,21 @@ const KonvaCanvas = () => {
   };
 
   const handleMouseMove = (e) => {
-    checkDeselect();
     // no drawing - skipping
-    if (!isDrawing.current) {
-      return;
-    }
-    const stage = e.target.getStage();
-    const point = stage.getPointerPosition();
-    let lastLine = lines[lines.length - 1];
-    // add point
-    lastLine.points = lastLine.points.concat([point.x, point.y]);
+    if (freeDraw) {
+      if (!isDrawing.current) {
+        return;
+      }
+      const stage = e.target.getStage();
+      const point = stage.getPointerPosition();
+      let lastLine = lines[lines.length - 1];
+      // add point
+      lastLine.points = lastLine.points.concat([point.x, point.y]);
 
-    // replace last
-    lines.splice(lines.length - 1, 1, lastLine);
-    setLines(lines.concat());
+      // replace last
+      lines.splice(lines.length - 1, 1, lastLine);
+      setLines(lines.concat());
+    }
   };
 
   const handleMouseUp = () => {
@@ -118,8 +118,8 @@ const KonvaCanvas = () => {
     });
   };
 
-  console.log(lines);
-  
+  console.log(freeDraw);
+
   return (
     <>
       <div className="konvaContainer">
@@ -133,8 +133,9 @@ const KonvaCanvas = () => {
           height={window.innerHeight}
           ref={stageRef}
           onClick={checkDeselect}
+          onMousemove={handleMouseMove}
+          onMouseup={handleMouseUp}
           onMouseDown={handleMouseDown}
-          onTouchStart={handleMouseDown}
         >
           <Layer>
             {images.map((img, i) => {
@@ -200,10 +201,16 @@ const KonvaCanvas = () => {
                 key={i}
                 points={line.points}
                 stroke="black"
+                draggable="true"
                 strokeWidth={strokeSlide}
                 tension={0.5}
                 lineCap="round"
                 lineJoin="round"
+                onClick={() => {
+                  if (deleteMode) {
+                    lines.splice(line, 1);
+                  }
+                }}
                 globalCompositeOperation={
                   line.tool === "eraser" ? "destination-out" : "source-over"
                 }
@@ -213,7 +220,13 @@ const KonvaCanvas = () => {
         </Stage>
         <div
           className="zommContainer"
-          style={{ position: "absolute", bottom: "2rem", left: "1rem", gap: ".5rem", display: "flex" }}
+          style={{
+            position: "absolute",
+            bottom: "2rem",
+            left: "1rem",
+            gap: ".5rem",
+            display: "flex",
+          }}
         >
           <Button variant="outlined" onClick={handleZoomIn}>
             <img src="../public/svg/plus.svg" alt="plus zoom" />
@@ -242,6 +255,8 @@ const KonvaCanvas = () => {
             selectShape={selectShape}
             deleteMode={deleteMode}
             setDeleteMode={setDeleteMode}
+            freeDraw={freeDraw}
+            setFreeDraw={setFreeDraw}
           />
           <div>
             <select

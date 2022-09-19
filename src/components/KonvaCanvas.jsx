@@ -1,16 +1,17 @@
 import React, { useState, useRef } from "react";
-import { Stage, Layer, Line } from "react-konva";
+import { Stage, Layer } from "react-konva";
 import URLImage from "./URLImage";
 import Iconbar from "./Iconbar";
 import ControlPanel from "./ControlPanel";
 import TextModal from "./TextModal";
-import { Box, Button } from "@mui/material";
+import { Box, Button, useTheme } from "@mui/material";
 
 //  at the moment we need to find a way to position the image
 //  id in state when added. when we move an image, we want
 //  to update its x and y in images state.
 
 const KonvaCanvas = () => {
+  const theme = useTheme()
   const stageRef = useRef();
   const [stageScale, setStageScale] = useState({
     scale: 1,
@@ -91,6 +92,7 @@ const KonvaCanvas = () => {
             {images.map((img, i) => {
               return (
                 <URLImage
+                  theme={theme}
                   image={img.icon}
                   key={i}
                   id={img.id}
@@ -114,6 +116,7 @@ const KonvaCanvas = () => {
             {textAnnotations.map((annotation, i) => {
               return (
                 <TextModal
+                  theme={theme}
                   text={annotation.text}
                   key={i}
                   id={annotation.id}
@@ -138,7 +141,7 @@ const KonvaCanvas = () => {
         </Stage>
         <div
           className="zommContainer"
-          style={{ position: "absolute", bottom: "2rem", left: "1rem" }}
+          style={{ position: "absolute", bottom: "2rem", left: "1rem", gap: ".5rem", display: "flex" }}
         >
           <Button variant="outlined" onClick={handleZoomIn}>
             <img src="../public/svg/plus.svg" alt="plus zoom" />
@@ -167,6 +170,7 @@ const KonvaCanvas = () => {
             selectShape={selectShape}
           />
           <Iconbar
+            theme={theme}
             images={images}
             setImages={setImages}
             addImages={addImages}

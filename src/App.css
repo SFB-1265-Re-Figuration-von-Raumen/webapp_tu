@@ -51,7 +51,7 @@ body {
 
 .icon {
   background-color: rgb(243, 238, 238);
-  border: 1px solid #7dd1a4;
+  /* border: 1px solid #7dd1a4; */
   border-radius: 20px;
   /* flex-shrink: 0; */
   cursor: pointer;

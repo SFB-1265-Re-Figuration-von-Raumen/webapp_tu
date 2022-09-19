@@ -21,8 +21,6 @@ const CustomThemeProvider = (props) => {
     const theme = getTheme(themeName);
 
     // wrap _setThemeName to store new theme names in local storage
-    // explain _setThemeName to me please
-
 
     const setThemeName = (name) => {
         localStorage.setItem("theme", name);

@@ -1,7 +1,6 @@
 import Konva from "konva";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import { Transformer, Text } from "react-konva";
-import theme from "../Themes";
 
 const TextModal = ({
   selectShape,
@@ -12,6 +11,7 @@ const TextModal = ({
   onChange,
   textAnnotations,
   setTextAnnotations,
+  theme,
   id,
   x,
   y,
@@ -82,7 +82,8 @@ const TextModal = ({
         onSelect={() => {
           selectShape(id);
         }}
-        fill={theme.palette.primary.main}
+
+
         // lineCap={"butt"}
         // lineJoin={"bevel"}
         strokeEnabled={true}
@@ -95,8 +96,11 @@ const TextModal = ({
         y={y}
         borderStroke={"black"}
         fontSize={20}
+
         fontFamily={theme.typography.fontFamily}
+
         height={undefined}
+
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
         onTransform={

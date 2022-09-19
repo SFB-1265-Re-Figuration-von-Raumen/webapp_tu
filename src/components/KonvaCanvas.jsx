@@ -118,7 +118,8 @@ const KonvaCanvas = () => {
     });
   };
 
-  console.log(freeDraw);
+  // console.log(images);
+  // console.log(textAnnotations);
 
   return (
     <>
@@ -257,6 +258,8 @@ const KonvaCanvas = () => {
             setDeleteMode={setDeleteMode}
             freeDraw={freeDraw}
             setFreeDraw={setFreeDraw}
+            isEditing={isEditing}
+            setIsEditing={setIsEditing}
           />
           {freeDraw && <div>
             <select
@@ -265,7 +268,6 @@ const KonvaCanvas = () => {
                 setTool(e.target.value);
               }}
             >
-              <option value="nodraw"></option>
               <option value="pen">FreeDraw</option>
               <option value="eraser">Erase</option>
             </select>
@@ -278,6 +280,7 @@ const KonvaCanvas = () => {
               }}
               getaria-label="Small"
               valueLabelDisplay="auto"
+              min={1}
             />
           </div>}
 

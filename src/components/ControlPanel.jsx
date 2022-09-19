@@ -19,6 +19,8 @@ const ControlPanel = ({
   setDeleteMode,
   freeDraw,
   setFreeDraw,
+  isEditing,
+  setIsEditing,
 }) => {
   const [open, setOpen] = useState(false);
   const [textInput, setTextInput] = useState("");
@@ -137,7 +139,10 @@ const ControlPanel = ({
           xs={2}
           sx={{ borderRight: "1px solid", borderColor: "primary.main" }}
         >
-          <Button onClick={handleOpen}>
+          <Button
+            onClick={handleOpen}
+            style={{ backgroundColor: `${isEditing ? "pink" : "transparent"}` }}
+          >
             <img
               src="../public/svg/ux_icon_text-annotation.svg"
               alt="Text Annotation"

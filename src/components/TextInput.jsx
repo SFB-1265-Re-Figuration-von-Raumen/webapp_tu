@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Html } from "react-konva-utils";
 
 
@@ -16,6 +16,11 @@ const TextInput = ({
   text,
   theme
 }) => {
+
+    useEffect(() => {
+     
+    }, [x, y]);
+    
   const [input, setInput] = useState(text);
   const RETURN_KEY = 13;
   const ESCAPE_KEY = 27;

@@ -4,6 +4,7 @@ import { Transformer, Text } from "react-konva";
 import TextInput from "./TextInput";
 
 const TextModal = ({
+  theme,
   selectShape,
   selectedId,
   shapeProps,
@@ -13,14 +14,13 @@ const TextModal = ({
   textAnnotations,
   setTextAnnotations,
   text,
-  theme,
   id,
   x,
   y,
   arrayPos,
   isEditing,
   setIsEditing,
-  deleteMode
+  deleteMode,
 }) => {
   const shapeRef = useRef();
   const trRef = useRef();
@@ -40,7 +40,11 @@ const TextModal = ({
   }, [isSelected, isEditing]);
 
   function savePosition(pos, x, y) {
+    console.log(`arrayPos is ${pos}, x is ${x}, y is ${y}`);
+
     const newText = textAnnotations[pos];
+    console.log(newText);
+
     newText.x = x;
     newText.y = y;
     const updatedTexts = Object.keys(textAnnotations).map((key, i) => {
@@ -50,6 +54,7 @@ const TextModal = ({
       return textAnnotations[key];
     });
     setTextAnnotations(updatedTexts);
+    console.log(textAnnotations);
   }
 
   const handleDragStart = (e) => {
@@ -131,8 +136,8 @@ const TextModal = ({
         fontSize={20}
         fontFamily={theme.typography.fontFamily}
         height={undefined}
-        onDragStart={() => handleDragStart}
-        onDragEnd={() => handleDragEnd}
+        onDragStart={handleDragStart}
+        onDragEnd={handleDragEnd}
         onDblClick={() => {
           setIsEditing(true);
         }}

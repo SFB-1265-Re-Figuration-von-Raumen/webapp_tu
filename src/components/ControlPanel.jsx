@@ -1,16 +1,13 @@
 import React, { useState } from "react";
 import {
-  Card,
   Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
-  DialogTitle,
   TextField,
   Button,
   Box,
   Grid,
-  Paper,
 } from "@mui/material";
 
 const ControlPanel = ({
@@ -170,7 +167,9 @@ const ControlPanel = ({
           borderRight: "1px solid",
           borderColor: "primary.main",
         }}
-      ></Grid>
+      >
+
+      </Grid>
 
       {/* <br /> */}
 

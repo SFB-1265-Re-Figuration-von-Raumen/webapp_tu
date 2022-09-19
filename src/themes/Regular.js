@@ -1,8 +1,7 @@
 import { createTheme } from "@mui/material";
-import { orange, red } from "@mui/material/colors";
-import "./Fonts.css"
+import "../Fonts.css"
 
-export const theme = createTheme({
+const theme = createTheme({
     palette: {
         primary: {
             main: "#7dd1a4",
@@ -15,7 +14,6 @@ export const theme = createTheme({
         fontFamily: [
             "Poppins",
             "Arial"
-            // "Space Mono",
         ].join(","),
     },
 });

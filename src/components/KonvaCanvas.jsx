@@ -80,7 +80,7 @@ const KonvaCanvas = () => {
     const pos = e.target.getStage().getPointerPosition();
     setLines([...lines, { tool, points: [pos.x, pos.y] }]);
   };
-
+  const [lineColor, setLineColor] = useState("#000000");
   const handleMouseMove = (e) => {
     // no drawing - skipping
     if (freeDraw) {
@@ -92,7 +92,8 @@ const KonvaCanvas = () => {
       let lastLine = lines[lines.length - 1];
       // add point
       lastLine.points = lastLine.points.concat([point.x, point.y]);
-      lastLine.strokeWidth=strokeSlide
+      lastLine.strokeWidth = strokeSlide;
+      lastLine.color = lineColor;
 
       // replace last
       lines.splice(lines.length - 1, 1, lastLine);
@@ -202,7 +203,7 @@ const KonvaCanvas = () => {
               <Line
                 key={i}
                 points={line.points}
-                stroke="black"
+                stroke={line.color}
                 draggable="true"
                 strokeWidth={line.strokeWidth}
                 tension={0.5}
@@ -266,8 +267,12 @@ const KonvaCanvas = () => {
             <FreeDrawControls
               strokeSlide={strokeSlide}
               tool={tool}
+              setTool={setTool}
               theme={theme}
               setStroke={setStroke}
+              lineColor={lineColor}
+              setLineColor={setLineColor}
+
             />
           )}
 

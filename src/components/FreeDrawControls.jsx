@@ -1,19 +1,32 @@
-import React from "react";
-import { Slider } from "@mui/material";
+import React, { useState } from "react";
+import { Slider, Select, MenuItem } from "@mui/material";
 import { Box } from "@mui/system";
-const FreeDrawControls = ({ theme, strokeSlide, setStroke, tool }) => {
+import { MuiColorInput } from "mui-color-input";
+const FreeDrawControls = ({
+  theme,
+  strokeSlide,
+  setStroke,
+  tool,
+  setTool,
+  lineColor,
+  setLineColor,
+}) => {
   return (
     <Box borderTop={`1px solid ${theme.palette.primary.main}`}>
-      <Box mx={2} my={1}>
-        <select
+      <Box mx={2} my={1} >
+        <Select
           value={tool}
           onChange={(e) => {
             setTool(e.target.value);
           }}
         >
-          <option value="pen">FreeDraw</option>
-          <option value="eraser">Erase</option>
-        </select>
+          <MenuItem value="pen">FreeDraw</MenuItem>
+          <MenuItem value="eraser">Erase</MenuItem>
+        </Select>
+        <MuiColorInput
+          value={lineColor}
+          onChange={(color) => setLineColor(color)}
+        />
         <Slider
           size="small"
           defaultValue={5}

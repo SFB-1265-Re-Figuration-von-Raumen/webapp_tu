@@ -6,8 +6,8 @@ import URLImage from "./URLImage";
 import Iconbar from "./Iconbar";
 import ControlPanel from "./ControlPanel";
 import TextModal from "./TextModal";
-
-import { Box, Button, Slider, useTheme } from "@mui/material";
+import FreeDrawControls from "./FreeDrawControls";
+import { Box, Button, useTheme } from "@mui/material";
 
 //  at the moment we need to find a way to position the image
 //  id in state when added. when we move an image, we want
@@ -72,7 +72,7 @@ const KonvaCanvas = () => {
   // PENTOOL ##############################
 
   const [tool, setTool] = useState("pen");
-  const [lines, setLines] = useState([]);
+  const [lines, setLines] = useState([{}]);
   const isDrawing = useRef(false);
   const [strokeSlide, setStroke] = useState(5); //experimental
   const handleMouseDown = (e) => {
@@ -92,6 +92,7 @@ const KonvaCanvas = () => {
       let lastLine = lines[lines.length - 1];
       // add point
       lastLine.points = lastLine.points.concat([point.x, point.y]);
+      lastLine.strokeWidth=strokeSlide
 
       // replace last
       lines.splice(lines.length - 1, 1, lastLine);
@@ -203,7 +204,7 @@ const KonvaCanvas = () => {
                 points={line.points}
                 stroke="black"
                 draggable="true"
-                strokeWidth={strokeSlide}
+                strokeWidth={line.strokeWidth}
                 tension={0.5}
                 lineCap="round"
                 lineJoin="round"
@@ -261,28 +262,14 @@ const KonvaCanvas = () => {
             isEditing={isEditing}
             setIsEditing={setIsEditing}
           />
-          {freeDraw && <div>
-            <select
-              value={tool}
-              onChange={(e) => {
-                setTool(e.target.value);
-              }}
-            >
-              <option value="pen">FreeDraw</option>
-              <option value="eraser">Erase</option>
-            </select>
-            <Slider
-              size="small"
-              defaultValue={5}
-              value={strokeSlide}
-              onChange={(e) => {
-                setStroke(e.target.value);
-              }}
-              getaria-label="Small"
-              valueLabelDisplay="auto"
-              min={1}
+          {freeDraw && (
+            <FreeDrawControls
+              strokeSlide={strokeSlide}
+              tool={tool}
+              theme={theme}
+              setStroke={setStroke}
             />
-          </div>}
+          )}
 
           <Iconbar
             theme={theme}

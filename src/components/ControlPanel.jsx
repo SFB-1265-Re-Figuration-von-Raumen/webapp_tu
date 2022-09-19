@@ -191,10 +191,6 @@ const ControlPanel = ({
           borderColor: "primary.main",
         }}
       ></Grid>
-
-      {/* <br /> */}
-
-      {/* </Card> */}
     </Box>
   );
 };

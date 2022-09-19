@@ -1,6 +1,8 @@
 import Konva from "konva";
 import React, { useState, useRef, useEffect } from "react";
 import { Transformer, Text } from "react-konva";
+import TextInput from "./TextInput";
+import theme from "../Themes";
 
 const TextModal = ({
   selectShape,
@@ -11,9 +13,14 @@ const TextModal = ({
   onChange,
   textAnnotations,
   setTextAnnotations,
+  text,
   id,
   x,
   y,
+  arrayPos,
+  isEditing,
+  setIsEditing,
+  deleteMode
 }) => {
   const shapeRef = useRef();
   const trRef = useRef();
@@ -23,7 +30,14 @@ const TextModal = ({
       trRef.current.nodes([shapeRef.current]);
       trRef.current.getLayer().batchDraw();
     }
-  }, [isSelected]);
+    if (isEditing) {
+      const cursorInput = document.getElementById("editInput");
+      console.log(cursorInput);
+      const end = cursorInput.value.length;
+      cursorInput.setSelectionRange(end, end);
+      cursorInput.focus();
+    }
+  }, [isSelected, isEditing]);
 
   function savePosition(pos, x, y) {
     const newText = textAnnotations[pos];
@@ -68,22 +82,42 @@ const TextModal = ({
 
     savePosition(e.target.attrs.arrayPos, e.target.attrs.x, e.target.attrs.y);
   };
+
   return (
     <>
+      {isEditing && (
+        <TextInput
+          x={x}
+          y={y}
+          text={text}
+          textAnnotations={textAnnotations}
+          setTextAnnotations={setTextAnnotations}
+          isEditing={isEditing}
+          setIsEditing={setIsEditing}
+          id={id}
+          arrayPos={arrayPos}
+          width={shapeProps.scaleX}
+          height={shapeProps.scaleY}
+          placeholder={text}
+        />
+      )}
       <Text
         ref={shapeRef}
         {...shapeProps}
-        arrayPos={id}
+        arrayPos={arrayPos}
         isSelected={id === selectedId}
         onClick={() => {
+          if (deleteMode) {
+            textAnnotations.splice(arrayPos, 1);
+          }
           selectShape(id);
         }}
         onSelect={() => {
           selectShape(id);
         }}
-        fill={"green"}
-        lineCap={"butt"}
-        lineJoin={"bevel"}
+        fill={isEditing ? "transparent" : theme.palette.primary.main}
+        // lineCap={"butt"}
+        // lineJoin={"bevel"}
         strokeEnabled={true}
         wrap={"word"}
         // onClick={id ? isSelected = id : isSelected = null}
@@ -94,9 +128,16 @@ const TextModal = ({
         y={y}
         borderStroke={"black"}
         fontSize={20}
+        fontFamily={theme.typography.fontFamily}
         height={undefined}
-        onDragStart={handleDragStart}
-        onDragEnd={handleDragEnd}
+        onDragStart={() => handleDragStart}
+        onDragEnd={() => handleDragEnd}
+        onDblClick={() => {
+          setIsEditing(true);
+        }}
+        onDblTap={() => {
+          setIsEditing(true);
+        }}
         onTransform={
           () => {
             const node = shapeRef.current;
@@ -166,9 +207,11 @@ const TextModal = ({
         <Transformer
           ref={trRef}
           padding={5}
-          anchorCornerRadius={5}
+          anchorCornerRadius={50}
           enabledAnchors={["middle-left", "middle-right"]}
-          //   borderStroke={"black"}
+          borderStroke={theme.palette.primary.main}
+          anchorStroke={theme.palette.primary.main}
+          anchorSize={15}
           boundBoxFunc={(oldBox, newBox) => {
             // limit resize
             if (newBox.width < 20) {

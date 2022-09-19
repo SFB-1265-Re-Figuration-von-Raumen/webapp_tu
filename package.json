@@ -11,6 +11,7 @@
   "dependencies": {
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
+    "@mui/icons-material": "^5.10.3",
     "@mui/material": "^5.9.3",
     "babel-plugin-macros": "^3.1.0",
     "konva": "^8.3.10",
@@ -19,6 +20,7 @@
     "react-dom": "^18.2.0",
     "react-indiana-drag-scroll": "^2.2.0",
     "react-konva": "^18.2.1",
+    "react-konva-utils": "^0.3.0",
     "use-image": "^1.0.12"
   },
   "devDependencies": {

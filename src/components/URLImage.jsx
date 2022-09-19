@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import { Image, Transformer } from "react-konva";
 import useImage from "use-image";
+import theme from "../Themes";
 
 const URLImage = ({
   selectShape,
@@ -15,6 +16,8 @@ const URLImage = ({
   id,
   x,
   y,
+  arrayPos,
+  deleteMode
 }) => {
   const shapeRef = useRef();
   const trRef = useRef();
@@ -30,9 +33,9 @@ const URLImage = ({
     // console.log(`arrayPos is ${pos}, x is ${x}, y is ${y}`);
 
     const newImage = images[pos];
+    // console.log(newImage);
     newImage.x = x;
     newImage.y = y;
-    // console.log(newImage);
     const updatedImages = Object.keys(images).map((key, i) => {
       if (key === pos) {
         return newImage;
@@ -77,17 +80,20 @@ const URLImage = ({
   };
 
   const [img] = useImage(image);
-  // console.log(isSelected);
+
   return (
     <>
       <Image
         ref={shapeRef}
         {...shapeProps}
-        arrayPos={id}
+        arrayPos={arrayPos}
         image={img}
         draggable="true"
         isSelected={id === selectedId}
         onClick={() => {
+          if (deleteMode) {
+            images.splice(arrayPos, 1);
+          }
           selectShape(id);
         }}
         onSelect={() => {
@@ -128,14 +134,16 @@ const URLImage = ({
       {isSelected && (
         <Transformer
           ref={trRef}
-          anchorCornerRadius={5}
+          anchorCornerRadius={50}
           enabledAnchors={[
             "top-left",
             "top-right",
             "bottom-left",
             "bottom-right",
           ]}
-          borderStroke={"black"}
+          borderStroke={theme.palette.primary.main}
+          anchorStroke={theme.palette.primary.main}
+          anchorSize={15}
           boundBoxFunc={(oldBox, newBox) => {
             // limit resize
             if (newBox.width < 5 || newBox.height < 5) {

@@ -76,7 +76,6 @@ const KonvaCanvas = () => {
   const isDrawing = useRef(false);
   const [strokeSlide, setStroke] = useState(5); //experimental
   const handleMouseDown = (e) => {
-    checkDeselect();
     isDrawing.current = true;
     const pos = e.target.getStage().getPointerPosition();
     setLines([...lines, { tool, points: [pos.x, pos.y] }]);
@@ -132,8 +131,9 @@ const KonvaCanvas = () => {
           width={percentWidth}
           height={window.innerHeight}
           ref={stageRef}
-          onMouseDown={() => handleMouseDown}
-          onTouchStart={() => handleMouseDown}
+          onClick={checkDeselect}
+          onMouseDown={handleMouseDown}
+          onTouchStart={handleMouseDown}
         >
           <Layer>
             {images.map((img, i) => {

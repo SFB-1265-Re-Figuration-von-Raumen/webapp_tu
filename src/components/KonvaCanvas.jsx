@@ -258,7 +258,7 @@ const KonvaCanvas = () => {
             freeDraw={freeDraw}
             setFreeDraw={setFreeDraw}
           />
-          <div>
+          {freeDraw && <div>
             <select
               value={tool}
               onChange={(e) => {
@@ -279,7 +279,7 @@ const KonvaCanvas = () => {
               getaria-label="Small"
               valueLabelDisplay="auto"
             />
-          </div>
+          </div>}
 
           <Iconbar
             theme={theme}

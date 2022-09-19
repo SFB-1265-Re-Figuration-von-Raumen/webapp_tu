@@ -23,7 +23,7 @@ function getSvgUrl(name) {
   return new URL(`../svg/${name}`, import.meta.url).href;
 }
 
-const Iconbar = ({ images, addImages, percentWidth }) => {
+const Iconbar = ({ images, addImages, percentWidth, theme }) => {
   const defaultPos = {
     x: percentWidth / 2,
     y: window.innerHeight / 2,
@@ -87,6 +87,9 @@ const Iconbar = ({ images, addImages, percentWidth }) => {
                         src={getSvgUrl(key)}
                         alt={key}
                         className="icon"
+                        style={{
+                          border: `1px solid ${theme.palette.secondary.main}`,
+                        }}
                         onClick={() => {
                           addImages({
                             // id: images.at(-1).id + 1,

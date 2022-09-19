@@ -1,9 +1,9 @@
 import React, { useRef, useEffect } from "react";
 import { Image, Transformer } from "react-konva";
 import useImage from "use-image";
-import theme from "../Themes";
 
 const URLImage = ({
+  theme,
   selectShape,
   selectedId,
   shapeProps,
@@ -51,20 +51,20 @@ const URLImage = ({
     isSelected
       ? null
       : e.target.setAttrs({
-          scaleX: 1.1,
-          scaleY: 1.1,
-        });
+        scaleX: 1.1,
+        scaleY: 1.1,
+      });
   };
 
   const handleDragEnd = (e) => {
     isSelected
       ? null
       : e.target.to({
-          duration: 0.2,
-          easing: Konva.Easings.EaseInOut,
-          scaleX: 1,
-          scaleY: 1,
-        });
+        duration: 0.2,
+        easing: Konva.Easings.EaseInOut,
+        scaleX: 1,
+        scaleY: 1,
+      });
     onChange({
       ...shapeProps,
       x: e.target.x(),

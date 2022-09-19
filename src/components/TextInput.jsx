@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Html } from "react-konva-utils";
-import theme from "../Themes";
+
 
 const TextInput = ({
   x,
@@ -14,6 +14,7 @@ const TextInput = ({
   width,
   height,
   text,
+  theme
 }) => {
   const [input, setInput] = useState(text);
   const RETURN_KEY = 13;

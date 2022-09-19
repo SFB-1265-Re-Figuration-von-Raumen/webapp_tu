@@ -1,8 +1,7 @@
 import Konva from "konva";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import { Transformer, Text } from "react-konva";
 import TextInput from "./TextInput";
-import theme from "../Themes";
 
 const TextModal = ({
   selectShape,
@@ -14,6 +13,7 @@ const TextModal = ({
   textAnnotations,
   setTextAnnotations,
   text,
+  theme,
   id,
   x,
   y,
@@ -99,6 +99,7 @@ const TextModal = ({
           width={shapeProps.scaleX}
           height={shapeProps.scaleY}
           placeholder={text}
+          theme={theme}
         />
       )}
       <Text
@@ -152,7 +153,8 @@ const TextModal = ({
               // width: Math.max(5, node.width() * scaleX),
               // height: Math.max(node.height() * scaleY),
             });
-            //   // we will reset it back
+
+            // we will reset it back
             node.scaleX(1);
             node.scaleY(1);
             onChange({

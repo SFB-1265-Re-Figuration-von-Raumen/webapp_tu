@@ -1,14 +1,12 @@
-import { ThemeProvider } from "@mui/material";
 import "./App.css";
 import KonvaCanvas from "./components/KonvaCanvas";
-import theme from "./Themes";
+import ThemeSelector from "./components/ThemeSelector";
 
 function App() {
   return (
     <div className="appContainer">
-      <ThemeProvider theme={theme}>
-        <KonvaCanvas />
-      </ThemeProvider>
+      <ThemeSelector />
+      <KonvaCanvas />
     </div>
   );
 }

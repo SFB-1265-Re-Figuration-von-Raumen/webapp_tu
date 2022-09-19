@@ -15,6 +15,9 @@ const KonvaCanvas = () => {
   const percentWidth = (window.innerWidth / 100) * 65;
   const [images, setImages] = useState([{ id: 0, icon: "", x: 300, y: 300 }]);
   const [selectedId, selectShape] =  useState(null);
+  const [lastDist, setLastDist] = useState(0);
+  const [lastCenter, setLastCenter] = useState(null);
+  const [selectedId, selectShape] = useState(null);
   const [textAnnotations, setTextAnnotations] = useState([
     { id: 0, text: "", x: 300, y: 300 },
   ]);
@@ -69,6 +72,7 @@ const KonvaCanvas = () => {
       };
 
       const handleMouseMove = (e) => {
+        checkDeselect()
         // no drawing - skipping
         if (!isDrawing.current) {
           return;
@@ -92,14 +96,12 @@ const KonvaCanvas = () => {
     };
     return (
 
-      
       <>
         <div className="konvaContainer">
           <Stage
             width={percentWidth}
             height={window.innerHeight}
             ref={stageRef}
-            //onMouseDown={checkDeselect} -- Temporary disabled
             onTouchStart={checkDeselect}
             onWheel={handleWheel}
             scaleX={stage.scale}

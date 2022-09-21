@@ -81,10 +81,6 @@ const URLImage = ({
     savePosition(e.target.attrs.arrayPos, e.target.attrs.x, e.target.attrs.y);
   };
 
-  // function cleanUp () => {
-  //   // console.log("cleaning up");
-  //   setFreeDraw(false);
-  // }
 
   const [img] = useImage(image);
   return (

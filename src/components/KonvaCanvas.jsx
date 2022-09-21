@@ -128,14 +128,6 @@ const KonvaCanvas = () => {
 
   // console.log(images);
   // console.log(textAnnotations);
-  // const stageStyle = {
-  //   backgroundColor: "#e5e5f7",
-  //   opacity: 0.8,
-  //   backgroundImage: "radial-gradient(#444cf7 1.1px, #e5e5f7 1.1px)",
-  //   backgroundSize: "22px 22px",
-  //   backgroundPosition:
-  //     this.state.stageOffset.x + "px " + this.state.stageOffset.y + "px"
-  // }
 
   return (
     <>
@@ -153,7 +145,6 @@ const KonvaCanvas = () => {
           onMousemove={handleMouseMove}
           onMouseup={handleMouseUp}
           onMouseDown={handleMouseDown}
-        // style={stageStyle}
         >
           <Layer ref={layeRef}>
             {images.map((img, i) => {
@@ -182,6 +173,8 @@ const KonvaCanvas = () => {
                   setDeleteMode={setDeleteMode}
                   freeDraw={freeDraw}
                   setFreeDraw={setFreeDraw}
+                  lines={lines}
+                  setLines={setLines}
                 />
               );
             })}
@@ -221,7 +214,6 @@ const KonvaCanvas = () => {
                 key={i}
                 points={line.points}
                 stroke={line.color}
-                // draggable={true}
                 draggable={freeDraw ? false : true}
                 strokeWidth={line.strokeWidth}
                 tension={0.5}

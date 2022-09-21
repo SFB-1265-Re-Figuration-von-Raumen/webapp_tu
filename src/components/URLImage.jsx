@@ -19,7 +19,9 @@ const URLImage = ({
   arrayPos,
   deleteMode,
   freeDraw,
-  setFreeDraw
+  setFreeDraw,
+  lines,
+  setLines
 }) => {
   const shapeRef = useRef();
   const trRef = useRef();
@@ -49,7 +51,24 @@ const URLImage = ({
     // console.log(images);
   }
 
+  const checkDeletePoint = () => {
+    if (freeDraw === true) {
+      console.log(lines)
+      lines.splice(lines.length - 1, 1);
+      console.log(lines);
+    }
+    setFreeDraw(false);
+  }
+
+  // if (isSelected) {
+  // check if freeDraw is true
+  //   checkDeletePoint();
+  // setFreeDraw(false);
+  // }
+
+
   const handleDragStart = (e) => {
+    checkDeletePoint();
     isSelected
       ? null
       : e.target.setAttrs({
@@ -81,8 +100,8 @@ const URLImage = ({
     savePosition(e.target.attrs.arrayPos, e.target.attrs.x, e.target.attrs.y);
   };
 
-
   const [img] = useImage(image);
+
   return (
     <>
       <Image
@@ -90,12 +109,7 @@ const URLImage = ({
         {...shapeProps}
         arrayPos={arrayPos}
         image={img}
-        draggable="true"
         isSelected={id === selectedId}
-
-        // onDragStart={() => setFreeDraw(false)}
-        // we need to find a way to set freeDraw to false when drag starts
-
         onClick={() => {
           // we switch off free draw mode when we click on an image
           setFreeDraw(false);
@@ -116,6 +130,8 @@ const URLImage = ({
         // offsetX={img ? img.width / 2 : 0}
         // offsetY={img ? img.height / 2 : 0}
         shadowBlur={3}
+        // we need to find a way to set freeDraw to false when drag starts
+        draggable="true"
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
         onTransformEnd={(e) => {

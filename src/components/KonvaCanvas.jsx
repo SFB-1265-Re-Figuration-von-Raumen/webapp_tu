@@ -210,7 +210,8 @@ const KonvaCanvas = () => {
                 key={i}
                 points={line.points}
                 stroke={line.color}
-                draggable="true"
+                // draggable="true"
+                draggable={freeDraw ? false : true}
                 strokeWidth={line.strokeWidth}
                 tension={0.5}
                 lineCap="round"

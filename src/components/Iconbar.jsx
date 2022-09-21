@@ -77,7 +77,6 @@ const Iconbar = ({ images, addImages, percentWidth, theme }) => {
                     <Box
                       sx={{
                         height: "100%",
-                        // borderLeft: "1px solid",
                         width: "auto",
                       }}
                       key={i + 4}

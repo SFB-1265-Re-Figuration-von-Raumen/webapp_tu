@@ -17,7 +17,9 @@ const URLImage = ({
   x,
   y,
   arrayPos,
-  deleteMode
+  deleteMode,
+  freeDraw,
+  setFreeDraw
 }) => {
   const shapeRef = useRef();
   const trRef = useRef();
@@ -79,8 +81,12 @@ const URLImage = ({
     savePosition(e.target.attrs.arrayPos, e.target.attrs.x, e.target.attrs.y);
   };
 
-  const [img] = useImage(image);
+  // function cleanUp () => {
+  //   // console.log("cleaning up");
+  //   setFreeDraw(false);
+  // }
 
+  const [img] = useImage(image);
   return (
     <>
       <Image
@@ -90,7 +96,14 @@ const URLImage = ({
         image={img}
         draggable="true"
         isSelected={id === selectedId}
+
+        // onDragStart={() => setFreeDraw(false)}
+        // we need to find a way to set freeDraw to false when drag starts
+
         onClick={() => {
+          // we switch off free draw mode when we click on an image
+          setFreeDraw(false);
+          console.log("clicked");
           if (deleteMode) {
             images.splice(arrayPos, 1);
           }

@@ -30,14 +30,12 @@ const TextModal = ({
       trRef.current.nodes([shapeRef.current]);
       trRef.current.getLayer().batchDraw();
     }
-    if (isEditing) {
-      const cursorInput = document.getElementById(`editInput${arrayPos}`);
-      const end = cursorInput.value.length;
-      cursorInput.setSelectionRange(end, end);
-      cursorInput.focus();
-    }
   }, [isSelected, isEditing]);
 
+  // console.log(arrayPos);
+
+
+  
   function savePosition(pos, x, y) {
     console.log(`arrayPos is ${pos}, x is ${x}, y is ${y}`);
 
@@ -89,7 +87,7 @@ const TextModal = ({
 
   return (
     <>
-      {isEditing && (
+      {isSelected && isEditing && (
         <TextInput
           x={x}
           y={y}
@@ -120,7 +118,7 @@ const TextModal = ({
         onSelect={() => {
           selectShape(id);
         }}
-        fill={isEditing ? "transparent" : theme.palette.primary.main}
+        fill={isEditing && isSelected ? "transparent" : theme.palette.primary.main}
         // lineCap={"butt"}
         // lineJoin={"bevel"}
         strokeEnabled={true}

@@ -31,13 +31,17 @@ const TextModal = ({
       trRef.current.getLayer().batchDraw();
     }
     if (isEditing) {
-      const cursorInput = document.getElementById(`editInput${arrayPos}`);
+      const cursorInput = document.getElementById(`editInputOf:${id}`);
       const end = cursorInput.value.length;
       cursorInput.setSelectionRange(end, end);
       cursorInput.focus();
     }
   }, [isSelected, isEditing]);
 
+  console.log(arrayPos);
+
+
+  
   function savePosition(pos, x, y) {
     console.log(`arrayPos is ${pos}, x is ${x}, y is ${y}`);
 

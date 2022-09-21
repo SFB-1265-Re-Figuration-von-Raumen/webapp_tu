@@ -39,7 +39,7 @@ const ControlPanel = ({
     setTextAnnotations((current) => [
       ...current,
       {
-        id: `${textInput}${current.indexOf() + 1}`,
+        id: `textAnnotation${textAnnotations.length}`,
         text: textInput,
         x: defaultPos.x,
         y: defaultPos.y,

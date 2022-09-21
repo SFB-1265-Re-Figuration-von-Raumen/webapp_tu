@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# vis-int pdf's & icons
+
+interface-design-v1.pdf
+stylesheet-v1.pdf
+SVG_ux-icons.zip

@@ -6,7 +6,6 @@ const TextInput = ({
   x,
   y,
   id,
-  isEditing,
   setIsEditing,
   textAnnotations,
   setTextAnnotations,
@@ -44,7 +43,7 @@ const TextInput = ({
         onKeyDown={handleEscapeKeys}
         x={x}
         y={y}
-        id={`editInput${arrayPos}`}
+        id={`editInputOf:${id}`}
         value={input}
         style={{
           background: "transparent",

@@ -16,6 +16,8 @@ import { Box, Button, useTheme } from "@mui/material";
 const KonvaCanvas = () => {
   const theme = useTheme();
   const stageRef = useRef();
+  const layeRef = useRef();
+  const Konva = window.Konva;
 
   const percentWidth = (window.innerWidth / 100) * 65;
   const [images, setImages] = useState([{}]);
@@ -76,9 +78,11 @@ const KonvaCanvas = () => {
   const isDrawing = useRef(false);
   const [strokeSlide, setStroke] = useState(5); //experimental
   const handleMouseDown = (e) => {
-    isDrawing.current = true;
-    const pos = e.target.getStage().getPointerPosition();
-    setLines([...lines, { tool, points: [pos.x, pos.y] }]);
+    if (freeDraw) {
+      isDrawing.current = true;
+      const pos = e.target.getStage().getPointerPosition();
+      setLines([...lines, { tool, points: [pos.x, pos.y] }]);
+    }
   };
   const [lineColor, setLineColor] = useState("#000000");
   const handleMouseMove = (e) => {
@@ -102,7 +106,9 @@ const KonvaCanvas = () => {
   };
 
   const handleMouseUp = () => {
-    isDrawing.current = false;
+    if (freeDraw) {
+      isDrawing.current = false;
+    }
   };
 
   const handleZoomIn = () => {
@@ -140,7 +146,7 @@ const KonvaCanvas = () => {
           onMouseup={handleMouseUp}
           onMouseDown={handleMouseDown}
         >
-          <Layer>
+          <Layer ref={layeRef}>
             {images.map((img, i) => {
               return (
                 <URLImage
@@ -272,7 +278,6 @@ const KonvaCanvas = () => {
               setStroke={setStroke}
               lineColor={lineColor}
               setLineColor={setLineColor}
-
             />
           )}
 

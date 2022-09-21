@@ -44,7 +44,7 @@ const TextInput = ({
         onKeyDown={handleEscapeKeys}
         x={x}
         y={y}
-        id="editInput"
+        id={`editInput${arrayPos}`}
         value={input}
         style={{
           background: "transparent",

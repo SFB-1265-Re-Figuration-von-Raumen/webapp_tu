@@ -31,8 +31,7 @@ const TextModal = ({
       trRef.current.getLayer().batchDraw();
     }
     if (isEditing) {
-      const cursorInput = document.getElementById("editInput");
-      console.log(cursorInput);
+      const cursorInput = document.getElementById(`editInput${arrayPos}`);
       const end = cursorInput.value.length;
       cursorInput.setSelectionRange(end, end);
       cursorInput.focus();

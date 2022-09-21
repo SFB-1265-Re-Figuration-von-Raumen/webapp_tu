@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Html } from "react-konva-utils";
 
-
 const TextInput = ({
   x,
   y,
   id,
+  isEditing,
   setIsEditing,
   textAnnotations,
   setTextAnnotations,
@@ -13,13 +13,21 @@ const TextInput = ({
   width,
   height,
   text,
-  theme
+  theme,
 }) => {
+  useEffect(() => {
+    // console.log(document.getElementById(`editInputOf:${id}`));
+    const isUpdated = async () => {
+      await id;
+      console.log(id);
+      const cursorInput = document.getElementById(`editInputOf:${id}`);
+      const end = cursorInput.value.length;
+      cursorInput.setSelectionRange(end, end);
+      cursorInput.focus();
+    };
+    isUpdated();
+  }, [isEditing, id]);
 
-    useEffect(() => {
-     
-    }, [x, y]);
-    
   const [input, setInput] = useState(text);
   const RETURN_KEY = 13;
   const ESCAPE_KEY = 27;
@@ -48,8 +56,6 @@ const TextInput = ({
         style={{
           background: "transparent",
           border: "none",
-          width: `${width}`,
-          height: `${height}`,
           color: `${theme.palette.primary.main}`,
           fontFamily: `${theme.typography.fontFamily}`,
           fontSize: "20px",

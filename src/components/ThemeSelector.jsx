@@ -1,7 +1,10 @@
 import React from 'react'
-import { Box, Button, ButtonGroup, FormControlLabel, FormGroup, Switch, ThemeProvider } from "@mui/material";
+import { Box, Button, ButtonGroup } from "@mui/material";
 import { useContext } from "react";
 import { CustomThemeContext } from "../themes/CustomThemeProvider";
+import "../Fonts.css";
+
+
 
 const ThemeSelector = () => {
 
@@ -17,11 +20,26 @@ const ThemeSelector = () => {
             <ButtonGroup
                 orientation="vertical"
                 aria-label="vertical outlined button group"
-            variant="contained"
+                variant="contained"
             >
-                <Button onClick={() => { setTheme("regular") }}>Regular</Button>
-                <Button onClick={() => { setTheme("softice") }}>Soft Ice</Button>
-                <Button onClick={() => { setTheme("space") }}>Space</Button>
+                <Button
+                    sx={{
+                        fontFamily: "Poppins",
+                        fontWeight: "bold",
+                    }}
+                    onClick={() => { setTheme("regular") }}>Regular</Button>
+                <Button
+                    sx={{
+                        fontFamily: "Space Mono",
+                        fontWeight: "bold",
+                    }}
+                    onClick={() => { setTheme("softice") }}>Soft Ice</Button>
+                <Button
+                    sx={{
+                        fontFamily: "Ark-Es",
+                        fontWeight: "bold",
+                    }}
+                    onClick={() => { setTheme("space") }}>Space</Button>
             </ButtonGroup>
 
         </Box>

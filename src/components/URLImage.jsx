@@ -21,7 +21,7 @@ const URLImage = ({
   freeDraw,
   setFreeDraw,
   lines,
-  setLines
+  setLines,
 }) => {
   const shapeRef = useRef();
   const trRef = useRef();

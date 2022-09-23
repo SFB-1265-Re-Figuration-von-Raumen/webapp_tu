@@ -166,6 +166,12 @@ const ControlPanel = ({
                 onChange={(e) => {
                   setTextInput(e.target.value);
                 }}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter") {
+                    handleSubmit();
+                    handleClose();
+                  }
+                }}
               />
             </DialogContent>
             <DialogActions>

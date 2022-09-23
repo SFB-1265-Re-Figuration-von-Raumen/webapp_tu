@@ -206,6 +206,8 @@ const TextModal = ({
             height: Math.max(node.height() * scaleY),
           });
         }}
+
+
       />
       {isSelected && (
         <Transformer

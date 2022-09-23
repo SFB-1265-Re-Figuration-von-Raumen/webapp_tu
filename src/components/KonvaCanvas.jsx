@@ -204,6 +204,7 @@ const KonvaCanvas = () => {
                     text[i] = newAttrs;
                     setTextAnnotations(text);
                   }}
+                  
                 />
               );
             })}

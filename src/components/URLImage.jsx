@@ -101,6 +101,7 @@ const URLImage = ({
   };
 
   const [img] = useImage(image);
+console.log(isSelected);
 
   const handleClickTap = () => {
     // we switch off free draw mode when we click on an image

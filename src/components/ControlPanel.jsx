@@ -20,7 +20,6 @@ const ControlPanel = ({
   freeDraw,
   setFreeDraw,
   isEditing,
-  setIsEditing,
 }) => {
   const [open, setOpen] = useState(false);
   const [textInput, setTextInput] = useState("");
@@ -33,8 +32,6 @@ const ControlPanel = ({
     setOpen(false);
   };
   const handleOpen = () => {
-    console.log("first");
-
     selectShape(null);
     setOpen(true);
     setDeleteMode(false);

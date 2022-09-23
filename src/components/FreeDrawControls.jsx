@@ -14,7 +14,7 @@ const FreeDrawControls = ({
   return (
     <Box borderTop={`1px solid ${theme.palette.primary.main}`}>
       <Box mx={2} my={1} >
-        <Select
+        {/* <Select
           value={tool}
           onChange={(e) => {
             setTool(e.target.value);
@@ -22,7 +22,7 @@ const FreeDrawControls = ({
         >
           <MenuItem value="pen">FreeDraw</MenuItem>
           <MenuItem value="eraser">Erase</MenuItem>
-        </Select>
+        </Select> */}
         <MuiColorInput
           value={lineColor}
           onChange={(color) => setLineColor(color)}

@@ -46,67 +46,70 @@ const Iconbar = ({ images, addImages, percentWidth, theme }) => {
               flexDirection: "column",
               // backgroundImage: "linear-gradient(to left, #000000, #ffffff)",
             }}
+            className= "iconBar__outer"
           >
-            <Typography color="primary" fontWeight="bold" key={key + 1} p>
-              {categories[key]}
-            </Typography>
-            <Box
-              key={key + 3}
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                // borderLeft: "1px solid",
-                overflowX: "hidden",
-                height: "100%",
-              }}
-            >
-              <img
-                src="../public/svg/ux-icon_custom-icon.svg"
-                alt=""
-                className="iconBar--customIconBtn"
-              />
+          <Typography color="primary" fontWeight="bold" key={key + 1} p>
+            {categories[key]}
+          </Typography>
+          <Box
+            key={key + 3}
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              // borderLeft: "1px solid",
+              overflowX: "hidden",
+              height: "100%",
+            }}
+          >
+            <img
+              src="../public/svg/ux-icon_custom-icon.svg"
+              alt=""
+              className="iconBar__customIconBtn"
+            />
 
-              <ScrollContainer
-                className={`scroll-container iconToolbarRow ${index}`}
-                id="xDragToolbar"
-                key={key + 2}
-              >
-                {Object.keys(index).map((key, i) => {
-                  return (
-                    <Box
-                      sx={{
-                        height: "100%",
-                        width: "auto",
+            <ScrollContainer
+              className={`scroll-container iconToolbarRow ${index}`}
+              id="xDragToolbar"
+              key={key + 2}
+            >
+              {Object.keys(index).map((key, i) => {
+                {/* { console.log(`hello ${key}`) } */ }
+                return (
+                  <Box
+                    sx={{
+                      height: "100%",
+                      width: "auto",
+                    }}
+                    key={i + 4}
+                  >
+                    <img
+                      key={i + 3}
+                      src={getSvgUrl(key)}
+                      alt={key}
+                      className="icon"
+                      style={{
+                        border: `1px solid ${theme.palette.secondary.main}`,
                       }}
-                      key={i + 4}
-                    >
-                      <img
-                        key={i + 3}
-                        src={getSvgUrl(key)}
-                        alt={key}
-                        className="icon"
-                        style={{
-                          border: `1px solid ${theme.palette.secondary.main}`,
-                        }}
-                        onClick={() => {
-                          addImages({
-                            // id: images.at(-1).id + 1,
-                            id: `${key}`,
-                            icon: getSvgUrl(key),
-                            x: defaultPos.x,
-                            y: defaultPos.y,
-                          });
-                        }}
-                      />
-                    </Box>
-                  );
-                })}
-              </ScrollContainer>
-            </Box>
+                      onClick={() => {
+                        addImages({
+                          // id: images.at(-1).id + 1,
+                          id: `${key}`,
+                          icon: getSvgUrl(key),
+                          x: defaultPos.x,
+                          y: defaultPos.y,
+                        });
+                      }}
+                    />
+                  </Box>
+                );
+              })}
+            </ScrollContainer>
           </Box>
+        </Box>
         </Grid>
-      ))}
+  ))
+}
     </>
   );
 };

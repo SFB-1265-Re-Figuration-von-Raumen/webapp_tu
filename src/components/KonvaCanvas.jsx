@@ -19,7 +19,7 @@ const KonvaCanvas = () => {
   const layeRef = useRef();
   const Konva = window.Konva;
 
-  const percentWidth = (window.innerWidth / 100) * 65;
+  const percentWidth = (window.innerWidth / 100) * 70;
   const [images, setImages] = useState([{}]);
   const [textAnnotations, setTextAnnotations] = useState([{}]);
   const [isEditing, setIsEditing] = useState(false);
@@ -125,9 +125,6 @@ const KonvaCanvas = () => {
       y: stageScale.y - 0.1,
     });
   };
-
-  // console.log(images);
-  // console.log(textAnnotations);
 
   return (
     <>

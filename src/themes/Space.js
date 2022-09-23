@@ -5,9 +5,12 @@ export const theme = createTheme({
     palette: {
         primary: {
             main: "#ff0000",
+            dark: "#ffd1d4",
+            light: "#ffffff",
         },
         secondary: {
             main: "#ffdccc",
+            // main: "#000000",
         },
     },
     typography: {

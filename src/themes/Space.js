@@ -9,8 +9,7 @@ export const theme = createTheme({
             light: "#ffffff",
         },
         secondary: {
-            main: "#ffdccc",
-            // main: "#000000",
+            main: "#000000",
         },
     },
     typography: {

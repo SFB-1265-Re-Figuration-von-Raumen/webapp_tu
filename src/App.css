@@ -69,6 +69,8 @@ body {
 
 .iconBar__customIconBtn {
   cursor: pointer;
+  display: grid;
+  place-content: center;
 }
 
 .iconBar__outer {

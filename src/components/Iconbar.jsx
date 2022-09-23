@@ -63,13 +63,7 @@ const Iconbar = ({ images, addImages, percentWidth, theme }) => {
                 height: "100%",
               }}
             >
-              {/* <img
-                src="../public/svg/ux-icon_custom-icon.svg"
-                alt=""
-                className="iconBar__customIconBtn"
-              /> */}
-
-              <AddIconButton />
+              <AddIconButton theme={theme} />
               <ScrollContainer
                 className={`scroll-container iconToolbarRow ${index}`}
                 id="xDragToolbar"

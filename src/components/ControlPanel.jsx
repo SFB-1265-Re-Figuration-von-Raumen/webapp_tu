@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Dialog,
   DialogActions,
@@ -28,12 +28,17 @@ const ControlPanel = ({
     x: percentWidth / 2,
     y: window.innerHeight / 2,
   };
+
   const handleClose = () => {
     setOpen(false);
   };
   const handleOpen = () => {
+    console.log("first");
+
     selectShape(null);
     setOpen(true);
+    setDeleteMode(false);
+    setFreeDraw(false);
   };
   const handleSubmit = () => {
     setTextAnnotations((current) => [
@@ -83,7 +88,12 @@ const ControlPanel = ({
 
           <Button
             onClick={() => {
-              freeDraw ? setFreeDraw(false) : setFreeDraw(true);
+              if (freeDraw) {
+                setFreeDraw(false);
+              } else {
+                setFreeDraw(true);
+                setDeleteMode(false);
+              }
             }}
             style={{
               backgroundColor: `${freeDraw ? "pink" : "transparent"}`,
@@ -121,9 +131,14 @@ const ControlPanel = ({
           }}
         >
           <Button
-            onClick={() =>
-              deleteMode ? setDeleteMode(false) : setDeleteMode(true)
-            }
+            onClick={() => {
+              if (deleteMode) {
+                setDeleteMode(false);
+              } else {
+                setFreeDraw(false);
+                setDeleteMode(true);
+              }
+            }}
             style={{
               backgroundColor: `${deleteMode ? "pink" : "transparent"}`,
             }}

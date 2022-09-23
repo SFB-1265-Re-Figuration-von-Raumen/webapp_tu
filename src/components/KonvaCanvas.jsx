@@ -105,8 +105,59 @@ const KonvaCanvas = () => {
     }
   };
 
+  const handleTouchStart = (e) => {
+    if (freeDraw) {
+      isDrawing.current = true;
+      const pos = e.target.getStage().getPointerPosition();
+      setLines([...lines, { tool, points: [pos.x, pos.y] }]);
+      // console.log(pos);
+      // const stage = e.target.getStage();
+      // const point = stage.getPointerPosition();
+      // let lastLine = lines[lines.length - 1];
+      // // add point
+      // console.log(lastLine);
+
+      // lastLine.points = lastLine.points.concat([point.x, point.y]);
+      // lastLine.strokeWidth = strokeSlide;
+      // lastLine.color = lineColor;
+
+      // // replace last
+      // lines.splice(lines.length - 1, 1, lastLine);
+      // setLines(lines.concat());
+      // if (!isDrawing.current) {
+      //   return;
+      // }
+    }
+  };
+  const handleTouchMove = (e) => {
+    if (freeDraw) {
+      isDrawing.current = true;
+      const pos = e.target.getStage().getPointerPosition();
+      // setLines([...lines, { tool, points: [pos.x, pos.y] }]);
+      console.log(pos);
+      const stage = e.target.getStage();
+      const point = stage.getPointerPosition();
+      let lastLine = lines[lines.length - 1];
+      // add point
+      console.log(lastLine);
+
+      lastLine.points = lastLine.points.concat([point.x, point.y]);
+      lastLine.strokeWidth = strokeSlide;
+      lastLine.color = lineColor;
+
+      // replace last
+      lines.splice(lines.length - 1, 1, lastLine);
+      setLines(lines.concat());
+      if (!isDrawing.current) {
+        return;
+      }
+    }
+  };
+
   const handleMouseUp = () => {
     if (freeDraw) {
+      console.log("hi");
+
       isDrawing.current = false;
     }
   };
@@ -146,9 +197,9 @@ const KonvaCanvas = () => {
           onMousemove={handleMouseMove}
           onMouseup={handleMouseUp}
           onMouseDown={handleMouseDown}
-          onTouchMove={handleMouseDown}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
           onTouchEnd={handleMouseUp}
-
         >
           <Layer ref={layeRef}>
             {images.map((img, i) => {
@@ -208,7 +259,6 @@ const KonvaCanvas = () => {
                     text[i] = newAttrs;
                     setTextAnnotations(text);
                   }}
-                  
                 />
               );
             })}
@@ -225,6 +275,11 @@ const KonvaCanvas = () => {
                 lineCap="round"
                 lineJoin="round"
                 onClick={() => {
+                  if (deleteMode) {
+                    lines.splice(line, 1);
+                  }
+                }}
+                onTap={() => {
                   if (deleteMode) {
                     lines.splice(line, 1);
                   }

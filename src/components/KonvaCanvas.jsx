@@ -142,9 +142,13 @@ const KonvaCanvas = () => {
           height={window.innerHeight}
           ref={stageRef}
           onClick={checkDeselect}
+          onTap={checkDeselect}
           onMousemove={handleMouseMove}
           onMouseup={handleMouseUp}
           onMouseDown={handleMouseDown}
+          onTouchMove={handleMouseDown}
+          onTouchEnd={handleMouseUp}
+
         >
           <Layer ref={layeRef}>
             {images.map((img, i) => {

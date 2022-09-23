@@ -45,6 +45,7 @@ const ControlPanel = ({
         y: defaultPos.y,
       },
     ]);
+    setOpen(false);
   };
 
   return (
@@ -169,7 +170,6 @@ const ControlPanel = ({
                 onKeyPress={(e) => {
                   if (e.key === "Enter") {
                     handleSubmit();
-                    handleClose();
                   }
                 }}
               />
@@ -180,7 +180,6 @@ const ControlPanel = ({
                 type="submit"
                 onClick={() => {
                   handleSubmit();
-                  handleClose();
                 }}
               >
                 Fertig

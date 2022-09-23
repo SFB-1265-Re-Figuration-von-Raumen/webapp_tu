@@ -102,6 +102,16 @@ const URLImage = ({
 
   const [img] = useImage(image);
 
+  const handleClickTap = () => {
+    // we switch off free draw mode when we click on an image
+    setFreeDraw(false);
+    console.log("clicked");
+    if (deleteMode) {
+      images.splice(arrayPos, 1);
+    }
+    selectShape(id);
+  }
+
   return (
     <>
       <Image
@@ -110,20 +120,9 @@ const URLImage = ({
         arrayPos={arrayPos}
         image={img}
         isSelected={id === selectedId}
-        onClick={() => {
-          // we switch off free draw mode when we click on an image
-          setFreeDraw(false);
-          console.log("clicked");
-          if (deleteMode) {
-            images.splice(arrayPos, 1);
-          }
-          selectShape(id);
-        }}
-        onSelect={() => {
-          selectShape(id);
-        }}
+        onClick={handleClickTap}
+        onTap={handleClickTap}
         // onClick={id ? isSelected = id : isSelected = null}
-        onTap={onSelect}
         x={x}
         y={y}
         // I will use offset to set origin to the center of the image

@@ -84,6 +84,12 @@ const TextModal = ({
 
     savePosition(e.target.attrs.arrayPos, e.target.attrs.x, e.target.attrs.y);
   };
+  const handleClickTap = () => {
+    if (deleteMode) {
+      textAnnotations.splice(arrayPos, 1);
+    }
+    selectShape(id);
+  }
 
   return (
     <>
@@ -109,12 +115,8 @@ const TextModal = ({
         {...shapeProps}
         arrayPos={arrayPos}
         isSelected={id === selectedId}
-        onClick={() => {
-          if (deleteMode) {
-            textAnnotations.splice(arrayPos, 1);
-          }
-          selectShape(id);
-        }}
+        onClick={handleClickTap}
+        onTap={handleClickTap}
         onSelect={() => {
           selectShape(id);
         }}
@@ -124,7 +126,7 @@ const TextModal = ({
         strokeEnabled={true}
         wrap={"word"}
         // onClick={id ? isSelected = id : isSelected = null}
-        onTap={onSelect}
+
         draggable="true"
         // text={text}
         x={x}

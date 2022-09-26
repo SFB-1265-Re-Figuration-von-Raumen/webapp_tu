@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 
-import { Stage, Layer, Line } from "react-konva";
+import { Stage, Layer, Line, Rect, Transformer } from "react-konva";
 
 import URLImage from "./URLImage";
 import Iconbar from "./Iconbar";
@@ -17,6 +17,7 @@ const KonvaCanvas = () => {
   const theme = useTheme();
   const stageRef = useRef();
   const layeRef = useRef();
+  const selectionRectRef = useRef()
   const Konva = window.Konva;
 
   const percentWidth = (window.innerWidth / 100) * 70;
@@ -27,6 +28,7 @@ const KonvaCanvas = () => {
   const [selectedId, selectShape] = useState(null);
   const [freeDraw, setFreeDraw] = useState(false);
 
+  const trRef = useRef();
   //ZOOM STUFF
   const [stageScale, setStageScale] = useState({
     scale: 1,
@@ -110,23 +112,6 @@ const KonvaCanvas = () => {
       isDrawing.current = true;
       const pos = e.target.getStage().getPointerPosition();
       setLines([...lines, { tool, points: [pos.x, pos.y] }]);
-      // console.log(pos);
-      // const stage = e.target.getStage();
-      // const point = stage.getPointerPosition();
-      // let lastLine = lines[lines.length - 1];
-      // // add point
-      // console.log(lastLine);
-
-      // lastLine.points = lastLine.points.concat([point.x, point.y]);
-      // lastLine.strokeWidth = strokeSlide;
-      // lastLine.color = lineColor;
-
-      // // replace last
-      // lines.splice(lines.length - 1, 1, lastLine);
-      // setLines(lines.concat());
-      // if (!isDrawing.current) {
-      //   return;
-      // }
     }
   };
   const handleTouchMove = (e) => {
@@ -197,51 +182,55 @@ const KonvaCanvas = () => {
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleMouseUp}
-        >
+          >
           <Layer ref={layeRef}>
             {images.map((img, i) => {
               return (
                 <URLImage
-                  theme={theme}
-                  image={img.icon}
-                  key={i}
-                  arrayPos={images.indexOf(img)}
-                  id={img.id}
-                  x={img.x}
-                  y={img.y}
-                  images={images}
-                  setImages={setImages}
-                  shapeProps={img}
-                  checkDeselect={checkDeselect}
-                  selectedId={selectedId}
-                  selectShape={selectShape}
-                  isSelected={img.id === selectedId}
-                  onChange={(newAttrs) => {
-                    const imgs = images.slice();
-                    imgs[i] = newAttrs;
-                    setImages(imgs);
-                  }}
-                  deleteMode={deleteMode}
-                  setDeleteMode={setDeleteMode}
-                  freeDraw={freeDraw}
-                  setFreeDraw={setFreeDraw}
-                  lines={lines}
-                  setLines={setLines}
+                theme={theme}
+                image={img.icon}
+                key={i}
+                arrayPos={images.indexOf(img)}
+                id={img.id}
+                x={img.x}
+                y={img.y}
+                images={images}
+                setImages={setImages}
+                shapeProps={img}
+                checkDeselect={checkDeselect}
+                selectedId={selectedId}
+                selectShape={selectShape}
+                isSelected={img.id === selectedId}
+                onChange={(newAttrs) => {
+                  const imgs = images.slice();
+                  imgs[i] = newAttrs;
+                  setImages(imgs);
+                }}
+                deleteMode={deleteMode}
+                setDeleteMode={setDeleteMode}
+                freeDraw={freeDraw}
+                setFreeDraw={setFreeDraw}
+                lines={lines}
+                setLines={setLines}
+
+                selectionRectRef={selectionRectRef}
+                  layeRef={layeRef}
+                  stageRef={stageRef}
                 />
-              );
-            })}
+                );
+              })}
             {textAnnotations.map((annotation, i) => {
               return (
                 <TextModal
-                  theme={theme}
-                  text={annotation.text}
-                  key={i}
-                  id={annotation.id}
-                  x={annotation.x}
-                  y={annotation.y}
-                  arrayPos={textAnnotations.indexOf(annotation)}
-                  textAnnotations={textAnnotations}
-                  setTextAnnotations={setTextAnnotations}
+                theme={theme}
+                text={annotation.text}
+                key={i}
+                id={annotation.id}
+                x={annotation.x}
+                y={annotation.y}
+                arrayPos={textAnnotations.indexOf(annotation)}
+                textAnnotations={textAnnotations}
+                setTextAnnotations={setTextAnnotations}
                   shapeProps={annotation}
                   checkDeselect={checkDeselect}
                   selectedId={selectedId}
@@ -256,6 +245,10 @@ const KonvaCanvas = () => {
                     text[i] = newAttrs;
                     setTextAnnotations(text);
                   }}
+                  freeDraw={freeDraw}
+                  trRef={trRef}
+                  layeRef={layeRef}
+                  stageRef={stageRef}
                 />
               );
             })}
@@ -286,6 +279,18 @@ const KonvaCanvas = () => {
                 }
               />
             ))}
+            <Transformer
+          // ref={trRef.current[getKey]}
+          ref={trRef}
+          boundBoxFunc={(oldBox, newBox) => {
+            // limit resize
+            if (newBox.width < 5 || newBox.height < 5) {
+              return oldBox;
+            }
+            return newBox;
+          }}
+        />
+        <Rect fill="rgba(0,0,255,0.5)" ref={selectionRectRef} />
           </Layer>
         </Stage>
         <div

@@ -7,7 +7,6 @@ const URLImage = ({
   selectShape,
   selectedId,
   shapeProps,
-  onSelect,
   isSelected,
   onChange,
   images,
@@ -21,7 +20,8 @@ const URLImage = ({
   freeDraw,
   setFreeDraw,
   lines,
-  setLines,
+  layerRef,
+  stageRef,
 }) => {
   const shapeRef = useRef();
   const trRef = useRef();
@@ -53,12 +53,12 @@ const URLImage = ({
 
   const checkDeletePoint = () => {
     if (freeDraw === true) {
-      console.log(lines)
+      console.log(lines);
       lines.splice(lines.length - 1, 1);
       console.log(lines);
     }
     setFreeDraw(false);
-  }
+  };
 
   // if (isSelected) {
   // check if freeDraw is true
@@ -66,26 +66,28 @@ const URLImage = ({
   // setFreeDraw(false);
   // }
 
-
   const handleDragStart = (e) => {
+    if (freeDraw){
+      return 
+    }
     checkDeletePoint();
     isSelected
       ? null
       : e.target.setAttrs({
-        scaleX: 1.1,
-        scaleY: 1.1,
-      });
+          scaleX: 1.1,
+          scaleY: 1.1,
+        });
   };
 
   const handleDragEnd = (e) => {
     isSelected
       ? null
       : e.target.to({
-        duration: 0.2,
-        easing: Konva.Easings.EaseInOut,
-        scaleX: 1,
-        scaleY: 1,
-      });
+          duration: 0.2,
+          easing: Konva.Easings.EaseInOut,
+          scaleX: 1,
+          scaleY: 1,
+        });
     onChange({
       ...shapeProps,
       x: e.target.x(),
@@ -101,17 +103,16 @@ const URLImage = ({
   };
 
   const [img] = useImage(image);
-console.log(isSelected);
+  console.log(isSelected);
 
   const handleClickTap = () => {
-    // we switch off free draw mode when we click on an image
-    setFreeDraw(false);
-    console.log("clicked");
     if (deleteMode) {
       images.splice(arrayPos, 1);
+    } else if (freeDraw) {
+       selectShape(null)
     }
     selectShape(id);
-  }
+  };
 
   return (
     <>
@@ -131,7 +132,7 @@ console.log(isSelected);
         // offsetY={img ? img.height / 2 : 0}
         shadowBlur={3}
         // we need to find a way to set freeDraw to false when drag starts
-        draggable="true"
+        draggable={freeDraw ? "false" : "true"}
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
         onTransformEnd={(e) => {

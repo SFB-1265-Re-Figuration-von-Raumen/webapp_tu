@@ -1,6 +1,6 @@
 import Konva from "konva";
 import React, { useRef, useEffect } from "react";
-import { Transformer, Text } from "react-konva";
+import { Transformer, Text, Rect } from "react-konva";
 import TextInput from "./TextInput";
 
 const TextModal = ({
@@ -8,7 +8,6 @@ const TextModal = ({
   selectShape,
   selectedId,
   shapeProps,
-  onSelect,
   isSelected,
   onChange,
   textAnnotations,
@@ -21,6 +20,10 @@ const TextModal = ({
   isEditing,
   setIsEditing,
   deleteMode,
+  freeDraw,
+  layerRef,
+  stageRef,
+  selectionRectRef,
 }) => {
   const shapeRef = useRef();
   const trRef = useRef();
@@ -34,8 +37,6 @@ const TextModal = ({
 
   // console.log(arrayPos);
 
-
-  
   function savePosition(pos, x, y) {
     console.log(`arrayPos is ${pos}, x is ${x}, y is ${y}`);
 
@@ -87,9 +88,11 @@ const TextModal = ({
   const handleClickTap = () => {
     if (deleteMode) {
       textAnnotations.splice(arrayPos, 1);
+    } else if (freeDraw) {
+      return;
     }
     selectShape(id);
-  }
+  };
 
   return (
     <>
@@ -120,14 +123,16 @@ const TextModal = ({
         onSelect={() => {
           selectShape(id);
         }}
-        fill={isEditing && isSelected ? "transparent" : theme.palette.primary.main}
+        fill={
+          isEditing && isSelected ? "transparent" : theme.palette.primary.main
+        }
         // lineCap={"butt"}
         // lineJoin={"bevel"}
         strokeEnabled={true}
         wrap={"word"}
         // onClick={id ? isSelected = id : isSelected = null}
 
-        draggable="true"
+        draggable={freeDraw ? "false" : "true"}
         // text={text}
         x={x}
         y={y}
@@ -187,17 +192,17 @@ const TextModal = ({
           const scaleX = node.scaleX();
           const scaleY = node.scaleY();
 
-          onChange({
-            ...shapeProps,
-            x: node.x(),
-            y: node.y(),
-            // set minimal value
-            // width: Math.max(5, node.width() * scaleX),
-            // height: Math.max(node.height() * scaleY),
-          });
-          //   // we will reset it back
           node.scaleX(1);
           node.scaleY(1);
+          // onChange({
+          //   ...shapeProps,
+          //   x: node.x(),
+          //   y: node.y(),
+          //   // set minimal value
+          //   // width: Math.max(5, node.width() * scaleX),
+          //   // height: Math.max(node.height() * scaleY),
+          // });
+          // //   // we will reset it back
           onChange({
             ...shapeProps,
             x: node.x(),
@@ -208,27 +213,27 @@ const TextModal = ({
             height: Math.max(node.height() * scaleY),
           });
         }}
-
-
       />
       {isSelected && (
-        <Transformer
-          ref={trRef}
-          padding={5}
-          anchorCornerRadius={50}
-          enabledAnchors={["middle-left", "middle-right"]}
-          borderStroke={theme.palette.primary.main}
-          anchorStroke={theme.palette.primary.main}
-          anchorSize={15}
-          boundBoxFunc={(oldBox, newBox) => {
-            // limit resize
-            if (newBox.width < 20) {
-              return oldBox;
-            }
-            return newBox;
-          }}
-          //   onDblClick={Transformer.hide()}
-        />
+        <>
+          <Transformer
+            ref={trRef}
+            padding={5}
+            anchorCornerRadius={50}
+            enabledAnchors={["middle-left", "middle-right"]}
+            borderStroke={theme.palette.primary.main}
+            anchorStroke={theme.palette.primary.main}
+            anchorSize={15}
+            boundBoxFunc={(oldBox, newBox) => {
+              // limit resize
+              if (newBox.width < 20) {
+                return oldBox;
+              }
+              return newBox;
+            }}
+            //   onDblClick={Transformer.hide()}
+          />
+        </>
       )}
     </>
   );

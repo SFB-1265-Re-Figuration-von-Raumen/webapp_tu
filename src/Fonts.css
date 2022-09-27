@@ -1,0 +1,110 @@
+/* Poppins */
+
+@font-face {
+  font-family: "Poppins";
+  src: url("../public/fonts/poppins/Poppins-Regular.ttf");
+  font-style: normal;
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("../public/fonts/poppins/Poppins-Black.ttf");
+  font-style: normal;
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("../public/fonts/poppins/Poppins-Regular.ttf");
+  font-style: normal;
+  font-weight: normal;
+}
+
+/* Space Mono */
+
+@font-face {
+  font-family: "Space Mono";
+  src: url("../public/fonts/space_mono/SpaceMono-Regular.ttf");
+  font-style: normal;
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "Space Mono";
+  src: url("../public/fonts/space_mono/SpaceMono-Bold.ttf");
+  font-style: normal;
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: "Space Mono";
+  src: url("../public/fonts/space_mono/SpaceMono-BoldItalic.ttf");
+  font-style: italic;
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: "Space Mono";
+  src: url("../public/fonts/space_mono/SpaceMono-Italic.ttf");
+  font-style: italic;
+  font-weight: normal;
+}
+
+/* Ark-Es */
+
+@font-face {
+  font-family: "Ark-Es";
+  src: url("../public/fonts/ark_es/ARK-ES-DenseBold.woff");
+  font-style: normal;
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: "Ark-Es";
+  src: url("../public/fonts/ark_es/ARK-ES-DenseLight.woff");
+  font-style: normal;
+  font-weight: lighter;
+}
+
+@font-face {
+  font-family: "Ark-Es";
+  src: url("../public/fonts/ark_es/ARK-ES-DenseMedium.woff");
+  font-style: normal;
+  font-weight: medium;
+}
+
+@font-face {
+  font-family: "Ark-Es";
+  src: url("../public/fonts/ark_es/ARK-ES-DenseRegular.woff");
+  font-style: normal;
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "Ark-Es";
+  src: url("../public/fonts/ark_es/ARK-ES-SolidBold.woff");
+  font-style: solid;
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: "Ark-Es";
+  src: url("../public/fonts/ark_es/ARK-ES-SolidLight.woff");
+  font-style: solid;
+  font-weight: lighter;
+}
+
+@font-face {
+  font-family: "Ark-Es";
+  src: url("../public/fonts/ark_es/ARK-ES-SolidMedium.woff");
+  font-style: solid;
+  font-weight: medium;
+}
+
+@font-face {
+  font-family: "Ark-Es";
+  src: url("../public/fonts/ark_es/ARK-ES-SolidRegular.woff");
+  font-style: solid;
+  font-weight: medium;
+}

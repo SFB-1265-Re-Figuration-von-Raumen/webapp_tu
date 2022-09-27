@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="uuid-b80fef19-7298-4700-a61d-dab3ae04ff62" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" width="68.67" height="69.52" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 68.67 69.52">
+  <defs>
+    <clipPath id="uuid-5805574d-c538-4798-90fd-68a707eff089">
+      <rect width="68.67" height="69.52" style="fill: none;"/>
+    </clipPath>
+    <clipPath id="uuid-377be5f7-617e-481b-a909-93795baba080">
+      <rect width="68.67" height="69.52" style="fill: none;"/>
+    </clipPath>
+  </defs>
+  <g style="clip-path: url(#uuid-5805574d-c538-4798-90fd-68a707eff089);">
+    <path d="M21.71,53.05s4.51,9.89,13,4.7c12.08-7.39,16.56-1.81,16.56-1.81" style="fill: none; stroke: #000;"/>
+  </g>
+  <rect x="19.83" y="19.31" width="27.54" height="11.9" transform="translate(-3.32 45.36) rotate(-65.5)" style="fill: none; stroke: #1d1d1b; stroke-linecap: round; stroke-linejoin: round;"/>
+  <polygon points="22.47 49.69 33.31 40.24 22.48 35.3 22.47 49.69" style="fill: none; stroke: #1d1d1b; stroke-linecap: round; stroke-linejoin: round;"/>
+  <g style="clip-path: url(#uuid-377be5f7-617e-481b-a909-93795baba080);">
+    <rect x=".5" y=".5" width="67.67" height="68.52" style="fill: none; stroke: #ec2832;"/>
+  </g>
+</svg>

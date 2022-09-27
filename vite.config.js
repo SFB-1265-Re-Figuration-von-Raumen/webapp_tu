@@ -7,6 +7,7 @@ export default defineConfig({
   base: "/",
   build: {
     outDir: "./dist",
+    publicDir: "./src/assets/",
     // emptyOutDir: true,
     rollupOptions: {
       output: {
@@ -38,3 +39,4 @@ export default defineConfig({
     },
   },
 });
+

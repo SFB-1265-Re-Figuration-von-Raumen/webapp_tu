@@ -304,10 +304,10 @@ const KonvaCanvas = () => {
           }}
         >
           <Button variant="outlined" onClick={handleZoomIn}>
-            <img src="../public/svg/plus.svg" alt="plus zoom" />
+            <img src=".assets/svg/plus.svg" alt="plus zoom" />
           </Button>
           <Button variant="outlined" onClick={handleZoomOut}>
-            <img src="../public/svg/minus.svg" alt="minus zoom" />
+            <img src=".assets/svg/minus.svg" alt="minus zoom" />
           </Button>
         </div>
       </div>

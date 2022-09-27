@@ -3,16 +3,16 @@ import React, { useEffect } from "react";
 import ScrollContainer from "react-indiana-drag-scroll";
 import AddIconButton from "./ui/AddIconButton";
 
-const aktis = import.meta.glob("../assets/svg/categories/aktis/*.svg", {
+const aktis = import.meta.glob("../../public/svg/categories/aktis/*.svg", {
   eager: true,
 });
-const atmos = import.meta.glob("../assets/svg/categories/atmos/*.svg", {
+const atmos = import.meta.glob("../../public/svg/categories/atmos/*.svg", {
   eager: true,
 });
-const orte = import.meta.glob("../assets/svg/categories/orte/*.svg", {
+const orte = import.meta.glob("../../public/svg/categories/orte/*.svg", {
   eager: true,
 });
-const personen = import.meta.glob("../assets/svg/categories/personen/*.svg", {
+const personen = import.meta.glob("../../public/svg/categories/personen/*.svg", {
   eager: true,
 }); /* */
 

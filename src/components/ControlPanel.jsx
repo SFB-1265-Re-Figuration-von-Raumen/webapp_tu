@@ -97,7 +97,7 @@ const ControlPanel = ({
             }}
           >
             <img
-              src="../public/svg/ux_icon_free-draw-mode.svg"
+              src="./assets/svg/ux_icon_free-draw-mode.svg"
               alt="Free Draw Mode"
               className="nav--button"
             />
@@ -113,7 +113,7 @@ const ControlPanel = ({
         >
           <Button>
             <img
-              src="../public/svg/ux-icon_connection-mode.svg"
+              src="./assets/svg/ux-icon_connection-mode.svg"
               alt="Connection Mode"
               className="nav--button"
             />
@@ -141,7 +141,7 @@ const ControlPanel = ({
             }}
           >
             <img
-              src="../public/svg/ux-icon_erase-mode.svg"
+              src="./assets/svg/ux-icon_erase-mode.svg"
               alt="Erase Mode"
               className="nav--button"
             />
@@ -157,7 +157,7 @@ const ControlPanel = ({
             style={{ backgroundColor: `${isEditing ? "pink" : "transparent"}` }}
           >
             <img
-              src="../public/svg/ux_icon_text-annotation.svg"
+              src="./assets/svg/ux_icon_text-annotation.svg"
               alt="Text Annotation"
               className="nav--button"
             />

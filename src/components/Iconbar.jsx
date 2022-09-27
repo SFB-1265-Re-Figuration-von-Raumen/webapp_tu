@@ -81,7 +81,7 @@ const Iconbar = ({ images, addImages, percentWidth, theme }) => {
                     >
                       <img
                         key={i + 3}
-                        src={getSvgUrl(key)}
+                        src={key}
                         alt={key}
                         className="icon"
                         style={{

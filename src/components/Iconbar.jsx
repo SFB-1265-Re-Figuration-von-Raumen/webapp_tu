@@ -18,19 +18,6 @@ import * as aktis from "../assets/svg/categories/aktis/svgr_output";
 //   { name: "lesen", icon: <AktiLesen /> },
 // ];
 
-// const aktis = import.meta.glob("../assets/svg/categories/aktis/*.svg", {
-//   eager: true,
-// });
-// const atmos = import.meta.glob("../assets/svg/categories/atmos/*.svg", {
-//   eager: true,
-// });
-// const orte = import.meta.glob("../assets/svg/categories/orte/*.svg", {
-//   eager: true,
-// });
-// const personen = import.meta.glob("../assets/svg/categories/personen/*.svg", {
-//   eager: true,
-// }); /* */
-
 // const svgArray = [aktis, orte, personen, atmos];
 const categories = ["AKTIVITÄTEN", "ORTE", "PERSONEN", "ATMOSPHÄREN"];
 // const addIcon = import.meta.glob("")

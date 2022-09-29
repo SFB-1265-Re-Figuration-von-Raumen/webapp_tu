@@ -7,6 +7,9 @@ import * as orte from "../assets/svg/categories/orte/svgr_output";
 import * as atmos from "../assets/svg/categories/atmos/svgr_output";
 import AddIconButton from "./ui/AddIconButton";
 
+
+
+
 // import {
 //   AktiBusfahren,
 //   AktiChattenn,
@@ -37,49 +40,29 @@ const Iconbar = ({ images, addImages, percentWidth, theme }) => {
     x: percentWidth / 2,
     y: window.innerHeight / 2,
   };
-  const toggleClick = (icon, name) => {
-    addImages({
-      // id: images.at(-1).id + 1,
-      id: `icon_${name}`,
-      icon: icon,
-      x: defaultPos.x,
-      y: defaultPos.y,
-    });
+  // addImages({
+  //   // id: images.at(-1).id + 1,
+  //   id: `icon_${name}`,
+  //   icon: icon,
+  //   x: defaultPos.x,
+  //   y: defaultPos.y,
+  // });
+  const toggleClick = (icon, key) => {
+    const element = document.getElementById(`${icon}-w-key:${key}`);
+    console.log(element.outerHTML);
+    
+addImages({
+    // id: images.at(-1).id + 1,
+    id: `icon_${key}`,
+    icon: element.outerHTML,
+    x: defaultPos.x,
+    y: defaultPos.y,
+  });
   };
   console.log(images);
 
   return (
     <>
-      {/* {Object.keys(aktis).map((akti, key) => {
-        const Component = aktis[akti];
-        return (
-          <Component
-            onClick={(e) => {
-              console.log(e.target);
-            }}
-            key={key}
-          />
-        );
-      })} */}
-      {/* {aktis.map(({ name, icon }) => {
-        return React.cloneElement(icon, {
-          key: `${name}`,
-          onClick: (e) => {
-            addImages(icon, name);
-          },
-        });
-      })} */}
-      {/* {iconElements.map(({ name, icon }) => {
-        return React.cloneElement(icon, {
-          key: `icon-${name}`,
-          onClick: () => {
-            handleIconClick(name);
-          },
-        });
-      })} */}
-    
-
-    
       {svgArray.map((index, key) => (
         <Grid key={key * 0.77} item height>
           <Box
@@ -118,22 +101,36 @@ const Iconbar = ({ images, addImages, percentWidth, theme }) => {
                 key={key + 2}
               >
                 {Object.keys(index).map((icon, key) => {
-        const Icon = index[icon];
-        return (
-          <Icon
-            onClick={(e) => {
-              console.log(e.target);
-            }}
-            key={key}
-          />
-        );
-      })}
+                  const Icon = index[icon];
+                  return (
+                    <Box
+                      sx={{
+                        height: "100%",
+                        width: "auto",
+                      }}
+                      key={key + 4}
+                    >
+                      <Icon
+                        onClick={(e) => {
+                          toggleClick(icon, key);
+                        }}
+                        key={key}
+                        style={{
+                          width: "4rem",
+                          height: "4rem",
+                          border: `1px solid ${theme.palette.primary.dark}`,
+                          backgroundColor: theme.palette.primary.light,
+                        }}
+                        id={`${icon}-w-key:${key}`}
+                      />
+                    </Box>
+                  );
+                })}
               </ScrollContainer>
             </Box>
           </Box>
         </Grid>
-      ))
-      }
+      ))}
     </>
   );
 };

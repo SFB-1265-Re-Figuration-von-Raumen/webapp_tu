@@ -187,8 +187,8 @@ const KonvaCanvas = () => {
             {images.map((img, i) => {
               return (
                 <URLImage
-                theme={theme}
                 image={img.icon}
+                theme={theme}
                 key={i}
                 arrayPos={images.indexOf(img)}
                 id={img.id}

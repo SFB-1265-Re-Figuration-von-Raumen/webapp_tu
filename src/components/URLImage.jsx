@@ -32,6 +32,8 @@ const URLImage = ({
       trRef.current.getLayer().batchDraw();
     }
   }, [isSelected]);
+const SVG = image
+const url = "data:image/svg+xml;base64," + window.btoa(SVG);
 
   function savePosition(pos, x, y) {
     // console.log(`arrayPos is ${pos}, x is ${x}, y is ${y}`);
@@ -102,7 +104,7 @@ const URLImage = ({
     savePosition(e.target.attrs.arrayPos, e.target.attrs.x, e.target.attrs.y);
   };
 
-  const [img] = useImage(image);
+  const [img] = useImage(SVG);
   console.log(isSelected);
 
   const handleClickTap = () => {

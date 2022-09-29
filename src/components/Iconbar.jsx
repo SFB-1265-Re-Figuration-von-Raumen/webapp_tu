@@ -2,8 +2,15 @@ import { Box, Button, Card, Grid, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import ScrollContainer from "react-indiana-drag-scroll";
 // import AddIconButton from "./ui/AddIconButton";
-import * as aktis from "../assets/svgr_output/index";
-console.log(aktis);
+
+import {
+  AktiBusfahren,
+  AktiChattenn,
+  AktiFahrradfahren,
+  AktiLesen,
+} from "../assets/svgr_output/index";
+// console.log(aktis);
+const aktis = [AktiBusfahren, AktiChattenn, AktiFahrradfahren, AktiLesen];
 
 // const aktis = import.meta.glob("../assets/svg/categories/aktis/*.svg", {
 //   eager: true,
@@ -25,18 +32,27 @@ const categories = ["AKTIVITÄTEN", "ORTE", "PERSONEN", "ATMOSPHÄREN"];
 function getSvgUrl(name) {
   return new URL(`../svg/${name}`, import.meta.url).href;
 }
+const RenderedIcon = ({ akti }) => {
+  return <>{akti}</>;
+};
 
 const Iconbar = ({ images, addImages, percentWidth, theme }) => {
   const defaultPos = {
     x: percentWidth / 2,
     y: window.innerHeight / 2,
   };
-
+const toggleClick = ()=> {
+  console.log("hi");
+  
+}
   return (
     <div>
-      {Object.keys(aktis).map((akti, key) => {
-        return React.createElement(akti, false, key)
+      {aktis.map((akti, key) => {
+       return  React.createElement(akti, { key: key, onAuxClick: toggleClick,  }, null);
       })}
+      {/* {Object.keys(aktis).map((akti, key) => {  
+        return React.createElement(RenderedIcon, {akti: akti, key: key}, null)
+      })} */}
     </div>
     // <>
     //   {svgArray.map((index, key) => (

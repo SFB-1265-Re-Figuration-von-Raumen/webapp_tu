@@ -1,21 +1,22 @@
 import { Box, Button, Card, Grid, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import ScrollContainer from "react-indiana-drag-scroll";
+import * as aktis from "../assets/svg/categories/aktis/svgr_output";
 // import AddIconButton from "./ui/AddIconButton";
 
-import {
-  AktiBusfahren,
-  AktiChattenn,
-  AktiFahrradfahren,
-  AktiLesen,
-} from "../assets/svg/categories/aktis/svgr_output/index";
-// console.log(aktis);
-const aktis = [
-  { name: "busfahren", icon: <AktiBusfahren /> },
-  { name: "chatten", icon: <AktiChattenn /> },
-  { name: "fahrradfahren", icon: <AktiFahrradfahren /> },
-  { name: "lesen", icon: <AktiLesen /> },
-];
+// import {
+//   AktiBusfahren,
+//   AktiChattenn,
+//   AktiFahrradfahren,
+//   AktiLesen,
+// } from "../assets/svg/categories/aktis/svgr_output/index";
+// // console.log(aktis);
+// const aktis = [
+//   { name: "busfahren", icon: <AktiBusfahren /> },
+//   { name: "chatten", icon: <AktiChattenn /> },
+//   { name: "fahrradfahren", icon: <AktiFahrradfahren /> },
+//   { name: "lesen", icon: <AktiLesen /> },
+// ];
 
 // const aktis = import.meta.glob("../assets/svg/categories/aktis/*.svg", {
 //   eager: true,
@@ -49,24 +50,37 @@ const Iconbar = ({ images, addImages, percentWidth, theme }) => {
   const toggleClick = (icon, name) => {
     addImages({
       // id: images.at(-1).id + 1,
-      id: `${name}`,
+      id: `icon_${name}`,
       icon: icon,
       x: defaultPos.x,
       y: defaultPos.y,
     });
   };
   console.log(images);
-  
+
   return (
     <>
-      {aktis.map(({ name, icon }) => {
+      {Object.keys(aktis).map((akti, key) => {
+        const Component = aktis[akti];
+        return (
+          <Component
+            onClick={(e) => {
+
+console.log(e.target);
+
+            }}
+            key={key}
+          />
+        );
+      })}
+      {/* {aktis.map(({ name, icon }) => {
         return React.cloneElement(icon, {
           key: `${name}`,
           onClick: (e) => {
             addImages(icon, name);
           },
         });
-      })}
+      })} */}
       {/* {iconElements.map(({ name, icon }) => {
         return React.cloneElement(icon, {
           key: `icon-${name}`,

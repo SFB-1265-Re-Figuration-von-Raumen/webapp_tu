@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview",
+    "serve": "yarn build && vite preview",
     "svgr": "svgr  --config-file svgr-config.json  src/assets/svg/categories/aktis  -d src/assets/svg/categories/aktis/svgr_output"
   },
   "dependencies": {

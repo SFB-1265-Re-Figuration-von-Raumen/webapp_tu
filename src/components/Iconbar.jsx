@@ -8,9 +8,14 @@ import {
   AktiChattenn,
   AktiFahrradfahren,
   AktiLesen,
-} from "../assets/svgr_output/index";
+} from "../assets/svg/categories/aktis/svgr_output/index";
 // console.log(aktis);
-const aktis = [AktiBusfahren, AktiChattenn, AktiFahrradfahren, AktiLesen];
+const aktis = [
+  { name: "busfahren", icon: <AktiBusfahren /> },
+  { name: "chatten", icon: <AktiChattenn /> },
+  { name: "fahrradfahren", icon: <AktiFahrradfahren /> },
+  { name: "lesen", icon: <AktiLesen /> },
+];
 
 // const aktis = import.meta.glob("../assets/svg/categories/aktis/*.svg", {
 //   eager: true,
@@ -41,19 +46,37 @@ const Iconbar = ({ images, addImages, percentWidth, theme }) => {
     x: percentWidth / 2,
     y: window.innerHeight / 2,
   };
-const toggleClick = ()=> {
-  console.log("hi");
+  const toggleClick = (icon, name) => {
+    addImages({
+      // id: images.at(-1).id + 1,
+      id: `${name}`,
+      icon: icon,
+      x: defaultPos.x,
+      y: defaultPos.y,
+    });
+  };
+  console.log(images);
   
-}
   return (
-    <div>
-      {aktis.map((akti, key) => {
-       return  React.createElement(akti, { key: key, onAuxClick: toggleClick,  }, null);
+    <>
+      {aktis.map(({ name, icon }) => {
+        return React.cloneElement(icon, {
+          key: `${name}`,
+          onClick: (e) => {
+            addImages(icon, name);
+          },
+        });
       })}
-      {/* {Object.keys(aktis).map((akti, key) => {  
-        return React.createElement(RenderedIcon, {akti: akti, key: key}, null)
+      {/* {iconElements.map(({ name, icon }) => {
+        return React.cloneElement(icon, {
+          key: `icon-${name}`,
+          onClick: () => {
+            handleIconClick(name);
+          },
+        });
       })} */}
-    </div>
+    </>
+
     // <>
     //   {svgArray.map((index, key) => (
     //     <Grid key={key * 0.77} item height>

@@ -21,8 +21,8 @@ const KonvaCanvas = () => {
   const Konva = window.Konva;
 
   const percentWidth = (window.innerWidth / 100) * 70;
-  const [images, setImages] = useState([{}]);
-  const [textAnnotations, setTextAnnotations] = useState([{}]);
+  const [images, setImages] = useState([]);
+  const [textAnnotations, setTextAnnotations] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [deleteMode, setDeleteMode] = useState(false);
   const [selectedId, selectShape] = useState(null);

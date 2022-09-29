@@ -1,8 +1,0 @@
-{
-  "jsxRuntime": "classic",
-  "titleProp": false,
-  "expandProps": false,
-  "dimensions": true,
-  "prettierConfig": "PrettierConfig",
-  "ext": "jsx" 
-}

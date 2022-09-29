@@ -1,10 +1,11 @@
 import * as React from "react";
 
-const SvgAktiChattenn = () => (
+const SvgAktiChattenn = (props) => (
   <svg
     data-name="Ebene 1"
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 100 100"
+    {...props}
   >
     <path
       d="M44.87 65.49c-.09 0-.15-.07-.15-.19v-1.09c0-.17.12-.38.27-.47l1.11-.64.06.12-1.16.67c-.07.04-.13.15-.13.23v1.09c0 .06.03.1.07.1.02 0 .04 0 .06-.02l1.82-1.05s.01.02.02.03c.02.03.04.05.06.08l-1.9 1.1s-.08.04-.12.04"

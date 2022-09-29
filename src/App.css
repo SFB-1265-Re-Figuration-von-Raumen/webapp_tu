@@ -5,8 +5,11 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 body {
   background-color: rgb(255, 255, 255);
+  overflow: hidden; /* Crude Ipad Fixes */
+  touch-action:none; /* Crude Ipad Fixes */
 }
 
 .appContainer {

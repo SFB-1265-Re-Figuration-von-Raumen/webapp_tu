@@ -104,7 +104,7 @@ const url = "data:image/svg+xml;base64," + window.btoa(SVG);
     savePosition(e.target.attrs.arrayPos, e.target.attrs.x, e.target.attrs.y);
   };
 
-  const [img] = useImage(SVG);
+  const [img] = useImage(url);
   console.log(isSelected);
 
   const handleClickTap = () => {

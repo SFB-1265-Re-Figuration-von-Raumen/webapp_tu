@@ -7,59 +7,28 @@ import * as orte from "../assets/svg/categories/orte/svgr_output";
 import * as atmos from "../assets/svg/categories/atmos/svgr_output";
 import AddIconButton from "./ui/AddIconButton";
 
-
-
-
-// import {
-//   AktiBusfahren,
-//   AktiChattenn,
-//   AktiFahrradfahren,
-//   AktiLesen,
-// } from "../assets/svg/categories/aktis/svgr_output/index";
-// // console.log(aktis);
-// const aktis = [
-//   { name: "busfahren", icon: <AktiBusfahren /> },
-//   { name: "chatten", icon: <AktiChattenn /> },
-//   { name: "fahrradfahren", icon: <AktiFahrradfahren /> },
-//   { name: "lesen", icon: <AktiLesen /> },
-// ];
-
 const svgArray = [aktis, orte, personen, atmos];
 const categories = ["AKTIVITÄTEN", "ORTE", "PERSONEN", "ATMOSPHÄREN"];
 // const addIcon = import.meta.glob("")
-
-function getSvgUrl(name) {
-  return new URL(`../svg/${name}`, import.meta.url).href;
-}
-const RenderedIcon = ({ akti }) => {
-  return <>{akti}</>;
-};
 
 const Iconbar = ({ images, addImages, percentWidth, theme }) => {
   const defaultPos = {
     x: percentWidth / 2,
     y: window.innerHeight / 2,
   };
-  // addImages({
-  //   // id: images.at(-1).id + 1,
-  //   id: `icon_${name}`,
-  //   icon: icon,
-  //   x: defaultPos.x,
-  //   y: defaultPos.y,
-  // });
+
   const toggleClick = (icon, key) => {
     const element = document.getElementById(`${icon}-w-key:${key}`);
     console.log(element.outerHTML);
-    
-addImages({
-    // id: images.at(-1).id + 1,
-    id: `icon_${key}`,
-    icon: element.outerHTML,
-    x: defaultPos.x,
-    y: defaultPos.y,
-  });
+
+    addImages({
+      // id: images.at(-1).id + 1,
+      id: `icon_${key}`,
+      icon: element.outerHTML,
+      x: defaultPos.x,
+      y: defaultPos.y,
+    });
   };
-  console.log(images);
 
   return (
     <>
@@ -105,9 +74,16 @@ addImages({
                   return (
                     <Box
                       sx={{
-                        height: "100%",
-                        width: "auto",
+                        // height: "100%",
+                        // width: "auto",
+                        alignContent: "center",
+                        borderRadius: "20%",
+                        margin: "0 1rem",
+                        border: `1px solid ${theme.palette.primary.dark}`,
+                        backgroundColor: theme.palette.primary.light,
                       }}
+                      alignItems="center"
+                      justifyContent="center"
                       key={key + 4}
                     >
                       <Icon
@@ -116,10 +92,10 @@ addImages({
                         }}
                         key={key}
                         style={{
+                          margin: "1rem",
+                          padding: "0",
                           width: "4rem",
                           height: "4rem",
-                          border: `1px solid ${theme.palette.primary.dark}`,
-                          backgroundColor: theme.palette.primary.light,
                         }}
                         id={`${icon}-w-key:${key}`}
                       />

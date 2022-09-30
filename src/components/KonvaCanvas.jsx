@@ -8,6 +8,7 @@ import ControlPanel from "./ControlPanel";
 import TextModal from "./TextModal";
 import FreeDrawControls from "./FreeDrawControls";
 import { Box, Button, useTheme } from "@mui/material";
+import * as UIcons from "../assets/svg/UIcons/svgr_output/index";
 
 //  at the moment we need to find a way to position the image
 //  id in state when added. when we move an image, we want
@@ -17,7 +18,7 @@ const KonvaCanvas = () => {
   const theme = useTheme();
   const stageRef = useRef();
   const layeRef = useRef();
-  const selectionRectRef = useRef()
+  const selectionRectRef = useRef();
   const Konva = window.Konva;
 
   const percentWidth = (window.innerWidth / 100) * 70;
@@ -182,55 +183,54 @@ const KonvaCanvas = () => {
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleMouseUp}
-          >
+        >
           <Layer ref={layeRef}>
             {images.map((img, i) => {
               return (
                 <URLImage
-                image={img.icon}
-                theme={theme}
-                key={i}
-                arrayPos={images.indexOf(img)}
-                id={img.id}
-                x={img.x}
-                y={img.y}
-                images={images}
-                setImages={setImages}
-                shapeProps={img}
-                checkDeselect={checkDeselect}
-                selectedId={selectedId}
-                selectShape={selectShape}
-                isSelected={img.id === selectedId}
-                onChange={(newAttrs) => {
-                  const imgs = images.slice();
-                  imgs[i] = newAttrs;
-                  setImages(imgs);
-                }}
-                deleteMode={deleteMode}
-                setDeleteMode={setDeleteMode}
-                freeDraw={freeDraw}
-                setFreeDraw={setFreeDraw}
-                lines={lines}
-                setLines={setLines}
-
-                selectionRectRef={selectionRectRef}
+                  image={img.icon}
+                  theme={theme}
+                  key={i}
+                  arrayPos={images.indexOf(img)}
+                  id={img.id}
+                  x={img.x}
+                  y={img.y}
+                  images={images}
+                  setImages={setImages}
+                  shapeProps={img}
+                  checkDeselect={checkDeselect}
+                  selectedId={selectedId}
+                  selectShape={selectShape}
+                  isSelected={img.id === selectedId}
+                  onChange={(newAttrs) => {
+                    const imgs = images.slice();
+                    imgs[i] = newAttrs;
+                    setImages(imgs);
+                  }}
+                  deleteMode={deleteMode}
+                  setDeleteMode={setDeleteMode}
+                  freeDraw={freeDraw}
+                  setFreeDraw={setFreeDraw}
+                  lines={lines}
+                  setLines={setLines}
+                  selectionRectRef={selectionRectRef}
                   layeRef={layeRef}
                   stageRef={stageRef}
                 />
-                );
-              })}
+              );
+            })}
             {textAnnotations.map((annotation, i) => {
               return (
                 <TextModal
-                theme={theme}
-                text={annotation.text}
-                key={i}
-                id={annotation.id}
-                x={annotation.x}
-                y={annotation.y}
-                arrayPos={textAnnotations.indexOf(annotation)}
-                textAnnotations={textAnnotations}
-                setTextAnnotations={setTextAnnotations}
+                  theme={theme}
+                  text={annotation.text}
+                  key={i}
+                  id={annotation.id}
+                  x={annotation.x}
+                  y={annotation.y}
+                  arrayPos={textAnnotations.indexOf(annotation)}
+                  textAnnotations={textAnnotations}
+                  setTextAnnotations={setTextAnnotations}
                   shapeProps={annotation}
                   checkDeselect={checkDeselect}
                   selectedId={selectedId}
@@ -280,17 +280,17 @@ const KonvaCanvas = () => {
               />
             ))}
             <Transformer
-          // ref={trRef.current[getKey]}
-          ref={trRef}
-          boundBoxFunc={(oldBox, newBox) => {
-            // limit resize
-            if (newBox.width < 5 || newBox.height < 5) {
-              return oldBox;
-            }
-            return newBox;
-          }}
-        />
-        <Rect fill="rgba(0,0,255,0.5)" ref={selectionRectRef} />
+              // ref={trRef.current[getKey]}
+              ref={trRef}
+              boundBoxFunc={(oldBox, newBox) => {
+                // limit resize
+                if (newBox.width < 5 || newBox.height < 5) {
+                  return oldBox;
+                }
+                return newBox;
+              }}
+            />
+            <Rect fill="rgba(0,0,255,0.5)" ref={selectionRectRef} />
           </Layer>
         </Stage>
         <div
@@ -304,10 +304,10 @@ const KonvaCanvas = () => {
           }}
         >
           <Button variant="outlined" onClick={handleZoomIn}>
-            <img src="../public/svg/plus.svg" alt="plus zoom" />
+            <UIcons.Plus alt="plus zoom" />
           </Button>
           <Button variant="outlined" onClick={handleZoomOut}>
-            <img src="../public/svg/minus.svg" alt="minus zoom" />
+            <UIcons.Minus alt="minus zoom" />
           </Button>
         </div>
       </div>

@@ -1,33 +1,33 @@
 import { Box, Button, Card, Grid, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import ScrollContainer from "react-indiana-drag-scroll";
+import * as aktis from "../assets/svg/categories/aktis/svgr_output";
+import * as personen from "../assets/svg/categories/personen/svgr_output";
+import * as orte from "../assets/svg/categories/orte/svgr_output";
+import * as atmos from "../assets/svg/categories/atmos/svgr_output";
 import AddIconButton from "./ui/AddIconButton";
-
-const aktis = import.meta.glob("/assets/svg/categories/aktis/*.svg", {
-  eager: true,
-});
-const atmos = import.meta.glob("/assets/svg/categories/atmos/*.svg", {
-  eager: true,
-});
-const orte = import.meta.glob("/assets/svg/categories/orte/*.svg", {
-  eager: true,
-});
-const personen = import.meta.glob("/assets/svg/categories/personen/*.svg", {
-  eager: true,
-}); /* */
 
 const svgArray = [aktis, orte, personen, atmos];
 const categories = ["AKTIVITÄTEN", "ORTE", "PERSONEN", "ATMOSPHÄREN"];
 // const addIcon = import.meta.glob("")
 
-function getSvgUrl(name) {
-  return new URL(`../svg/${name}`, import.meta.url).href;
-}
-
 const Iconbar = ({ images, addImages, percentWidth, theme }) => {
   const defaultPos = {
     x: percentWidth / 2,
     y: window.innerHeight / 2,
+  };
+
+  const toggleClick = (icon, key) => {
+    const element = document.getElementById(`${icon}-w-key:${key}`);
+    console.log(element.outerHTML);
+
+    addImages({
+      // id: images.at(-1).id + 1,
+      id: `icon_${key}`,
+      icon: element.outerHTML,
+      x: defaultPos.x,
+      y: defaultPos.y,
+    });
   };
 
   return (
@@ -65,38 +65,39 @@ const Iconbar = ({ images, addImages, percentWidth, theme }) => {
             >
               <AddIconButton theme={theme} />
               <ScrollContainer
-                className={`scroll-container iconToolbarRow ${index}`}
+                className={`scroll-container iconToolbarRow`}
                 id="xDragToolbar"
                 key={key + 2}
               >
-                {Object.keys(index).map((key, i) => {
-                  {/* { console.log(`hello ${key}`) } */ }
+                {Object.keys(index).map((icon, key) => {
+                  const Icon = index[icon];
                   return (
                     <Box
                       sx={{
-                        height: "100%",
-                        width: "auto",
+                        // height: "100%",
+                        // width: "auto",
+                        alignContent: "center",
+                        borderRadius: "20%",
+                        margin: "0 1rem",
+                        border: `1px solid ${theme.palette.primary.dark}`,
+                        backgroundColor: theme.palette.primary.light,
                       }}
-                      key={i + 4}
+                      alignItems="center"
+                      justifyContent="center"
+                      key={key + 4}
                     >
-                      <img
-                        key={i + 3}
-                        src={getSvgUrl(key)}
-                        alt={key}
-                        className="icon"
+                      <Icon
+                        onClick={(e) => {
+                          toggleClick(icon, key);
+                        }}
+                        key={key}
                         style={{
-                          border: `1px solid ${theme.palette.primary.dark}`,
-                          backgroundColor: theme.palette.primary.light,
+                          margin: "1rem",
+                          padding: "0",
+                          width: "4rem",
+                          height: "4rem",
                         }}
-                        onClick={() => {
-                          addImages({
-                            // id: images.at(-1).id + 1,
-                            id: `${key}`,
-                            icon: getSvgUrl(key),
-                            x: defaultPos.x,
-                            y: defaultPos.y,
-                          });
-                        }}
+                        id={`${icon}-w-key:${key}`}
                       />
                     </Box>
                   );
@@ -105,8 +106,7 @@ const Iconbar = ({ images, addImages, percentWidth, theme }) => {
             </Box>
           </Box>
         </Grid>
-      ))
-      }
+      ))}
     </>
   );
 };

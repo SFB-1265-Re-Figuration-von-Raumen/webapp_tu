@@ -1,0 +1,17 @@
+export { default as Minus } from "./Minus";
+export { default as Plus } from "./Plus";
+export { default as UxIconConnectionMode } from "./UxIconConnectionMode";
+export { default as UxIconConnectionModeContour } from "./UxIconConnectionModeContour";
+export { default as UxIconCustomIcon } from "./UxIconCustomIcon";
+export { default as UxIconEmojiAnnotation } from "./UxIconEmojiAnnotation";
+export { default as UxIconEmojiAnnotationContour } from "./UxIconEmojiAnnotationContour";
+export { default as UxIconEraseMode } from "./UxIconEraseMode";
+export { default as UxIconEraseModeContour } from "./UxIconEraseModeContour";
+export { default as UxIconImageAnnotation } from "./UxIconImageAnnotation";
+export { default as UxIconImageAnnotationContour } from "./UxIconImageAnnotationContour";
+export { default as UxIconInstitutionalPage } from "./UxIconInstitutionalPage";
+export { default as UxIconInstitutionalPageContour } from "./UxIconInstitutionalPageContour";
+export { default as UxIconFreeDrawMode } from "./UxIconFreeDrawMode";
+export { default as UxIconFreeDrawModeContour } from "./UxIconFreeDrawModeContour";
+export { default as UxIconTextAnnotation } from "./UxIconTextAnnotation";
+export { default as UxIconTextAnnotationContour } from "./UxIconTextAnnotationContour";

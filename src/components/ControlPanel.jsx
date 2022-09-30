@@ -9,6 +9,7 @@ import {
   Box,
   Grid,
 } from "@mui/material";
+import * as UIcons from "../assets/svg/UIcons/svgr_output/index";
 
 const ControlPanel = ({
   textAnnotations,
@@ -96,8 +97,7 @@ const ControlPanel = ({
               backgroundColor: `${freeDraw ? "pink" : "transparent"}`,
             }}
           >
-            <img
-              src="./assets/svg/ux_icon_free-draw-mode.svg"
+            <UIcons.UxIconFreeDrawMode
               alt="Free Draw Mode"
               className="nav--button"
             />
@@ -112,8 +112,7 @@ const ControlPanel = ({
           }}
         >
           <Button>
-            <img
-              src="./assets/svg/ux-icon_connection-mode.svg"
+            <UIcons.UxIconConnectionMode
               alt="Connection Mode"
               className="nav--button"
             />
@@ -140,11 +139,7 @@ const ControlPanel = ({
               backgroundColor: `${deleteMode ? "pink" : "transparent"}`,
             }}
           >
-            <img
-              src="./assets/svg/ux-icon_erase-mode.svg"
-              alt="Erase Mode"
-              className="nav--button"
-            />
+            <UIcons.UxIconEraseMode alt="Erase Mode" className="nav--button" />
           </Button>
         </Grid>
         <Grid
@@ -156,8 +151,7 @@ const ControlPanel = ({
             onClick={handleOpen}
             style={{ backgroundColor: `${isEditing ? "pink" : "transparent"}` }}
           >
-            <img
-              src="./assets/svg/ux_icon_text-annotation.svg"
+            <UIcons.UxIconTextAnnotation
               alt="Text Annotation"
               className="nav--button"
             />

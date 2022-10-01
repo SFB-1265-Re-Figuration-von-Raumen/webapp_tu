@@ -191,6 +191,7 @@ const KonvaCanvas = () => {
                   image={img.icon}
                   theme={theme}
                   key={i}
+                  index={img}
                   arrayPos={images.indexOf(img)}
                   id={img.id}
                   x={img.x}

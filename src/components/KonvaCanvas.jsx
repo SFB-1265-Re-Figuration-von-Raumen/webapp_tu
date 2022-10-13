@@ -184,33 +184,34 @@ const KonvaCanvas = () => {
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleMouseUp}
-          >
+          // onDragStart={updateOrigin}
+        >
           <Layer ref={layeRef}>
-          {lines.map((line, i) => (
-            <Line
-              key={i}
-              points={line.points}
-              stroke={line.color}
-              draggable={freeDraw ? false : true}
-              strokeWidth={line.strokeWidth}
-              tension={0.5}
-              lineCap="round"
-              lineJoin="round"
-              onClick={() => {
-                if (deleteMode) {
-                  lines.splice(line, 1);
+            {lines.map((line, i) => (
+              <Line
+                key={i}
+                points={line.points}
+                stroke={line.color}
+                draggable={freeDraw ? false : true}
+                strokeWidth={line.strokeWidth}
+                tension={0.5}
+                lineCap="round"
+                lineJoin="round"
+                onClick={() => {
+                  if (deleteMode) {
+                    lines.splice(line, 1);
+                  }
+                }}
+                onTap={() => {
+                  if (deleteMode) {
+                    lines.splice(line, 1);
+                  }
+                }}
+                globalCompositeOperation={
+                  line.tool === "eraser" ? "destination-out" : "source-over"
                 }
-              }}
-              onTap={() => {
-                if (deleteMode) {
-                  lines.splice(line, 1);
-                }
-              }}
-              globalCompositeOperation={
-                line.tool === "eraser" ? "destination-out" : "source-over"
-              }
-            />
-          ))}
+              />
+            ))}
             {images.map((img, i) => {
               return (
                 <URLImage
@@ -340,6 +341,7 @@ const KonvaCanvas = () => {
           )}
 
           <Iconbar
+            stageRef={stageRef}
             theme={theme}
             images={images}
             setImages={setImages}

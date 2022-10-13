@@ -11,20 +11,21 @@ const svgArray = [aktis, orte, personen, atmos];
 const categories = ["AKTIVITÄTEN", "ORTE", "PERSONEN", "ATMOSPHÄREN"];
 // const addIcon = import.meta.glob("")
 
-const Iconbar = ({ images, addImages, percentWidth, theme }) => {
+const Iconbar = ({ images, addImages, percentWidth, theme, stageRef }) => {
   const defaultPos = {
     x: percentWidth / 2,
     y: window.innerHeight / 2,
   };
 
   const toggleClick = (icon, key) => {
+    const stagePos = stageRef.current.getAbsolutePosition();
     const element = document.getElementById(`${icon}-w-key:${key}`);
     addImages({
       // id: images.at(-1).id + 1,
       id: `icon_${key}`,
       icon: element.outerHTML,
-      x: defaultPos.x,
-      y: defaultPos.y,
+      x: defaultPos.x - stagePos.x,
+      y: defaultPos.y - stagePos.y,
     });
   };
 

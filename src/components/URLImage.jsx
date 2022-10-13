@@ -57,9 +57,9 @@ const URLImage = ({
     isSelected || isDragging
       ? null
       : e.target.setAttrs({
-          scaleX: 1.1,
-          scaleY: 1.1,
-        });
+        scaleX: 1.1,
+        scaleY: 1.1,
+      });
   };
 
   const handleDragEnd = (e) => {
@@ -67,11 +67,11 @@ const URLImage = ({
     isSelected || isDragging
       ? null
       : e.target.to({
-          duration: 0.2,
-          easing: Konva.Easings.EaseInOut,
-          scaleX: 1,
-          scaleY: 1,
-        });
+        duration: 0.2,
+        easing: Konva.Easings.EaseInOut,
+        scaleX: 1,
+        scaleY: 1,
+      });
     onChange({
       ...shapeProps,
       x: e.target.x(),
@@ -107,7 +107,7 @@ const URLImage = ({
   return (
     <>
       <Group draggable={freeDraw ? "false" : "true"}
-      visible="true">
+        visible="true">
         <Text
           ref={shapeRef}
           {...shapeProps}
@@ -128,7 +128,7 @@ const URLImage = ({
           // onClick={id ? isSelected = id : isSelected = null}
 
           draggable={freeDraw ? "false" : "true"}
-          text="bapp"
+          text="largest bapper"
           x={x}
           y={y}
           borderStroke={"black"}
@@ -137,6 +137,9 @@ const URLImage = ({
           height={undefined}
           onDragStart={handleDragStart}
           onDragEnd={handleDragEnd}
+          // we offset the text according to the image size
+          // offsetX={shapeRef.current}
+          // offsetY={img.height * -.6}
           // onDblClick={() => {
           //   setIsEditing(true);
           // }}
@@ -221,8 +224,8 @@ const URLImage = ({
           x={x}
           y={y}
           // I will use offset to set origin to the center of the image
-          // offsetX={img ? img.width / 2 : 0}
-          // offsetY={img ? img.height / 2 : 0}
+          offsetX={img ? img.width / 2 : 0}
+          offsetY={img ? img.height / 2 : 0}
           shadowBlur={3}
           // we need to find a way to set freeDraw to false when drag starts
           draggable={freeDraw ? "false" : "true"}

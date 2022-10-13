@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, Fragment } from "react";
 
 import { Stage, Layer, Line, Rect, Transformer } from "react-konva";
 
@@ -36,6 +36,23 @@ const KonvaCanvas = () => {
     x: 0,
     y: 0,
   });
+
+  // Download Button Function
+  function downloadURI(uri, name) {
+    var link = document.createElement('a');
+    link.download = name;
+    link.href = uri;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+//handle the export of the Canvas Stage as a PNG
+  const handleExport = () => {
+    const uri = stageRef.current.toDataURL();
+    console.log(uri);
+    downloadURI(uri, 'USERID.pdf');
+  };
+
 
   const checkDeselect = (e) => {
     // deselect when clicked on empty area
@@ -165,7 +182,9 @@ const KonvaCanvas = () => {
 
   return (
     <>
+      
       <div className="konvaContainer">
+      <Fragment>
         <Stage
           draggable={freeDraw ? false : true}
           onWheel={handleWheel}
@@ -281,6 +300,7 @@ const KonvaCanvas = () => {
             })}
           </Layer>
         </Stage>
+        </Fragment>
         <div
           className="zommContainer"
           style={{
@@ -299,6 +319,7 @@ const KonvaCanvas = () => {
           </Button>
         </div>
       </div>
+      <button onClick={handleExport}>SAVE BUTTON</button>
       <div className="iconBarContainer">
         <Box
           sx={{

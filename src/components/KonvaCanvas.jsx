@@ -38,7 +38,7 @@ const KonvaCanvas = () => {
     y: 0,
   });
 
-  // Download Button Function
+  // Download Button Function // we dont need this anymore if we export pdf via external library
   function downloadURI(uri, name) {
     var link = document.createElement('a');
     link.download = name;
@@ -47,23 +47,25 @@ const KonvaCanvas = () => {
     link.click();
     document.body.removeChild(link);
   }
+  // quickfix to get the current width and height of the stage --> how to do this better? @gg @alza
+  // i tried stageRef.current.height() --> this gives me a smaller pdf than the actual stage size
+  const pdfWidth= percentWidth
+  const pdfHeight = window.innerHeight
 //handle the export of the Canvas Stage as a Png  (for now later pdf)
   const handleExport = () => {
     // This is the Old png export code
     //const uri = stageRef.current.toDataURL();
     //console.log(uri);
     //downloadURI(uri, 'Canvas.png');
-    const pdf = new jsPDF('l', 'px', [stageRef.current.width(), stageRef.current.height()]);
+    const pdf = new jsPDF('l', 'px', [pdfWidth * 2, pdfHeight *2]); // times 2 just a quickfix atm so everything fits on pdf
     pdf.addImage(
     stageRef.current.toDataURL({ pixelRatio: 2}),
     0,
     0,
-    stageRef.current.width(),
-    stageRef.current.height()
+    pdfWidth,
+    pdfHeight
 );
   pdf.save("canvas.pdf")
-
-
   };
 
 

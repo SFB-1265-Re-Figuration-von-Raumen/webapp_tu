@@ -19,8 +19,6 @@ const Iconbar = ({ images, addImages, percentWidth, theme }) => {
 
   const toggleClick = (icon, key) => {
     const element = document.getElementById(`${icon}-w-key:${key}`);
-    console.log(element.outerHTML);
-
     addImages({
       // id: images.at(-1).id + 1,
       id: `icon_${key}`,
@@ -90,7 +88,7 @@ const Iconbar = ({ images, addImages, percentWidth, theme }) => {
                         onClick={(e) => {
                           toggleClick(icon, key);
                         }}
-                        key={key}
+                        key={`${icon}-w-key:${Math.random()}`}
                         style={{
                           margin: "1rem",
                           padding: "0",

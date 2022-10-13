@@ -1,4 +1,6 @@
+export { default as BringToFront } from "./BringToFront";
 export { default as Minus } from "./Minus";
+export { default as MoveToBack } from "./MoveToBack";
 export { default as Plus } from "./Plus";
 export { default as UxIconConnectionMode } from "./UxIconConnectionMode";
 export { default as UxIconConnectionModeContour } from "./UxIconConnectionModeContour";

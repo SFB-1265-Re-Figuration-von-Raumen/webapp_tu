@@ -167,6 +167,7 @@ const KonvaCanvas = () => {
     <>
       <div className="konvaContainer">
         <Stage
+          draggable={freeDraw ? false : true}
           onWheel={handleWheel}
           scaleX={stageScale.scale}
           scaleY={stageScale.scale}
@@ -183,14 +184,40 @@ const KonvaCanvas = () => {
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleMouseUp}
-        >
+          >
           <Layer ref={layeRef}>
+          {lines.map((line, i) => (
+            <Line
+              key={i}
+              points={line.points}
+              stroke={line.color}
+              draggable={freeDraw ? false : true}
+              strokeWidth={line.strokeWidth}
+              tension={0.5}
+              lineCap="round"
+              lineJoin="round"
+              onClick={() => {
+                if (deleteMode) {
+                  lines.splice(line, 1);
+                }
+              }}
+              onTap={() => {
+                if (deleteMode) {
+                  lines.splice(line, 1);
+                }
+              }}
+              globalCompositeOperation={
+                line.tool === "eraser" ? "destination-out" : "source-over"
+              }
+            />
+          ))}
             {images.map((img, i) => {
               return (
                 <URLImage
                   image={img.icon}
                   theme={theme}
                   key={i}
+                  index={img}
                   arrayPos={images.indexOf(img)}
                   id={img.id}
                   x={img.x}
@@ -252,45 +279,6 @@ const KonvaCanvas = () => {
                 />
               );
             })}
-          </Layer>
-          <Layer>
-            {lines.map((line, i) => (
-              <Line
-                key={i}
-                points={line.points}
-                stroke={line.color}
-                draggable={freeDraw ? false : true}
-                strokeWidth={line.strokeWidth}
-                tension={0.5}
-                lineCap="round"
-                lineJoin="round"
-                onClick={() => {
-                  if (deleteMode) {
-                    lines.splice(line, 1);
-                  }
-                }}
-                onTap={() => {
-                  if (deleteMode) {
-                    lines.splice(line, 1);
-                  }
-                }}
-                globalCompositeOperation={
-                  line.tool === "eraser" ? "destination-out" : "source-over"
-                }
-              />
-            ))}
-            <Transformer
-              // ref={trRef.current[getKey]}
-              ref={trRef}
-              boundBoxFunc={(oldBox, newBox) => {
-                // limit resize
-                if (newBox.width < 5 || newBox.height < 5) {
-                  return oldBox;
-                }
-                return newBox;
-              }}
-            />
-            <Rect fill="rgba(0,0,255,0.5)" ref={selectionRectRef} />
           </Layer>
         </Stage>
         <div

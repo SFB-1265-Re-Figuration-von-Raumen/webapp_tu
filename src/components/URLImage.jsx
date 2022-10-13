@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { Image, Transformer } from "react-konva";
 import useImage from "use-image";
 
@@ -22,9 +22,11 @@ const URLImage = ({
   lines,
   layerRef,
   stageRef,
+  index,
 }) => {
   const shapeRef = useRef();
   const trRef = useRef();
+  const [isDragging, setIsDragging] = useState(false);
   useEffect(() => {
     if (isSelected) {
       // we need to attach transformer manually
@@ -32,26 +34,8 @@ const URLImage = ({
       trRef.current.getLayer().batchDraw();
     }
   }, [isSelected]);
-const SVG = image
-const url = "data:image/svg+xml;base64," + window.btoa(SVG);
-
-  function savePosition(pos, x, y) {
-    // console.log(`arrayPos is ${pos}, x is ${x}, y is ${y}`);
-
-    const newImage = images[pos];
-    // console.log(newImage);
-    newImage.x = x;
-    newImage.y = y;
-    const updatedImages = Object.keys(images).map((key, i) => {
-      if (key === pos) {
-        return newImage;
-      }
-      return images[key];
-    });
-    // console.log(updatedImages);
-    setImages(updatedImages);
-    // console.log(images);
-  }
+  const SVG = image;
+  const url = "data:image/svg+xml;base64," + window.btoa(SVG);
 
   const checkDeletePoint = () => {
     if (freeDraw === true) {
@@ -62,27 +46,24 @@ const url = "data:image/svg+xml;base64," + window.btoa(SVG);
     setFreeDraw(false);
   };
 
-  // if (isSelected) {
-  // check if freeDraw is true
-  //   checkDeletePoint();
-  // setFreeDraw(false);
-  // }
-
   const handleDragStart = (e) => {
-    if (freeDraw){
-      return 
+    setIsDragging(true);
+    if (freeDraw) {
+      return;
     }
     checkDeletePoint();
-    isSelected
+    isSelected || isDragging
       ? null
       : e.target.setAttrs({
           scaleX: 1.1,
           scaleY: 1.1,
         });
+
   };
 
   const handleDragEnd = (e) => {
-    isSelected
+    setIsDragging(false);
+    isSelected || isDragging
       ? null
       : e.target.to({
           duration: 0.2,
@@ -100,18 +81,24 @@ const url = "data:image/svg+xml;base64," + window.btoa(SVG);
     // with the new x and y values
     // for the current image
     // respective to the index "arrayPos"
-
-    savePosition(e.target.attrs.arrayPos, e.target.attrs.x, e.target.attrs.y);
+    const idx = images.find((obj) => obj.id == id);
+    console.log(idx);
+    const arrCopy = images.slice();
+    arrCopy.splice(images.indexOf(idx), 1);
+    idx.x = e.target.attrs.x;
+    idx.y = e.target.attrs.y;
+    arrCopy.push(idx);
+    setImages(arrCopy);
+    // savePosition(id, e.target.attrs.x, e.target.attrs.y);
   };
 
   const [img] = useImage(url);
-  console.log(isSelected);
 
   const handleClickTap = () => {
     if (deleteMode) {
       images.splice(arrayPos, 1);
     } else if (freeDraw) {
-       selectShape(null)
+      selectShape(null);
     }
     selectShape(id);
   };

@@ -47,7 +47,7 @@ const KonvaCanvas = () => {
     link.click();
     document.body.removeChild(link);
   }
-//handle the export of the Canvas Stage as a PNG (for now later pdf)
+//handle the export of the Canvas Stage as a Png  (for now later pdf)
   const handleExport = () => {
     // This is the Old png export code
     //const uri = stageRef.current.toDataURL();

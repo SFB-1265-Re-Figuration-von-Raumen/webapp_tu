@@ -88,7 +88,7 @@ const Iconbar = ({ images, addImages, percentWidth, theme }) => {
                         onClick={(e) => {
                           toggleClick(icon, key);
                         }}
-                        key={key}
+                        key={`${icon}-w-key:${Math.random()}`}
                         style={{
                           margin: "1rem",
                           padding: "0",

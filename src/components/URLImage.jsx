@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { Image, Transformer } from "react-konva";
 import useImage from "use-image";
 
@@ -26,6 +26,7 @@ const URLImage = ({
 }) => {
   const shapeRef = useRef();
   const trRef = useRef();
+  const [isDragging, setIsDragging] = useState(false);
   useEffect(() => {
     if (isSelected) {
       // we need to attach transformer manually
@@ -45,23 +46,24 @@ const URLImage = ({
     setFreeDraw(false);
   };
 
-  
-
   const handleDragStart = (e) => {
+    setIsDragging(true);
     if (freeDraw) {
       return;
     }
     checkDeletePoint();
-    isSelected
+    isSelected || isDragging
       ? null
       : e.target.setAttrs({
           scaleX: 1.1,
           scaleY: 1.1,
         });
+
   };
 
   const handleDragEnd = (e) => {
-    isSelected
+    setIsDragging(false);
+    isSelected || isDragging
       ? null
       : e.target.to({
           duration: 0.2,
@@ -86,7 +88,7 @@ const URLImage = ({
     idx.x = e.target.attrs.x;
     idx.y = e.target.attrs.y;
     arrCopy.push(idx);
-    setImages(arrCopy)
+    setImages(arrCopy);
     // savePosition(id, e.target.attrs.x, e.target.attrs.y);
   };
 

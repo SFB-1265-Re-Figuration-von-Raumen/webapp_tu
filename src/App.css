@@ -28,6 +28,8 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  /* freedraw prevent dings*/
+  overflow-y: hidden;
 }
 
 .iconToolbarRow {

@@ -21,6 +21,7 @@ const ControlPanel = ({
   freeDraw,
   setFreeDraw,
   isEditing,
+  isSelected
 }) => {
   const [open, setOpen] = useState(false);
   const [textInput, setTextInput] = useState("");
@@ -33,6 +34,7 @@ const ControlPanel = ({
     setOpen(false);
   };
   const handleOpen = () => {
+    if (isSelected)
     selectShape(null);
     setOpen(true);
     setDeleteMode(false);

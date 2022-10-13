@@ -57,7 +57,7 @@ const KonvaCanvas = () => {
     //const uri = stageRef.current.toDataURL();
     //console.log(uri);
     //downloadURI(uri, 'Canvas.png');
-    const pdf = new jsPDF('l', 'px', [pdfWidth * 2, pdfHeight *2]); // times 2 just a quickfix atm so everything fits on pdf
+    const pdf = new jsPDF('l', 'px', [pdfWidth * 2, pdfHeight *2]); // times 2 just a quickfix atm so everything fits on pdf (lol)
     pdf.addImage(
     stageRef.current.toDataURL({ pixelRatio: 2}),
     0,

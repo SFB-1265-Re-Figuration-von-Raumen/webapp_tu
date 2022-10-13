@@ -107,7 +107,7 @@ const URLImage = ({
   return (
     <>
       <Group draggable={freeDraw ? "false" : "true"}
-      visible="true">
+      visible="true" borderStroke={true} >
         <Text
           ref={shapeRef}
           {...shapeProps}

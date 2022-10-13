@@ -104,13 +104,18 @@ const URLImage = ({
     selectShape(id);
   };
 
+  // create a useRef for the Text props
+  const textRef = useRef(0)
+  console.log(textRef);
+
   return (
     <>
       <Group draggable={freeDraw ? "false" : "true"}
         visible="true">
         <Text
-          ref={shapeRef}
-          {...shapeProps}
+          ref={textRef}
+          // ref={shapeRef}
+          // {...shapeProps}
           arrayPos={arrayPos}
           isSelected={id === selectedId}
           // onClick={handleClickTap}
@@ -128,7 +133,7 @@ const URLImage = ({
           // onClick={id ? isSelected = id : isSelected = null}
 
           draggable={freeDraw ? "false" : "true"}
-          text="largest bapper"
+          text="llargest bapperlargest bapperlargest bapperlargest bapperargest bapper"
           x={x}
           y={y}
           borderStroke={"black"}
@@ -137,9 +142,14 @@ const URLImage = ({
           height={undefined}
           onDragStart={handleDragStart}
           onDragEnd={handleDragEnd}
-          // we offset the text according to the image size
-          // offsetX={shapeRef.current}
-          // offsetY={img.height * -.6}
+          // we offset the text on x axis according to the text width
+          offsetX={textRef.current.textWidth / 2}
+          // next we need to offset the text on y axis according to the image height
+          // how do we get the image height since we are using useImage hook?
+
+          // offsetY={img.height / -2}
+          // this does not work!
+
           // onDblClick={() => {
           //   setIsEditing(true);
           // }}

@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
-import { Image, Transformer } from "react-konva";
+import { Image, Transformer, Group, Text } from "react-konva";
 import useImage from "use-image";
 
 const URLImage = ({
@@ -23,6 +23,8 @@ const URLImage = ({
   layerRef,
   stageRef,
   index,
+  isEditing,
+  setIsEditing,
 }) => {
   const shapeRef = useRef();
   const trRef = useRef();
@@ -58,7 +60,6 @@ const URLImage = ({
           scaleX: 1.1,
           scaleY: 1.1,
         });
-
   };
 
   const handleDragEnd = (e) => {
@@ -105,47 +106,151 @@ const URLImage = ({
 
   return (
     <>
-      <Image
-        ref={shapeRef}
-        {...shapeProps}
-        arrayPos={arrayPos}
-        image={img}
-        isSelected={id === selectedId}
-        onClick={handleClickTap}
-        onTap={handleClickTap}
-        // onClick={id ? isSelected = id : isSelected = null}
-        x={x}
-        y={y}
-        // I will use offset to set origin to the center of the image
-        // offsetX={img ? img.width / 2 : 0}
-        // offsetY={img ? img.height / 2 : 0}
-        shadowBlur={3}
-        // we need to find a way to set freeDraw to false when drag starts
-        draggable={freeDraw ? "false" : "true"}
-        onDragStart={handleDragStart}
-        onDragEnd={handleDragEnd}
-        onTransformEnd={(e) => {
-          // transformer is changing scale of the node
-          // and NOT its width or height
-          // but in the store we have only width and height
-          // to match the data better we will reset scale on transform end
-          const node = shapeRef.current;
-          const scaleX = node.scaleX();
-          const scaleY = node.scaleY();
+      <Group draggable={freeDraw ? "false" : "true"}
+      visible="true">
+        <Text
+          ref={shapeRef}
+          {...shapeProps}
+          arrayPos={arrayPos}
+          isSelected={id === selectedId}
+          // onClick={handleClickTap}
+          // onTap={handleClickTap}
+          onSelect={() => {
+            selectShape(id);
+          }}
+          fill={
+            isEditing && isSelected ? "transparent" : theme.palette.primary.main
+          }
+          // lineCap={"butt"}
+          // lineJoin={"bevel"}
+          strokeEnabled={true}
+          wrap={"word"}
+          // onClick={id ? isSelected = id : isSelected = null}
 
-          // we will reset it back
-          node.scaleX(1);
-          node.scaleY(1);
-          onChange({
-            ...shapeProps,
-            x: node.x(),
-            y: node.y(),
-            // set minimal value
-            width: Math.max(5, node.width() * scaleX),
-            height: Math.max(node.height() * scaleY),
-          });
-        }}
-      />
+          draggable={freeDraw ? "false" : "true"}
+          text="bapp"
+          x={x}
+          y={y}
+          borderStroke={"black"}
+          fontSize={20}
+          fontFamily={theme.typography.fontFamily}
+          height={undefined}
+          onDragStart={handleDragStart}
+          onDragEnd={handleDragEnd}
+          // onDblClick={() => {
+          //   setIsEditing(true);
+          // }}
+          // onDblTap={() => {
+          //   setIsEditing(true);
+          // }}
+          onTransform={
+            () => {
+              const node = shapeRef.current;
+              const scaleX = node.scaleX();
+              const scaleY = node.scaleY();
+
+              onChange({
+                ...shapeProps,
+                x: node.x(),
+                y: node.y(),
+                // set minimal value
+                // width: Math.max(5, node.width() * scaleX),
+                // height: Math.max(node.height() * scaleY),
+              });
+
+              // we will reset it back
+              node.scaleX(1);
+              node.scaleY(1);
+              onChange({
+                ...shapeProps,
+                x: node.x(),
+                y: node.y(),
+                fontSize: Math.max(5, node.width() * scaleX),
+                // set minimal value
+                width: Math.max(5, node.width() * scaleX),
+                height: Math.max(node.height() * scaleY),
+              });
+            }
+            // setAttrs({
+            //   width: Math.max(this.width() * this.scaleX(), 20),
+            //   height: Math.max(this.height() * this.scaleY(), 40),
+            //   scaleX: 1,
+            //   scaleY: 1,
+            // })
+          }
+          onTransformEnd={() => {
+            //   // transformer is changing scale of the node
+            //   // and NOT its width or height
+            //   // but in the store we have only width and height
+            //   // to match the data better we will reset scale on transform end
+            const node = shapeRef.current;
+            const scaleX = node.scaleX();
+            const scaleY = node.scaleY();
+
+            node.scaleX(1);
+            node.scaleY(1);
+            // onChange({
+            //   ...shapeProps,
+            //   x: node.x(),
+            //   y: node.y(),
+            //   // set minimal value
+            //   // width: Math.max(5, node.width() * scaleX),
+            //   // height: Math.max(node.height() * scaleY),
+            // });
+            // //   // we will reset it back
+            onChange({
+              ...shapeProps,
+              x: node.x(),
+              y: node.y(),
+              fontSize: Math.max(5, node.width() * scaleX),
+              // set minimal value
+              width: Math.max(5, node.width() * scaleX),
+              height: Math.max(node.height() * scaleY),
+            });
+          }}
+        />
+        <Image
+          ref={shapeRef}
+          {...shapeProps}
+          arrayPos={arrayPos}
+          image={img}
+          isSelected={id === selectedId}
+          onClick={handleClickTap}
+          onTap={handleClickTap}
+          // onClick={id ? isSelected = id : isSelected = null}
+          x={x}
+          y={y}
+          // I will use offset to set origin to the center of the image
+          // offsetX={img ? img.width / 2 : 0}
+          // offsetY={img ? img.height / 2 : 0}
+          shadowBlur={3}
+          // we need to find a way to set freeDraw to false when drag starts
+          draggable={freeDraw ? "false" : "true"}
+          onDragStart={handleDragStart}
+          onDragEnd={handleDragEnd}
+          onTransformEnd={(e) => {
+            // transformer is changing scale of the node
+            // and NOT its width or height
+            // but in the store we have only width and height
+            // to match the data better we will reset scale on transform end
+            const node = shapeRef.current;
+            const scaleX = node.scaleX();
+            const scaleY = node.scaleY();
+
+            // we will reset it back
+            node.scaleX(1);
+            node.scaleY(1);
+            onChange({
+              ...shapeProps,
+              x: node.x(),
+              y: node.y(),
+              // set minimal value
+              width: Math.max(5, node.width() * scaleX),
+              height: Math.max(node.height() * scaleY),
+            });
+          }}
+        />
+      </Group>
       {isSelected && (
         <Transformer
           ref={trRef}

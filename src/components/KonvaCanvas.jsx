@@ -60,16 +60,16 @@ const KonvaCanvas = () => {
     const stage = e.target.getStage();
     const oldScale = stage.scaleX();
     const mousePointTo = {
-      x: stage.getPointerPosition().x / oldScale - stage.x() / oldScale,
-      y: stage.getPointerPosition().y / oldScale - stage.y() / oldScale,
+      x: stage.getRelativePointerPosition().x / oldScale - stage.x() / oldScale,
+      y: stage.getRelativePointerPosition().y / oldScale - stage.y() / oldScale,
     };
 
     const newScale = e.evt.deltaY < 0 ? oldScale * scaleBy : oldScale / scaleBy;
 
     setStageScale({
       scale: newScale,
-      x: (stage.getPointerPosition().x / newScale - mousePointTo.x) * newScale,
-      y: (stage.getPointerPosition().y / newScale - mousePointTo.y) * newScale,
+      x: (stage.getRelativePointerPosition().x / newScale - mousePointTo.x) * newScale,
+      y: (stage.getRelativePointerPosition().y / newScale - mousePointTo.y) * newScale,
     });
   }
   // END OF ZOOM FUNCTIONS
@@ -83,7 +83,7 @@ const KonvaCanvas = () => {
   const handleMouseDown = (e) => {
     if (freeDraw) {
       isDrawing.current = true;
-      const pos = e.target.getStage().getPointerPosition();
+      const pos = e.target.getStage().getRelativePointerPosition();
       setLines([...lines, { tool, points: [pos.x, pos.y] }]);
     }
   };
@@ -95,7 +95,7 @@ const KonvaCanvas = () => {
         return;
       }
       const stage = e.target.getStage();
-      const point = stage.getPointerPosition();
+      const point = stage.getRelativePointerPosition();
       let lastLine = lines[lines.length - 1];
       // add point
       lastLine.points = lastLine.points.concat([point.x, point.y]);
@@ -111,18 +111,18 @@ const KonvaCanvas = () => {
   const handleTouchStart = (e) => {
     if (freeDraw) {
       isDrawing.current = true;
-      const pos = e.target.getStage().getPointerPosition();
+      const pos = e.target.getStage().getRelativePointerPosition();
       setLines([...lines, { tool, points: [pos.x, pos.y] }]);
     }
   };
   const handleTouchMove = (e) => {
     if (freeDraw) {
       isDrawing.current = true;
-      const pos = e.target.getStage().getPointerPosition();
+      const pos = e.target.getStage().getRelativePointerPosition();
       // setLines([...lines, { tool, points: [pos.x, pos.y] }]);
       console.log(pos);
       const stage = e.target.getStage();
-      const point = stage.getPointerPosition();
+      const point = stage.getRelativePointerPosition();
       let lastLine = lines[lines.length - 1];
       // add point
       console.log(lastLine);
@@ -243,6 +243,8 @@ const KonvaCanvas = () => {
                   selectionRectRef={selectionRectRef}
                   layeRef={layeRef}
                   stageRef={stageRef}
+                  isEditing={isEditing}
+                  setIsEditing={setIsEditing}
                 />
               );
             })}
@@ -276,6 +278,8 @@ const KonvaCanvas = () => {
                   trRef={trRef}
                   layeRef={layeRef}
                   stageRef={stageRef}
+
+                  s
                 />
               );
             })}

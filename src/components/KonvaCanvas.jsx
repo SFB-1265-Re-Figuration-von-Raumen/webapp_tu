@@ -1,7 +1,7 @@
 import React, { useState, useRef, Fragment } from "react";
 
 import { Stage, Layer, Line, Rect, Transformer } from "react-konva";
-
+import { jsPDF } from "jspdf";
 import URLImage from "./URLImage";
 import Iconbar from "./Iconbar";
 import ControlPanel from "./ControlPanel";
@@ -9,6 +9,7 @@ import TextModal from "./TextModal";
 import FreeDrawControls from "./FreeDrawControls";
 import { Box, Button, useTheme } from "@mui/material";
 import * as UIcons from "../assets/svg/UIcons/svgr_output/index";
+
 
 //  at the moment we need to find a way to position the image
 //  id in state when added. when we move an image, we want
@@ -46,11 +47,23 @@ const KonvaCanvas = () => {
     link.click();
     document.body.removeChild(link);
   }
-//handle the export of the Canvas Stage as a PNG
+//handle the export of the Canvas Stage as a PNG (for now later pdf)
   const handleExport = () => {
-    const uri = stageRef.current.toDataURL();
-    console.log(uri);
-    downloadURI(uri, 'USERID.pdf');
+    // This is the Old png export code
+    //const uri = stageRef.current.toDataURL();
+    //console.log(uri);
+    //downloadURI(uri, 'Canvas.png');
+    const pdf = new jsPDF('l', 'px', [stageRef.current.width(), stageRef.current.height()]);
+    pdf.addImage(
+    stageRef.current.toDataURL({ pixelRatio: 2}),
+    0,
+    0,
+    stageRef.current.width(),
+    stageRef.current.height()
+);
+  pdf.save("canvas.pdf")
+
+
   };
 
 
@@ -318,8 +331,18 @@ const KonvaCanvas = () => {
             <UIcons.Minus alt="minus zoom" />
           </Button>
         </div>
+        <div className="zommContainer"
+          style={{
+            position: "absolute",
+            bottom: "2rem",
+            left: "40rem",
+            gap: ".5rem",
+            display: "flex",
+          }}>
+      <button variant="outlined" onClick={handleExport}>SAVE BUTTON</button>
+        </div>
       </div>
-      <button onClick={handleExport}>SAVE BUTTON</button>
+
       <div className="iconBarContainer">
         <Box
           sx={{

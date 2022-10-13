@@ -167,6 +167,7 @@ const KonvaCanvas = () => {
     <>
       <div className="konvaContainer">
         <Stage
+          draggable={freeDraw ? false : true}
           onWheel={handleWheel}
           scaleX={stageScale.scale}
           scaleY={stageScale.scale}

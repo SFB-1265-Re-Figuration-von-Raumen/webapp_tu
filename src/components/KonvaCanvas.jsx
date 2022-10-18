@@ -341,7 +341,11 @@ const KonvaCanvas = () => {
             gap: ".5rem",
             display: "flex",
           }}>
-      <button variant="outlined" onClick={handleExport}>SAVE BUTTON</button>
+      <div>
+      <Button variant="outlined" onClick={handleExport}>
+        <UIcons.BringToFront alt="Save Canvas" />
+      </Button>
+      </div>
         </div>
       </div>
 

@@ -77,6 +77,9 @@ const Iconbar = ({ images, addImages, percentWidth, theme, stageRef }) => {
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
+                        margin: "0 0.25rem",
+                        borderRadius: "20px",
+                        backgroundColor: theme.palette.primary.dark,
                       }}
                     >
                       <Icon

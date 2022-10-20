@@ -56,7 +56,10 @@ body {
 .icon {
   display: flex;
   cursor: pointer;
-  width: 10vmin;
+  /* width: 10vmin; */
+  /* width: auto; */
+  height: 100%;
+  /* border: 1px solid red; */
   margin: 0 0.5rem;
   padding: 0.25rem;
   border-radius: 20px;

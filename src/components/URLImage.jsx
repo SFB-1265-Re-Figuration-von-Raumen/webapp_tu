@@ -15,6 +15,7 @@ const URLImage = ({
   id,
   x,
   y,
+  name,
   arrayPos,
   deleteMode,
   freeDraw,
@@ -135,7 +136,7 @@ const URLImage = ({
           // onClick={id ? isSelected = id : isSelected = null}
 
           draggable={freeDraw ? "false" : "true"}
-          text="llargest bapperlargest bapperlargest bapperlargest bapperargest bapper"
+          text={name.split(/(?=[A-Z])/).join(" ")}
           x={x}
           y={y}
           borderStroke={"black"}

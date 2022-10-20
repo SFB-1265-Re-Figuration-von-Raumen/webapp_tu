@@ -1,4 +1,4 @@
-export { default as AtmoLustig } from "./AtmoLustig";
-export { default as AtmoAngespannt } from "./AtmoAngespannt";
-export { default as AtmoKonzentriert } from "./AtmoKonzentriert";
-export { default as AtmosSchoen } from "./AtmosSchoen";
+export { default as Angespannt } from "./Angespannt";
+export { default as Lustig } from "./Lustig";
+export { default as Schoen } from "./Schoen";
+export { default as Konzentriert } from "./Konzentriert";

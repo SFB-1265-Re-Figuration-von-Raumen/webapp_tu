@@ -224,6 +224,7 @@ const KonvaCanvas = () => {
                   theme={theme}
                   key={i}
                   index={img}
+                  name={img.name}
                   arrayPos={images.indexOf(img)}
                   id={img.id}
                   x={img.x}

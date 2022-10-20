@@ -5,6 +5,8 @@ const SvgMinus = (props) => (
     id="minus_svg__uuid-7b1cd523-cbff-497b-9016-1a39b5bb6275"
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 68.67 69.52"
+    width="1em"
+    height="1em"
     {...props}
   >
     <defs>

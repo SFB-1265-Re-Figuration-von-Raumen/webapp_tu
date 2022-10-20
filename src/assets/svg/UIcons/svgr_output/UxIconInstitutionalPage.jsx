@@ -4,8 +4,9 @@ const SvgUxIconInstitutionalPage = (props) => (
   <svg
     data-name="Ebene 1"
     xmlns="http://www.w3.org/2000/svg"
-    width={68.67}
-    height={69.52}
+    width="1em"
+    height="1em"
+    viewBox="0 0 68.67 69.52"
     {...props}
   >
     <path

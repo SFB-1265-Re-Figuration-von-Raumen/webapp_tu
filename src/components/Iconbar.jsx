@@ -1,9 +1,9 @@
 import { Box, Button, Card, Grid, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import ScrollContainer from "react-indiana-drag-scroll";
-import * as aktis from "../assets/svg/categories/aktis/svgr_output";
-import * as personen from "../assets/svg/categories/personen/svgr_output";
-import * as orte from "../assets/svg/categories/orte/svgr_output";
+import * as aktis from "../assets/svg/categories/Aktis/svgr_output";
+import * as personen from "../assets/svg/categories/Personen/svgr_output";
+import * as orte from "../assets/svg/categories/Places/svgr_output";
 import * as atmos from "../assets/svg/categories/atmos/svgr_output";
 import AddIconButton from "./ui/AddIconButton";
 
@@ -71,34 +71,25 @@ const Iconbar = ({ images, addImages, percentWidth, theme, stageRef }) => {
                 {Object.keys(index).map((icon, key) => {
                   const Icon = index[icon];
                   return (
-                    <Box
-                      sx={{
-                        // height: "100%",
-                        // width: "auto",
-                        alignContent: "center",
-                        borderRadius: "20%",
-                        margin: "0 1rem",
-                        border: `1px solid ${theme.palette.primary.dark}`,
-                        backgroundColor: theme.palette.primary.light,
+                    <div
+                      key={key}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
                       }}
-                      alignItems="center"
-                      justifyContent="center"
-                      key={key + 4}
                     >
                       <Icon
                         onClick={(e) => {
                           toggleClick(icon, key);
                         }}
                         key={`${icon}-w-key:${Math.random()}`}
-                        style={{
-                          margin: "1rem",
-                          padding: "0",
-                          width: "4rem",
-                          height: "4rem",
-                        }}
+                        className="icon"
                         id={`${icon}-w-key:${key}`}
+                        width={null}
+                        height={null}
                       />
-                    </Box>
+                    </div>
                   );
                 })}
               </ScrollContainer>

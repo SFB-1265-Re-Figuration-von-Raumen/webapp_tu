@@ -9,7 +9,7 @@
 body {
   background-color: rgb(255, 255, 255);
   overflow: hidden; /* Crude Ipad Fixes */
-  touch-action:none; /* Crude Ipad Fixes */
+  touch-action: none; /* Crude Ipad Fixes */
 }
 
 .appContainer {
@@ -54,10 +54,11 @@ body {
 }
 
 .icon {
+  display: flex;
   cursor: pointer;
+  width: 10vmin;
   margin: 0 0.5rem;
   padding: 0.25rem;
-  height: 100%;
   border-radius: 20px;
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;

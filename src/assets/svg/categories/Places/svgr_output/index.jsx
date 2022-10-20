@@ -1,0 +1,9 @@
+export { default as BeimFreund } from "./BeimFreund";
+export { default as Bushaltestelle } from "./Bushaltestelle";
+export { default as Fitnessstudio } from "./Fitnessstudio";
+export { default as Kino } from "./Kino";
+export { default as Museum } from "./Museum";
+export { default as Schule } from "./Schule";
+export { default as Sport } from "./Sport";
+export { default as Urlaub } from "./Urlaub";
+export { default as ZuHause } from "./ZuHause";

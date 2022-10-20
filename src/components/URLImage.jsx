@@ -272,14 +272,14 @@ const URLImage = ({
               height: Math.max(node.height() * scaleY),
             });
 
-            const newLine = lines.slice();
-            const lastLineGone = newLine.splice(1, -1);
-            return setLines((before) => [
-              ...(linesBeforeTransform
-                ? before === linesBeforeTransform
-                : before),
-              lastLineGone,
-            ]);
+            // const newLine = lines.slice();
+            // const lastLineGone = newLine.splice(1, -1);
+            // setLines((before) => [
+            //   ...(linesBeforeTransform
+            //     ? before === linesBeforeTransform
+            //     : before),
+            //   lastLineGone,
+            // ]);
           }}
         />
       </Group>

@@ -22,7 +22,7 @@ const Iconbar = ({ images, addImages, percentWidth, theme, stageRef }) => {
     const element = document.getElementById(`${icon}-w-key:${key}`);
     const name = dings.split(/(?=[A-Z])/);
     const joined = name.splice(1, 2).join("");
-    
+
     addImages({
       // id: images.at(-1).id + 1,
       id: `icon_${key}`,
@@ -84,7 +84,9 @@ const Iconbar = ({ images, addImages, percentWidth, theme, stageRef }) => {
                         justifyContent: "center",
                         margin: "0 0.25rem",
                         borderRadius: "20px",
-                        backgroundColor: theme.palette.primary.dark,
+                        backgroundColor: theme.palette.primary.light,
+                        aspectRatio: "1/1",
+                        border: `1px solid ${theme.palette.primary.dark}`
                       }}
                     >
                       <Icon

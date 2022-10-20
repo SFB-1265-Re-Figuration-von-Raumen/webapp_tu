@@ -68,7 +68,10 @@ body {
   -ms-border-radius: 20px;
   -o-border-radius: 20px;
 }
-
+/* UI */
+.zoomyZoom {
+  width: 5vmin;
+}
 /* nav */
 
 .nav--button {

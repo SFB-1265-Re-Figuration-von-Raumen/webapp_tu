@@ -47,7 +47,7 @@ const KonvaCanvas = () => {
   };
 
   const addImages = (obj) => {
-    setFreeDraw(false)
+    setFreeDraw(false);
     images.length >= 0
       ? (obj.id = obj.id + `${images.length + 1}`)
       : (obj.id = obj.id + `1`);
@@ -303,11 +303,21 @@ const KonvaCanvas = () => {
             display: "flex",
           }}
         >
-          <Button variant="outlined" onClick={handleZoomIn}>
-            <UIcons.Plus alt="plus zoom" />
+          <Button onClick={handleZoomOut}>
+            <UIcons.UxIconZoomOut
+              alt="minus zoom"
+              className="zoomyZoom"
+              width={null}
+              height={null}
+            />
           </Button>
-          <Button variant="outlined" onClick={handleZoomOut}>
-            <UIcons.Minus alt="minus zoom" />
+          <Button onClick={handleZoomIn}>
+            <UIcons.UxIconZoomIn
+              alt="plus zoom"
+              className="zoomyZoom"
+              width={null}
+              height={null}
+            />
           </Button>
         </div>
       </div>

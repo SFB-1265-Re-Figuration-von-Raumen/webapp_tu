@@ -20,7 +20,7 @@ const KonvaCanvas = () => {
   const layeRef = useRef();
   const selectionRectRef = useRef();
   const Konva = window.Konva;
-
+  const isSelected = useState(null);
   const percentWidth = (window.innerWidth / 100) * 70;
   const [images, setImages] = useState([]);
   const [textAnnotations, setTextAnnotations] = useState([]);
@@ -47,6 +47,7 @@ const KonvaCanvas = () => {
   };
 
   const addImages = (obj) => {
+    setFreeDraw(false)
     images.length >= 0
       ? (obj.id = obj.id + `${images.length + 1}`)
       : (obj.id = obj.id + `1`);
@@ -68,8 +69,12 @@ const KonvaCanvas = () => {
 
     setStageScale({
       scale: newScale,
-      x: (stage.getRelativePointerPosition().x / newScale - mousePointTo.x) * newScale,
-      y: (stage.getRelativePointerPosition().y / newScale - mousePointTo.y) * newScale,
+      x:
+        (stage.getRelativePointerPosition().x / newScale - mousePointTo.x) *
+        newScale,
+      y:
+        (stage.getRelativePointerPosition().y / newScale - mousePointTo.y) *
+        newScale,
     });
   }
   // END OF ZOOM FUNCTIONS
@@ -246,6 +251,8 @@ const KonvaCanvas = () => {
                   stageRef={stageRef}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
+                  textAnnotations={textAnnotations}
+                  setTextAnnotations={setTextAnnotations}
                 />
               );
             })}
@@ -279,7 +286,6 @@ const KonvaCanvas = () => {
                   trRef={trRef}
                   layeRef={layeRef}
                   stageRef={stageRef}
-
                   s
                 />
               );

@@ -1,4 +1,9 @@
-export { default as AktiBusfahren } from "./AktiBusfahren";
-export { default as AktiChattenn } from "./AktiChattenn";
-export { default as AktiFahrradfahren } from "./AktiFahrradfahren";
-export { default as AktiLesen } from "./AktiLesen";
+export { default as Angeln } from "./Angeln";
+export { default as BusFahren } from "./BusFahren";
+export { default as Chatten } from "./Chatten";
+export { default as Chillen } from "./Chillen";
+export { default as FahrradFahren } from "./FahrradFahren";
+export { default as Joggen } from "./Joggen";
+export { default as Lesen } from "./Lesen";
+export { default as MusikMachen } from "./MusikMachen";
+export { default as Shopping } from "./Shopping";

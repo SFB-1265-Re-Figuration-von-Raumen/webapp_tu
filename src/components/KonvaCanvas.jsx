@@ -20,7 +20,7 @@ const KonvaCanvas = () => {
   const layeRef = useRef();
   const selectionRectRef = useRef();
   const Konva = window.Konva;
-
+  const isSelected = useState(null);
   const percentWidth = (window.innerWidth / 100) * 70;
   const [images, setImages] = useState([]);
   const [textAnnotations, setTextAnnotations] = useState([]);
@@ -47,6 +47,7 @@ const KonvaCanvas = () => {
   };
 
   const addImages = (obj) => {
+    setFreeDraw(false);
     images.length >= 0
       ? (obj.id = obj.id + `${images.length + 1}`)
       : (obj.id = obj.id + `1`);
@@ -68,8 +69,12 @@ const KonvaCanvas = () => {
 
     setStageScale({
       scale: newScale,
-      x: (stage.getRelativePointerPosition().x / newScale - mousePointTo.x) * newScale,
-      y: (stage.getRelativePointerPosition().y / newScale - mousePointTo.y) * newScale,
+      x:
+        (stage.getRelativePointerPosition().x / newScale - mousePointTo.x) *
+        newScale,
+      y:
+        (stage.getRelativePointerPosition().y / newScale - mousePointTo.y) *
+        newScale,
     });
   }
   // END OF ZOOM FUNCTIONS
@@ -184,33 +189,34 @@ const KonvaCanvas = () => {
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleMouseUp}
-          >
+          // onDragStart={updateOrigin}
+        >
           <Layer ref={layeRef}>
-          {lines.map((line, i) => (
-            <Line
-              key={i}
-              points={line.points}
-              stroke={line.color}
-              draggable={freeDraw ? false : true}
-              strokeWidth={line.strokeWidth}
-              tension={0.5}
-              lineCap="round"
-              lineJoin="round"
-              onClick={() => {
-                if (deleteMode) {
-                  lines.splice(line, 1);
+            {lines.map((line, i) => (
+              <Line
+                key={i}
+                points={line.points}
+                stroke={line.color}
+                draggable={freeDraw ? false : true}
+                strokeWidth={line.strokeWidth}
+                tension={0.5}
+                lineCap="round"
+                lineJoin="round"
+                onClick={() => {
+                  if (deleteMode) {
+                    lines.splice(line, 1);
+                  }
+                }}
+                onTap={() => {
+                  if (deleteMode) {
+                    lines.splice(line, 1);
+                  }
+                }}
+                globalCompositeOperation={
+                  line.tool === "eraser" ? "destination-out" : "source-over"
                 }
-              }}
-              onTap={() => {
-                if (deleteMode) {
-                  lines.splice(line, 1);
-                }
-              }}
-              globalCompositeOperation={
-                line.tool === "eraser" ? "destination-out" : "source-over"
-              }
-            />
-          ))}
+              />
+            ))}
             {images.map((img, i) => {
               return (
                 <URLImage
@@ -218,6 +224,7 @@ const KonvaCanvas = () => {
                   theme={theme}
                   key={i}
                   index={img}
+                  name={img.name}
                   arrayPos={images.indexOf(img)}
                   id={img.id}
                   x={img.x}
@@ -245,6 +252,8 @@ const KonvaCanvas = () => {
                   stageRef={stageRef}
                   isEditing={isEditing}
                   setIsEditing={setIsEditing}
+                  textAnnotations={textAnnotations}
+                  setTextAnnotations={setTextAnnotations}
                 />
               );
             })}
@@ -278,7 +287,6 @@ const KonvaCanvas = () => {
                   trRef={trRef}
                   layeRef={layeRef}
                   stageRef={stageRef}
-
                   s
                 />
               );
@@ -295,11 +303,21 @@ const KonvaCanvas = () => {
             display: "flex",
           }}
         >
-          <Button variant="outlined" onClick={handleZoomIn}>
-            <UIcons.Plus alt="plus zoom" />
+          <Button onClick={handleZoomOut}>
+            <UIcons.UxIconZoomOut
+              alt="minus zoom"
+              className="zoomyZoom"
+              width={null}
+              height={null}
+            />
           </Button>
-          <Button variant="outlined" onClick={handleZoomOut}>
-            <UIcons.Minus alt="minus zoom" />
+          <Button onClick={handleZoomIn}>
+            <UIcons.UxIconZoomIn
+              alt="plus zoom"
+              className="zoomyZoom"
+              width={null}
+              height={null}
+            />
           </Button>
         </div>
       </div>
@@ -340,6 +358,7 @@ const KonvaCanvas = () => {
           )}
 
           <Iconbar
+            stageRef={stageRef}
             theme={theme}
             images={images}
             setImages={setImages}

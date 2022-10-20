@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "serve": "yarn build && vite preview",
-    "svgr": "svgr  --config-file svgr-config.json  src/assets/svg/categories/aktis  -d src/assets/svg/categories/aktis/svgr_output && svgr  --config-file svgr-config.json  src/assets/svg/categories/atmos  -d src/assets/svg/categories/atmos/svgr_output && svgr  --config-file svgr-config.json  src/assets/svg/categories/orte  -d src/assets/svg/categories/orte/svgr_output && svgr  --config-file svgr-config.json  src/assets/svg/categories/personen  -d src/assets/svg/categories/personen/svgr_output && svgr  --config-file svgr-config.json  src/assets/svg/UIcons  -d src/assets/svg/UIcons/svgr_output"
+    "svgr": "svgr  --config-file svgr-config.json  src/assets/svg/categories/Aktis  -d src/assets/svg/categories/Aktis/svgr_output && svgr  --config-file svgr-config.json  src/assets/svg/categories/atmos  -d src/assets/svg/categories/atmos/svgr_output && svgr  --config-file svgr-config.json  src/assets/svg/categories/Places  -d src/assets/svg/categories/Places/svgr_output && svgr  --config-file svgr-config.json  src/assets/svg/categories/Personen  -d src/assets/svg/categories/Personen/svgr_output && svgr  --config-file svgr-config.json  src/assets/svg/UIcons  -d src/assets/svg/UIcons/svgr_output"
   },
   "dependencies": {
     "@emotion/react": "^11.10.0",

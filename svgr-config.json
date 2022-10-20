@@ -2,7 +2,8 @@
   "jsxRuntime": "classic",
   "titleProp": false,
   "expandProps": true,
-  "dimensions": true,
+  "icon": true,
   "prettierConfig": "PrettierConfig",
-  "ext": "jsx"
+  "ext": "jsx",
+  "index": true
 }

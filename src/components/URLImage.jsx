@@ -29,18 +29,28 @@ const URLImage = ({
   setIsEditing,
   textAnnotations,
   setTextAnnotations,
+  connectMode,
+  setConnectMode,
+  connectedNodes,
+  setConnectedNodes,
 }) => {
   isSelected ? !freeDraw : null;
   const trRef = useRef();
   const [isDragging, setIsDragging] = useState(false);
   const [linesBeforeTransform, setLinesBeforeTransform] = useState([]);
+  const [nodeUpdater, setNodeUpdater] = useState([]);
   useEffect(() => {
     if (isSelected) {
       // we need to attach transformer manually
       trRef.current.nodes([imgRef.current] /*  || [textRef.current] */);
       trRef.current.getLayer().batchDraw();
     }
-  }, [isSelected]);
+    if (nodeUpdater.length === 2) {
+      setConnectedNodes((prevNodes) => [...prevNodes, nodeUpdater]);
+      setConnectMode(false);
+      setNodeUpdater([]);
+    }
+  }, [isSelected, nodeUpdater]);
   const SVG = image;
   const url = "data:image/svg+xml;base64," + window.btoa(SVG);
 
@@ -62,6 +72,7 @@ const URLImage = ({
           scaleY: 1.1,
         });
   };
+  console.log(connectedNodes);
 
   const handleDragEnd = (e) => {
     setFreeDraw(false);
@@ -85,7 +96,7 @@ const URLImage = ({
     // for the current image
     // respective to the index "arrayPos"
     const idx = images.find((obj) => obj.id == id);
-    console.log(idx);
+    // console.log(idx);
     const arrCopy = images.slice();
     arrCopy.splice(images.indexOf(idx), 1);
     idx.x = e.target.attrs.x;
@@ -94,24 +105,31 @@ const URLImage = ({
     setImages(arrCopy);
     // savePosition(id, e.target.attrs.x, e.target.attrs.y);
   };
+  // console.log(nodeUpdater);
 
   const [img] = useImage(url);
 
-  const handleClickTap = (array) => {
+  // console.log(connectedNodes);
+  const connectNodes = (element) => {
+    setNodeUpdater((prevNodes) => [...prevNodes, element]);
+  };
+  const handleClickTap = (e, array) => {
     setFreeDraw(false);
 
     if (deleteMode) {
       array.splice(arrayPos, 1);
     } else if (freeDraw) {
       selectShape(null);
-    }
-    selectShape(id);
+    } else if (connectMode) {
+      connectNodes(array[arrayPos]);
+      connectedNodes.push;
+    } else selectShape(id);
   };
 
   // create a useRef for the Text props
   const textRef = useRef(0);
   const imgRef = useRef(0);
-  console.log(imgRef);
+  // console.log(imgRef);
 
   return (
     <>
@@ -203,8 +221,8 @@ const URLImage = ({
           arrayPos={arrayPos}
           image={img}
           isSelected={id === selectedId}
-          onClick={handleClickTap}
-          onTap={handleClickTap}
+          onClick={(e) => handleClickTap(e, images)}
+          onTap={(e) => handleClickTap(e, images)}
           x={x}
           y={y}
           // I will use offset to set origin to the center of the image
@@ -284,7 +302,7 @@ const URLImage = ({
           }}
         />
       </Group>
-      {isSelected && (
+      {!connectMode && isSelected && (
         <Transformer
           ref={trRef}
           anchorCornerRadius={50}

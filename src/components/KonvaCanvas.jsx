@@ -28,7 +28,17 @@ const KonvaCanvas = () => {
   const [deleteMode, setDeleteMode] = useState(false);
   const [selectedId, selectShape] = useState(null);
   const [freeDraw, setFreeDraw] = useState(false);
-
+  const [connectMode, setConnectMode] = useState(false);
+  const [connectedNodes, setConnectedNodes] = useState([]);
+  const updatePosition = (index, e) => {
+    setconnectedNodes((prevState) => {
+      let node = { ...prevState[index] };
+      node.xPosition = e.target.x();
+      node.yPosition = e.target.y();
+      prevState[index] = node;
+      return prevState.slice();
+    });
+  };
   const trRef = useRef();
   //ZOOM STUFF
   const [stageScale, setStageScale] = useState({
@@ -168,6 +178,13 @@ const KonvaCanvas = () => {
     });
   };
 
+  {
+    console.log(
+      connectedNodes.map((node, i) => {
+        return {x: images[node].x,y: images[node].y}
+      })
+    );
+  }
   return (
     <>
       <div className="konvaContainer">
@@ -217,6 +234,15 @@ const KonvaCanvas = () => {
                 }
               />
             ))}
+
+            {connectedNodes.map((node, i) => (
+              <Line
+                points={[images[node].x, images[node].y]}
+                stroke="red"
+                strokeWidth={10}
+                key={i}
+              />
+            ))}
             {images.map((img, i) => {
               return (
                 <URLImage
@@ -254,6 +280,10 @@ const KonvaCanvas = () => {
                   setIsEditing={setIsEditing}
                   textAnnotations={textAnnotations}
                   setTextAnnotations={setTextAnnotations}
+                  connectMode={connectMode}
+                  setConnectMode={setConnectMode}
+                  connectedNodes={connectedNodes}
+                  setConnectedNodes={setConnectedNodes}
                 />
               );
             })}
@@ -344,6 +374,8 @@ const KonvaCanvas = () => {
             setFreeDraw={setFreeDraw}
             isEditing={isEditing}
             setIsEditing={setIsEditing}
+            connectMode={connectMode}
+            setConnectMode={setConnectMode}
           />
           {freeDraw && (
             <FreeDrawControls

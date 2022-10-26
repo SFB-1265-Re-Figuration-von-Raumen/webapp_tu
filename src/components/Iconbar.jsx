@@ -19,9 +19,6 @@ const Iconbar = ({ images, addImages, percentWidth, theme, stageRef }) => {
 
   const toggleClick = (icon, key, dings) => {
     const stagePos = stageRef.current.getAbsolutePosition();
-    const element = document.getElementById(`${icon}-w-key:${key}`);
-    const name = dings.split(/(?=[A-Z])/);
-    const joined = name.splice(1, 2).join("");
 
     addImages({
       // id: images.at(-1).id + 1,
@@ -29,7 +26,7 @@ const Iconbar = ({ images, addImages, percentWidth, theme, stageRef }) => {
       icon: element.outerHTML,
       x: defaultPos.x - stagePos.x,
       y: defaultPos.y - stagePos.y,
-      name: joined,
+      name: dings,
     });
   };
   // console.log(images);
@@ -74,6 +71,8 @@ const Iconbar = ({ images, addImages, percentWidth, theme, stageRef }) => {
                 key={key + 2}
               >
                 {Object.keys(index).map((icon, key) => {
+                  console.log(icon);
+
                   const Icon = index[icon];
                   return (
                     <div
@@ -91,7 +90,7 @@ const Iconbar = ({ images, addImages, percentWidth, theme, stageRef }) => {
                     >
                       <Icon
                         onClick={(e) => {
-                          toggleClick(icon, key, index[icon].name);
+                          toggleClick(icon, key, icon);
                         }}
                         key={`${icon}-w-key:${Math.random()}`}
                         className="icon"

@@ -228,7 +228,6 @@ const URLImage = ({
           // I will use offset to set origin to the center of the image
           // offsetX={imgRef.current.attrs.offsetX}
           // offsetY={imgRef.current.attrs.offsetY}
-          shadowBlur={3}
           draggable={freeDraw ? "false" : "true"}
           onDragStart={handleDragStart}
           onDragEnd={handleDragEnd}

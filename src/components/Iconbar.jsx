@@ -1,10 +1,10 @@
 import { Box, Button, Card, Grid, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import ScrollContainer from "react-indiana-drag-scroll";
-import * as aktis from "../assets/svg/categories/Aktis/svgr_output";
-import * as personen from "../assets/svg/categories/Personen/svgr_output";
-import * as orte from "../assets/svg/categories/Places/svgr_output";
-import * as atmos from "../assets/svg/categories/atmos/svgr_output";
+import * as aktis from "../assets/svg/categories/Aktis/svgr_output/index";
+import * as personen from "../assets/svg/categories/Personen/svgr_output/index";
+import * as orte from "../assets/svg/categories/Places/svgr_output/index";
+import * as atmos from "../assets/svg/categories/atmos/svgr_output/index";
 import AddIconButton from "./ui/AddIconButton";
 
 const svgArray = [aktis, orte, personen, atmos];
@@ -19,6 +19,8 @@ const Iconbar = ({ images, addImages, percentWidth, theme, stageRef }) => {
 
   const toggleClick = (icon, key, dings) => {
     const stagePos = stageRef.current.getAbsolutePosition();
+    const element = document.getElementById(`${icon}-w-key:${key}`);
+    
 
     addImages({
       // id: images.at(-1).id + 1,
@@ -26,10 +28,10 @@ const Iconbar = ({ images, addImages, percentWidth, theme, stageRef }) => {
       icon: element.outerHTML,
       x: defaultPos.x - stagePos.x,
       y: defaultPos.y - stagePos.y,
-      name: dings,
+      name: joined,
     });
   };
-  // console.log(images);
+  console.log(images);
 
   return (
     <>
@@ -71,8 +73,6 @@ const Iconbar = ({ images, addImages, percentWidth, theme, stageRef }) => {
                 key={key + 2}
               >
                 {Object.keys(index).map((icon, key) => {
-                  console.log(icon);
-
                   const Icon = index[icon];
                   return (
                     <div
@@ -90,7 +90,7 @@ const Iconbar = ({ images, addImages, percentWidth, theme, stageRef }) => {
                     >
                       <Icon
                         onClick={(e) => {
-                          toggleClick(icon, key, icon);
+                          toggleClick(icon, key, index[icon].name);
                         }}
                         key={`${icon}-w-key:${Math.random()}`}
                         className="icon"

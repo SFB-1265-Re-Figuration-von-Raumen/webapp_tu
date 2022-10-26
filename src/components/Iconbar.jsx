@@ -9,7 +9,7 @@ import AddIconButton from "./ui/AddIconButton";
 
 const svgArray = [aktis, orte, personen, atmos];
 const categories = ["AKTIVITÄTEN", "ORTE", "PERSONEN", "ATMOSPHÄREN"];
-// const addIcon = import.meta.glob("")
+
 
 const Iconbar = ({ images, addImages, percentWidth, theme, stageRef }) => {
   const defaultPos = {

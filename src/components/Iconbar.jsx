@@ -28,7 +28,7 @@ const Iconbar = ({ images, addImages, percentWidth, theme, stageRef }) => {
       icon: element.outerHTML,
       x: defaultPos.x - stagePos.x,
       y: defaultPos.y - stagePos.y,
-      name: joined,
+      name: dings,
     });
   };
   console.log(images);
@@ -90,7 +90,7 @@ const Iconbar = ({ images, addImages, percentWidth, theme, stageRef }) => {
                     >
                       <Icon
                         onClick={(e) => {
-                          toggleClick(icon, key, index[icon].name);
+                          toggleClick(icon, key, icon);
                         }}
                         key={`${icon}-w-key:${Math.random()}`}
                         className="icon"

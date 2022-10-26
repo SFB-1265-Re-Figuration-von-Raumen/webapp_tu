@@ -1,10 +1,10 @@
 import { Box, Button, Card, Grid, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import ScrollContainer from "react-indiana-drag-scroll";
-import * as aktis from "../assets/svg/categories/Aktis/svgr_output/index";
-import * as personen from "../assets/svg/categories/Personen/svgr_output/index";
-import * as orte from "../assets/svg/categories/Places/svgr_output/index";
-import * as atmos from "../assets/svg/categories/atmos/svgr_output/index";
+import * as aktis from "../assets/svg/categories/akti/svgr_output/index";
+import * as personen from "../assets/svg/categories/person/svgr_output/index";
+import * as orte from "../assets/svg/categories/spot/svgr_output/index";
+import * as atmos from "../assets/svg/categories/atmo/svgr_output/index";
 import AddIconButton from "./ui/AddIconButton";
 
 const svgArray = [aktis, orte, personen, atmos];

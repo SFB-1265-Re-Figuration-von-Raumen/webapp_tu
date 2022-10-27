@@ -1,7 +1,7 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, Fragment } from "react";
 
 import { Stage, Layer, Line, Rect, Transformer } from "react-konva";
-
+import { jsPDF } from "jspdf";
 import URLImage from "./URLImage";
 import Iconbar from "./Iconbar";
 import ControlPanel from "./ControlPanel";
@@ -9,6 +9,7 @@ import TextModal from "./TextModal";
 import FreeDrawControls from "./FreeDrawControls";
 import { Box, Button, useTheme } from "@mui/material";
 import * as UIcons from "../assets/svg/UIcons/svgr_output/index";
+
 
 //  at the moment we need to find a way to position the image
 //  id in state when added. when we move an image, we want
@@ -46,6 +47,37 @@ const KonvaCanvas = () => {
     x: 0,
     y: 0,
   });
+
+  // Download Button Function for pngs // we dont need this anymore if we export pdf via external library
+  function downloadURI(uri, name) {
+    var link = document.createElement('a');
+    link.download = name;
+    link.href = uri;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+  // quickfix to get the current width and height of the stage --> how to do this better? @gg @alza
+  // i tried stageRef.current.height() --> this gives me a smaller pdf than the actual stage size --> shrug Emoji
+  const pdfWidth= percentWidth // this is just how we calculate the width of our stage below 
+  const pdfHeight = window.innerHeight //this is just how we calculate the height of our stage below
+  //handle the export of the Canvas Stage as a pdf
+  const handleExport = () => {
+    // This is the Old png export code
+    //const uri = stageRef.current.toDataURL();
+    //console.log(uri);
+    //downloadURI(uri, 'Canvas.png');
+    const pdf = new jsPDF('l', 'px', [pdfWidth*2 , pdfHeight*2]); // times 2 just a quickfix atm so everything fits on pdf (lol)
+    pdf.addImage(
+    stageRef.current.toDataURL({ pixelRatio: 2}), // pixel ratio bigger = better
+    0,
+    0,
+    pdfWidth,
+    pdfHeight
+);
+  pdf.save("canvas.pdf")
+  };
+
 
   const checkDeselect = (e) => {
     // deselect when clicked on empty area
@@ -190,7 +222,9 @@ const KonvaCanvas = () => {
 
   return (
     <>
+      
       <div className="konvaContainer">
+      <Fragment>
         <Stage
           draggable={freeDraw ? false : true}
           onWheel={handleWheel}
@@ -329,6 +363,7 @@ const KonvaCanvas = () => {
             })}
           </Layer>
         </Stage>
+        </Fragment>
         <div
           className="zommContainer"
           style={{
@@ -356,7 +391,22 @@ const KonvaCanvas = () => {
             />
           </Button>
         </div>
+        <div className="zommContainer"
+          style={{
+            position: "absolute",
+            bottom: "2rem",
+            left: "40rem",
+            gap: ".5rem",
+            display: "flex",
+          }}>
+      <div>
+      <Button variant="outlined" onClick={handleExport}>
+        <UIcons.BringToFront alt="Save Canvas" />
+      </Button>
       </div>
+        </div>
+      </div>
+
       <div className="iconBarContainer">
         <Box
           sx={{

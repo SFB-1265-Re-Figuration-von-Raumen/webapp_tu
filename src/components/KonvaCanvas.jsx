@@ -21,7 +21,7 @@ const KonvaCanvas = () => {
   const layeRef = useRef();
   const selectionRectRef = useRef();
   const Konva = window.Konva;
-
+  const isSelected = useState(null);
   const percentWidth = (window.innerWidth / 100) * 70;
   const [images, setImages] = useState([]);
   const [textAnnotations, setTextAnnotations] = useState([]);
@@ -29,7 +29,17 @@ const KonvaCanvas = () => {
   const [deleteMode, setDeleteMode] = useState(false);
   const [selectedId, selectShape] = useState(null);
   const [freeDraw, setFreeDraw] = useState(false);
-
+  const [connectMode, setConnectMode] = useState(false);
+  const [connectedNodes, setConnectedNodes] = useState([]);
+  const updatePosition = (index, e) => {
+    setconnectedNodes((prevState) => {
+      let node = { ...prevState[index] };
+      node.xPosition = e.target.x();
+      node.yPosition = e.target.y();
+      prevState[index] = node;
+      return prevState.slice();
+    });
+  };
   const trRef = useRef();
   //ZOOM STUFF
   const [stageScale, setStageScale] = useState({
@@ -71,6 +81,7 @@ const KonvaCanvas = () => {
   };
 
   const addImages = (obj) => {
+    setFreeDraw(false);
     images.length >= 0
       ? (obj.id = obj.id + `${images.length + 1}`)
       : (obj.id = obj.id + `1`);
@@ -84,16 +95,20 @@ const KonvaCanvas = () => {
     const stage = e.target.getStage();
     const oldScale = stage.scaleX();
     const mousePointTo = {
-      x: stage.getPointerPosition().x / oldScale - stage.x() / oldScale,
-      y: stage.getPointerPosition().y / oldScale - stage.y() / oldScale,
+      x: stage.getRelativePointerPosition().x / oldScale - stage.x() / oldScale,
+      y: stage.getRelativePointerPosition().y / oldScale - stage.y() / oldScale,
     };
 
     const newScale = e.evt.deltaY < 0 ? oldScale * scaleBy : oldScale / scaleBy;
 
     setStageScale({
       scale: newScale,
-      x: (stage.getPointerPosition().x / newScale - mousePointTo.x) * newScale,
-      y: (stage.getPointerPosition().y / newScale - mousePointTo.y) * newScale,
+      x:
+        (stage.getRelativePointerPosition().x / newScale - mousePointTo.x) *
+        newScale,
+      y:
+        (stage.getRelativePointerPosition().y / newScale - mousePointTo.y) *
+        newScale,
     });
   }
   // END OF ZOOM FUNCTIONS
@@ -107,7 +122,7 @@ const KonvaCanvas = () => {
   const handleMouseDown = (e) => {
     if (freeDraw) {
       isDrawing.current = true;
-      const pos = e.target.getStage().getPointerPosition();
+      const pos = e.target.getStage().getRelativePointerPosition();
       setLines([...lines, { tool, points: [pos.x, pos.y] }]);
     }
   };
@@ -119,7 +134,7 @@ const KonvaCanvas = () => {
         return;
       }
       const stage = e.target.getStage();
-      const point = stage.getPointerPosition();
+      const point = stage.getRelativePointerPosition();
       let lastLine = lines[lines.length - 1];
       // add point
       lastLine.points = lastLine.points.concat([point.x, point.y]);
@@ -135,18 +150,18 @@ const KonvaCanvas = () => {
   const handleTouchStart = (e) => {
     if (freeDraw) {
       isDrawing.current = true;
-      const pos = e.target.getStage().getPointerPosition();
+      const pos = e.target.getStage().getRelativePointerPosition();
       setLines([...lines, { tool, points: [pos.x, pos.y] }]);
     }
   };
   const handleTouchMove = (e) => {
     if (freeDraw) {
       isDrawing.current = true;
-      const pos = e.target.getStage().getPointerPosition();
+      const pos = e.target.getStage().getRelativePointerPosition();
       // setLines([...lines, { tool, points: [pos.x, pos.y] }]);
       console.log(pos);
       const stage = e.target.getStage();
-      const point = stage.getPointerPosition();
+      const point = stage.getRelativePointerPosition();
       let lastLine = lines[lines.length - 1];
       // add point
       console.log(lastLine);
@@ -187,6 +202,13 @@ const KonvaCanvas = () => {
     });
   };
 
+  {
+    console.log(
+      connectedNodes.map((node, i) => {
+        return {x: images[node].x,y: images[node].y}
+      })
+    );
+  }
   return (
     <>
       
@@ -210,33 +232,43 @@ const KonvaCanvas = () => {
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleMouseUp}
-          >
+          // onDragStart={updateOrigin}
+        >
           <Layer ref={layeRef}>
-          {lines.map((line, i) => (
-            <Line
-              key={i}
-              points={line.points}
-              stroke={line.color}
-              draggable={freeDraw ? false : true}
-              strokeWidth={line.strokeWidth}
-              tension={0.5}
-              lineCap="round"
-              lineJoin="round"
-              onClick={() => {
-                if (deleteMode) {
-                  lines.splice(line, 1);
+            {lines.map((line, i) => (
+              <Line
+                key={i}
+                points={line.points}
+                stroke={line.color}
+                draggable={freeDraw ? false : true}
+                strokeWidth={line.strokeWidth}
+                tension={0.5}
+                lineCap="round"
+                lineJoin="round"
+                onClick={() => {
+                  if (deleteMode) {
+                    lines.splice(line, 1);
+                  }
+                }}
+                onTap={() => {
+                  if (deleteMode) {
+                    lines.splice(line, 1);
+                  }
+                }}
+                globalCompositeOperation={
+                  line.tool === "eraser" ? "destination-out" : "source-over"
                 }
-              }}
-              onTap={() => {
-                if (deleteMode) {
-                  lines.splice(line, 1);
-                }
-              }}
-              globalCompositeOperation={
-                line.tool === "eraser" ? "destination-out" : "source-over"
-              }
-            />
-          ))}
+              />
+            ))}
+
+            {connectedNodes.map((node, i) => (
+              <Line
+                points={[images[node].x, images[node].y]}
+                stroke="red"
+                strokeWidth={10}
+                key={i}
+              />
+            ))}
             {images.map((img, i) => {
               return (
                 <URLImage
@@ -244,6 +276,7 @@ const KonvaCanvas = () => {
                   theme={theme}
                   key={i}
                   index={img}
+                  name={img.name}
                   arrayPos={images.indexOf(img)}
                   id={img.id}
                   x={img.x}
@@ -269,6 +302,14 @@ const KonvaCanvas = () => {
                   selectionRectRef={selectionRectRef}
                   layeRef={layeRef}
                   stageRef={stageRef}
+                  isEditing={isEditing}
+                  setIsEditing={setIsEditing}
+                  textAnnotations={textAnnotations}
+                  setTextAnnotations={setTextAnnotations}
+                  connectMode={connectMode}
+                  setConnectMode={setConnectMode}
+                  connectedNodes={connectedNodes}
+                  setConnectedNodes={setConnectedNodes}
                 />
               );
             })}
@@ -302,6 +343,7 @@ const KonvaCanvas = () => {
                   trRef={trRef}
                   layeRef={layeRef}
                   stageRef={stageRef}
+                  s
                 />
               );
             })}
@@ -318,11 +360,21 @@ const KonvaCanvas = () => {
             display: "flex",
           }}
         >
-          <Button variant="outlined" onClick={handleZoomIn}>
-            <UIcons.Plus alt="plus zoom" />
+          <Button onClick={handleZoomOut}>
+            <UIcons.UxIconZoomOut
+              alt="minus zoom"
+              className="zoomyZoom"
+              width={null}
+              height={null}
+            />
           </Button>
-          <Button variant="outlined" onClick={handleZoomOut}>
-            <UIcons.Minus alt="minus zoom" />
+          <Button onClick={handleZoomIn}>
+            <UIcons.UxIconZoomIn
+              alt="plus zoom"
+              className="zoomyZoom"
+              width={null}
+              height={null}
+            />
           </Button>
         </div>
         <div className="zommContainer"
@@ -364,6 +416,8 @@ dings
             setFreeDraw={setFreeDraw}
             isEditing={isEditing}
             setIsEditing={setIsEditing}
+            connectMode={connectMode}
+            setConnectMode={setConnectMode}
           />
           {freeDraw && (
             <FreeDrawControls
@@ -378,6 +432,7 @@ dings
           )}
 
           <Iconbar
+            stageRef={stageRef}
             theme={theme}
             images={images}
             setImages={setImages}

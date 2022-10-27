@@ -5,8 +5,11 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 body {
   background-color: rgb(255, 255, 255);
+  overflow: hidden; /* Crude Ipad Fixes */
+  touch-action: none; /* Crude Ipad Fixes */
 }
 
 .appContainer {
@@ -28,6 +31,8 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  /* freedraw prevent dings*/
+  overflow-y: hidden;
 }
 
 .iconToolbarRow {
@@ -49,17 +54,24 @@ body {
 }
 
 .icon {
+  display: flex;
   cursor: pointer;
+  /* width: 10vmin; */
+  /* width: auto; */
+  height: 100%;
+  /* border: 1px solid red; */
   margin: 0 0.5rem;
   padding: 0.25rem;
-  height: 100%;
   border-radius: 20px;
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
   -ms-border-radius: 20px;
   -o-border-radius: 20px;
 }
-
+/* UI */
+.zoomyZoom {
+  width: 5vmin;
+}
 /* nav */
 
 .nav--button {

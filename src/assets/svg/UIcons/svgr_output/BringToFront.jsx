@@ -6,6 +6,8 @@ const SvgBringToFront = (props) => (
     data-name="Ebene 1"
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 148.58 150"
+    width="1em"
+    height="1em"
     {...props}
   >
     <defs>

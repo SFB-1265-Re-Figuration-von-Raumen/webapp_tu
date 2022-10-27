@@ -1,32 +1,37 @@
 import { Box, Button, Card, Grid, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import ScrollContainer from "react-indiana-drag-scroll";
-import * as aktis from "../assets/svg/categories/aktis/svgr_output";
-import * as personen from "../assets/svg/categories/personen/svgr_output";
-import * as orte from "../assets/svg/categories/orte/svgr_output";
-import * as atmos from "../assets/svg/categories/atmos/svgr_output";
+import * as aktis from "../assets/svg/categories/akti/svgr_output/index";
+import * as personen from "../assets/svg/categories/person/svgr_output/index";
+import * as orte from "../assets/svg/categories/spot/svgr_output/index";
+import * as atmos from "../assets/svg/categories/atmo/svgr_output/index";
 import AddIconButton from "./ui/AddIconButton";
 
 const svgArray = [aktis, orte, personen, atmos];
 const categories = ["AKTIVITÄTEN", "ORTE", "PERSONEN", "ATMOSPHÄREN"];
-// const addIcon = import.meta.glob("")
 
-const Iconbar = ({ images, addImages, percentWidth, theme }) => {
+
+const Iconbar = ({ images, addImages, percentWidth, theme, stageRef }) => {
   const defaultPos = {
     x: percentWidth / 2,
     y: window.innerHeight / 2,
   };
 
-  const toggleClick = (icon, key) => {
+  const toggleClick = (icon, key, dings) => {
+    const stagePos = stageRef.current.getAbsolutePosition();
     const element = document.getElementById(`${icon}-w-key:${key}`);
+    
+
     addImages({
       // id: images.at(-1).id + 1,
       id: `icon_${key}`,
       icon: element.outerHTML,
-      x: defaultPos.x,
-      y: defaultPos.y,
+      x: defaultPos.x - stagePos.x,
+      y: defaultPos.y - stagePos.y,
+      name: dings,
     });
   };
+  console.log(images);
 
   return (
     <>
@@ -70,34 +75,30 @@ const Iconbar = ({ images, addImages, percentWidth, theme }) => {
                 {Object.keys(index).map((icon, key) => {
                   const Icon = index[icon];
                   return (
-                    <Box
-                      sx={{
-                        // height: "100%",
-                        // width: "auto",
-                        alignContent: "center",
-                        borderRadius: "20%",
-                        margin: "0 1rem",
-                        border: `1px solid ${theme.palette.primary.dark}`,
+                    <div
+                      key={key}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        margin: "0 0.25rem",
+                        borderRadius: "20px",
                         backgroundColor: theme.palette.primary.light,
+                        aspectRatio: "1/1",
+                        border: `1px solid ${theme.palette.primary.dark}`,
                       }}
-                      alignItems="center"
-                      justifyContent="center"
-                      key={key + 4}
                     >
                       <Icon
                         onClick={(e) => {
-                          toggleClick(icon, key);
+                          toggleClick(icon, key, icon);
                         }}
                         key={`${icon}-w-key:${Math.random()}`}
-                        style={{
-                          margin: "1rem",
-                          padding: "0",
-                          width: "4rem",
-                          height: "4rem",
-                        }}
+                        className="icon"
                         id={`${icon}-w-key:${key}`}
+                        width={null}
+                        height={null}
                       />
-                    </Box>
+                    </div>
                   );
                 })}
               </ScrollContainer>

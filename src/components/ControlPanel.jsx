@@ -21,6 +21,9 @@ const ControlPanel = ({
   freeDraw,
   setFreeDraw,
   isEditing,
+  isSelected,
+  connectMode,
+  setConnectMode,
 }) => {
   const [open, setOpen] = useState(false);
   const [textInput, setTextInput] = useState("");
@@ -33,10 +36,11 @@ const ControlPanel = ({
     setOpen(false);
   };
   const handleOpen = () => {
-    selectShape(null);
+    if (isSelected) selectShape(null);
     setOpen(true);
     setDeleteMode(false);
     setFreeDraw(false);
+    setConnectMode(false);
   };
   const handleSubmit = () => {
     setTextAnnotations((current) => [
@@ -91,6 +95,7 @@ const ControlPanel = ({
               } else {
                 setFreeDraw(true);
                 setDeleteMode(false);
+                setConnectMode(false);
               }
             }}
             style={{
@@ -111,10 +116,23 @@ const ControlPanel = ({
             borderColor: "primary.main",
           }}
         >
-          <Button>
+          <Button
+            style={{
+              backgroundColor: `${connectMode ? "pink" : "transparent"}`,
+            }}
+          >
             <UIcons.UxIconConnectionMode
               alt="Connection Mode"
               className="nav--button"
+              onClick={() => {
+                if (connectMode) {
+                  setConnectMode(false);
+                } else {
+                  setFreeDraw(false);
+                  setDeleteMode(false);
+                  setConnectMode(true);
+                }
+              }}
             />
           </Button>
         </Grid>

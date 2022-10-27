@@ -39,14 +39,6 @@ const KonvaCanvas = () => {
   });
 
   // Download Button Function for pngs // we dont need this anymore if we export pdf via external library
-  function downloadURI(uri, name) {
-    var link = document.createElement('a');
-    link.download = name;
-    link.href = uri;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  }
   // quickfix to get the current width and height of the stage --> how to do this better? @gg @alza
   // i tried stageRef.current.height() --> this gives me a smaller pdf than the actual stage size --> shrug Emoji
   const pdfWidth= percentWidth // this is just how we calculate the width of our stage below 
@@ -343,7 +335,7 @@ const KonvaCanvas = () => {
           }}>
       <div>
       <Button variant="outlined" onClick={handleExport}>
-        <UIcons.BringToFront alt="Save Canvas" />
+dings
       </Button>
       </div>
         </div>

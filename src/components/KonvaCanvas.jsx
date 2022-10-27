@@ -438,6 +438,7 @@ dings
             setImages={setImages}
             addImages={addImages}
             percentWidth={percentWidth}
+            stageScale={stageScale}
           />
         </Box>
       </div>

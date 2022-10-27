@@ -11,24 +11,28 @@ const svgArray = [aktis, orte, personen, atmos];
 const categories = ["AKTIVITÄTEN", "ORTE", "PERSONEN", "ATMOSPHÄREN"];
 
 
-const Iconbar = ({ images, addImages, percentWidth, theme, stageRef }) => {
+const Iconbar = ({ images, addImages, percentWidth, theme, stageRef, stageScale }) => {
   const defaultPos = {
     x: percentWidth / 2,
     y: window.innerHeight / 2,
   };
 
-  const toggleClick = (icon, key, dings) => {
+  const toggleClick = (icon, key, name) => {
     const stagePos = stageRef.current.getAbsolutePosition();
     const element = document.getElementById(`${icon}-w-key:${key}`);
-    
+
+    const scale = stageScale.scale
+
+    console.log(stageScale);
+    console.log(stageRef)
 
     addImages({
       // id: images.at(-1).id + 1,
       id: `icon_${key}`,
       icon: element.outerHTML,
-      x: defaultPos.x - stagePos.x,
-      y: defaultPos.y - stagePos.y,
-      name: dings,
+      x: defaultPos.x / scale - stagePos.x / scale,
+      y: defaultPos.y / scale - stagePos.y / scale,
+      name: name,
     });
   };
   console.log(images);

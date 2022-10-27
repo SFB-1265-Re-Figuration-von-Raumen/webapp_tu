@@ -131,7 +131,6 @@ const TextModal = ({
         strokeEnabled={true}
         wrap={"word"}
         // onClick={id ? isSelected = id : isSelected = null}
-
         draggable={freeDraw ? "false" : "true"}
         // text={text}
         x={x}
@@ -220,10 +219,11 @@ const TextModal = ({
             ref={trRef}
             padding={5}
             anchorCornerRadius={50}
-            enabledAnchors={["middle-left", "middle-right"]}
+            enabledAnchors={["top-left", "bottom-left", "top-right", "bottom-right"]}
             borderStroke={theme.palette.primary.main}
             anchorStroke={theme.palette.primary.main}
             anchorSize={15}
+            centeredScaling={false}
             boundBoxFunc={(oldBox, newBox) => {
               // limit resize
               if (newBox.width < 20) {

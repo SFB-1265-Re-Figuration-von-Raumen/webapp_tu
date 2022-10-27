@@ -85,7 +85,6 @@ const ControlPanel = ({
             borderRight: "1px solid",
             borderColor: "primary.main",
           }}
-          className="control-panel__container"
         >
           {/* Z:\dev\gh\webapp_tu\public\svg\ux_icon_free-draw-mode.svg */}
 

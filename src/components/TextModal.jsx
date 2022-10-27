@@ -38,10 +38,10 @@ const TextModal = ({
   // console.log(arrayPos);
 
   function savePosition(pos, x, y) {
-    // console.log(`arrayPos is ${pos}, x is ${x}, y is ${y}`);
+    console.log(`arrayPos is ${pos}, x is ${x}, y is ${y}`);
 
     const newText = textAnnotations[pos];
-    // console.log(newText);
+    console.log(newText);
 
     newText.x = x;
     newText.y = y;
@@ -52,26 +52,26 @@ const TextModal = ({
       return textAnnotations[key];
     });
     setTextAnnotations(updatedTexts);
-    // console.log(textAnnotations);
+    console.log(textAnnotations);
   }
 
   const handleDragStart = (e) => {
     isSelected
       ? null
       : e.target.setAttrs({
-        scaleX: 1.1,
-        scaleY: 1.1,
-      });
+          scaleX: 1.1,
+          scaleY: 1.1,
+        });
   };
   const handleDragEnd = (e) => {
     isSelected
       ? null
       : e.target.to({
-        duration: 0.2,
-        easing: Konva.Easings.EaseInOut,
-        scaleX: 1,
-        scaleY: 1,
-      });
+          duration: 0.2,
+          easing: Konva.Easings.EaseInOut,
+          scaleX: 1,
+          scaleY: 1,
+        });
     onChange({
       ...shapeProps,
       x: e.target.x(),
@@ -231,7 +231,7 @@ const TextModal = ({
               }
               return newBox;
             }}
-          //   onDblClick={Transformer.hide()}
+            //   onDblClick={Transformer.hide()}
           />
         </>
       )}

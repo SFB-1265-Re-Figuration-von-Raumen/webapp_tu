@@ -11,7 +11,7 @@ const svgArray = [aktis, orte, personen, atmos];
 const categories = ["AKTIVITÄTEN", "ORTE", "PERSONEN", "ATMOSPHÄREN"];
 
 
-const Iconbar = ({ images, addImages, percentWidth, theme, stageRef, stageScale }) => {
+const Iconbar = ({ images, addImages, percentWidth, theme, stageRef }) => {
   const defaultPos = {
     x: percentWidth / 2,
     y: window.innerHeight / 2,
@@ -20,24 +20,18 @@ const Iconbar = ({ images, addImages, percentWidth, theme, stageRef, stageScale 
   const toggleClick = (icon, key, dings) => {
     const stagePos = stageRef.current.getAbsolutePosition();
     const element = document.getElementById(`${icon}-w-key:${key}`);
-
-    console.log(stageScale);
-    console.log(stageRef)
+    
 
     addImages({
       // id: images.at(-1).id + 1,
       id: `icon_${key}`,
       icon: element.outerHTML,
-      // x: defaultPos.x - stagePos.x,
-      // y: defaultPos.y - stagePos.y,
+      x: defaultPos.x - stagePos.x,
+      y: defaultPos.y - stagePos.y,
       name: dings,
-      x: defaultPos.x - stageRef.current.attrs.x / stageScale.scale,
-      y: defaultPos.y - stageRef.current.attrs.y / stageScale.scale,
-      // x: (defaultPos.x * stageScale.scale) - (stagePos.x * stageScale.scale),
-      // y: (defaultPos.y * stageScale.scale) - (stagePos.y * stageScale.scale),
     });
   };
-  // console.log(images);
+  console.log(images);
 
   return (
     <>

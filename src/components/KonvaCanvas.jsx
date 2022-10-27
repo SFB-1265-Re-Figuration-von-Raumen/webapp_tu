@@ -118,7 +118,6 @@ const KonvaCanvas = () => {
         (stage.getRelativePointerPosition().y / newScale - mousePointTo.y) *
         newScale,
     });
-    console.log(stageScale);
   }
   // END OF ZOOM FUNCTIONS
 
@@ -168,12 +167,12 @@ const KonvaCanvas = () => {
       isDrawing.current = true;
       const pos = e.target.getStage().getRelativePointerPosition();
       // setLines([...lines, { tool, points: [pos.x, pos.y] }]);
-      // console.log(pos);
+      console.log(pos);
       const stage = e.target.getStage();
       const point = stage.getRelativePointerPosition();
       let lastLine = lines[lines.length - 1];
       // add point
-      // console.log(lastLine);
+      console.log(lastLine);
 
       lastLine.points = lastLine.points.concat([point.x, point.y]);
       lastLine.strokeWidth = strokeSlide;
@@ -190,7 +189,7 @@ const KonvaCanvas = () => {
 
   const handleMouseUp = () => {
     if (freeDraw) {
-      // console.log("hi");
+      console.log("hi");
 
       isDrawing.current = false;
     }
@@ -212,14 +211,12 @@ const KonvaCanvas = () => {
   };
 
   {
-    // console.log(
-    //   connectedNodes.map((node, i) => {
-    //     return { x: images[node].x, y: images[node].y }
-    //   })
-    // );
+    console.log(
+      connectedNodes.map((node, i) => {
+        return {x: images[node].x,y: images[node].y}
+      })
+    );
   }
-
-
   return (
     <>
       
@@ -243,11 +240,8 @@ const KonvaCanvas = () => {
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleMouseUp}
-        // onDragStart={updateOrigin}
+          // onDragStart={updateOrigin}
         >
-          <Layer>
-            {/* connection lines go here */}
-          </Layer>
           <Layer ref={layeRef}>
             {lines.map((line, i) => (
               <Line
@@ -452,7 +446,6 @@ const KonvaCanvas = () => {
             setImages={setImages}
             addImages={addImages}
             percentWidth={percentWidth}
-            stageScale={stageScale}
           />
         </Box>
       </div>

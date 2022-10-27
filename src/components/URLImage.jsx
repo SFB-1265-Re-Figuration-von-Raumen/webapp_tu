@@ -72,7 +72,7 @@ const URLImage = ({
           scaleY: 1.1,
         });
   };
-  console.log(connectedNodes);
+  // console.log(connectedNodes);
 
   const handleDragEnd = (e) => {
     setFreeDraw(false);

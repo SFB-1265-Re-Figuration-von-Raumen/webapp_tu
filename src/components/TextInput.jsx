@@ -16,10 +16,8 @@ const TextInput = ({
   theme,
 }) => {
   useEffect(() => {
-    // console.log(document.getElementById(`editInputOf:${id}`));
     const isUpdated = async () => {
       await id;
-      console.log(id);
       const cursorInput = document.getElementById(`editInputOf:${id}`);
       const end = cursorInput.value.length;
       cursorInput.setSelectionRange(end, end);

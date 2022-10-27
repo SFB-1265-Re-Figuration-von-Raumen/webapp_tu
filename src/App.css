@@ -102,3 +102,8 @@ body {
   );
   pointer-events: none;
 }
+
+.control-panel__container > div {
+  /* background-color: red; */
+  aspect-ratio: 1/1;
+}

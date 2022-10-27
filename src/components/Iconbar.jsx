@@ -21,6 +21,8 @@ const Iconbar = ({ images, addImages, percentWidth, theme, stageRef, stageScale 
     const stagePos = stageRef.current.getAbsolutePosition();
     const element = document.getElementById(`${icon}-w-key:${key}`);
 
+    const scale = stageScale.scale
+
     console.log(stageScale);
     console.log(stageRef)
 
@@ -28,13 +30,9 @@ const Iconbar = ({ images, addImages, percentWidth, theme, stageRef, stageScale 
       // id: images.at(-1).id + 1,
       id: `icon_${key}`,
       icon: element.outerHTML,
-      // x: defaultPos.x - stagePos.x,
-      // y: defaultPos.y - stagePos.y,
+      x: defaultPos.x / scale - stagePos.x / scale,
+      y: defaultPos.y / scale - stagePos.y / scale,
       name: dings,
-      x: defaultPos.x - stageRef.current.attrs.x / stageScale.scale,
-      y: defaultPos.y - stageRef.current.attrs.y / stageScale.scale,
-      // x: (defaultPos.x * stageScale.scale) - (stagePos.x * stageScale.scale),
-      // y: (defaultPos.y * stageScale.scale) - (stagePos.y * stageScale.scale),
     });
   };
   // console.log(images);

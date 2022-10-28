@@ -387,7 +387,7 @@ const KonvaCanvas = () => {
           }}>
       <div>
       <Button variant="outlined" onClick={handleExport}>
-dings
+          Export Canvas
       </Button>
       </div>
         </div>

@@ -29,7 +29,9 @@ const KonvaCanvas = () => {
   const [selectedId, selectShape] = useState(null);
   const [freeDraw, setFreeDraw] = useState(false);
   const [connectMode, setConnectMode] = useState(false);
-  const [connectedNodes, setConnectedNodes] = useState([]);
+  const [fromShapeId, setFromShapeId] = useState(null);
+  const [connectors, setConnectors] = React.useState([]);
+
   const trRef = useRef();
   //ZOOM STUFF
   const [stageScale, setStageScale] = useState({
@@ -70,13 +72,22 @@ const KonvaCanvas = () => {
   };
   const handleClickTap = (e, array, id) => {
     setFreeDraw(false);
-
     if (deleteMode) {
       array.splice(arrayPos, 1);
     } else if (freeDraw) {
       selectShape(null);
     } else if (connectMode) {
-      console.log("clicked " + e.target + array);
+      if (fromShapeId) {
+        const newConnector = {
+          from: fromShapeId,
+          to: array[id].id,
+          id: connectors.length,
+        };
+        setConnectors(connectors.concat([newConnector]));
+        setFromShapeId(null);
+      } else {
+        setFromShapeId(array[id].id);
+      }
     } else selectShape(id);
   };
 
@@ -260,7 +271,18 @@ const KonvaCanvas = () => {
                   }
                 />
               ))}
+              {connectors.map((con) => {
+                const from = images.find((s) => s.id === con.from);
+                const to = images.find((s) => s.id === con.to);
 
+                return (
+                  <Line
+                    key={con.id}
+                    points={[from.x, from.y, to.x, to.y]}
+                    stroke="black"
+                  />
+                );
+              })}
               {images.map((img, i) => {
                 console.log(img.x);
 
@@ -303,10 +325,9 @@ const KonvaCanvas = () => {
                     setTextAnnotations={setTextAnnotations}
                     connectMode={connectMode}
                     setConnectMode={setConnectMode}
-                    connectedNodes={connectedNodes}
-                    setConnectedNodes={setConnectedNodes}
                     handleDrag={handleDrag}
                     handleClickTap={handleClickTap}
+                    fromShapeId={fromShapeId}
                   />
                 );
               })}

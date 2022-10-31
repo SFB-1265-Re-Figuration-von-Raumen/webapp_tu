@@ -20,21 +20,12 @@ const URLImage = ({
   deleteMode,
   freeDraw,
   setFreeDraw,
-  lines,
-  setLines,
-  layerRef,
-  stageRef,
-  index,
   isEditing,
   setIsEditing,
-  textAnnotations,
-  setTextAnnotations,
   connectMode,
-  setConnectMode,
-  connectedNodes,
-  setConnectedNodes,
   handleDrag,
   handleClickTap,
+  fromShapeId,
 }) => {
   isSelected ? !freeDraw : null;
   const trRef = useRef();
@@ -141,10 +132,12 @@ const URLImage = ({
           arrayPos={arrayPos}
           image={img}
           isSelected={id === selectedId}
-          onClick={(e) => handleClickTap(e, images, id)}
-          onTap={(e) => handleClickTap(e, images)}
+          onClick={(e) => handleClickTap(e, images, arrayPos)}
+          onTap={(e) => handleClickTap(e, images, arrayPos)}
           x={x}
           y={y}
+          shadowBlur={fromShapeId ? 10 : null}
+          shadowColor={fromShapeId ? "pink" : null}
           // I will use offset to set origin to the center of the image
           // offsetX={imgRef.current.attrs.offsetX}
           // offsetY={imgRef.current.attrs.offsetY}

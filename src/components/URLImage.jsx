@@ -33,10 +33,11 @@ const URLImage = ({
   setConnectMode,
   connectedNodes,
   setConnectedNodes,
+  handleDrag,
 }) => {
   isSelected ? !freeDraw : null;
   const trRef = useRef();
-
+  const [isDragging, setIsDragging] = useState(false);
 
   useEffect(() => {
     if (isSelected) {
@@ -51,7 +52,6 @@ const URLImage = ({
   const checkDeletePoint = () => {
     setFreeDraw(false);
   };
-
 
   // console.log(nodeUpdater);
 
@@ -78,7 +78,7 @@ const URLImage = ({
 
   return (
     <>
-      {/* <Group  visible="true" opacity={1}>
+      <Group draggable={freeDraw ? "false" : "true"} visible="true">
         <Text
           ref={textRef}
           {...shapeProps}
@@ -98,7 +98,7 @@ const URLImage = ({
           wrap={"word"}
           // onClick={id ? isSelected = id : isSelected = null}
 
-
+          draggable={freeDraw ? "false" : "true"}
           text={name.split(/(?=[A-Z])/).join(" ")}
           x={x}
           y={y}
@@ -106,7 +106,9 @@ const URLImage = ({
           fontSize={20}
           fontFamily={theme.typography.fontFamily}
           height={undefined}
-          
+          onDragStart={handleDrag}
+          onDragMove={handleDrag}
+          onDragEnd={handleDrag}
           // we offset the text on x axis according to the text width
           offsetX={textRef.current.textWidth / 2}
           // offsetY={imgRef.current.attrs.offsetY}
@@ -158,7 +160,7 @@ const URLImage = ({
               height: Math.max(node.height() * scaleY),
             });
           }}
-        /> */}
+        />
         <Image
           ref={imgRef}
           {...shapeProps}
@@ -169,11 +171,39 @@ const URLImage = ({
           onTap={(e) => handleClickTap(e, images)}
           x={x}
           y={y}
+          // I will use offset to set origin to the center of the image
+          // offsetX={imgRef.current.attrs.offsetX}
+          // offsetY={imgRef.current.attrs.offsetY}
+          draggable={freeDraw ? "false" : "true"}
+          onDragStart={(e) => {
+            handleDrag(e, images, setImages, arrayPos);
+          }}
+          onDragMove={(e) => {
+            handleDrag(e, images, setImages, arrayPos);
+          }}
+          onDragEnd={(e) => {
+            handleDrag(e, images, setImages, arrayPos);
+          }}
+          // onDragStart={(e) => {
+          //   const copy = images.slice();
+          //   copy[arrayPos].x = e.target.attrs.x;
+          //   copy[arrayPos].y = e.target.attrs.y;
+          //   setImages(copy);
+          // }}
+          // onDragMove={(e) => {
+          //   const copy = images.slice();
+          //   copy[arrayPos].x = e.target.attrs.x;
+          //   copy[arrayPos].y = e.target.attrs.y;
+          //   setImages(copy);
+          // }}
+          // onDragEnd={(e) => {
+          //   const copy = images.slice();
+          //   copy[arrayPos].x = e.target.attrs.x;
+          //   copy[arrayPos].y = e.target.attrs.y;
+          //   setImages(copy);
+          // }}
           onTransform={
             () => {
-              if (lines.length >= 0) {
-                setLinesBeforeTransform(lines);
-              }
               setFreeDraw(false);
               const node = textRef.current;
               const scaleX = node.scaleX();
@@ -238,8 +268,8 @@ const URLImage = ({
             // ]);
           }}
         />
-      {/* </Group> */}
-      {/* {!connectMode && isSelected && (
+      </Group>
+      {!connectMode && isSelected && (
         <Transformer
           ref={trRef}
           anchorCornerRadius={50}
@@ -260,7 +290,7 @@ const URLImage = ({
             return newBox;
           }}
         />
-      )} */}
+      )}
     </>
   );
 };

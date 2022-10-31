@@ -69,33 +69,8 @@ const KonvaCanvas = () => {
     }
   };
   // e, images, setImages, i, img
-  const handleDragStart = (e, stateArr, setStateArr, i, item) => {
-    console.log(item);
-
+  const handleDrag = (e, stateArr, setStateArr, i, item) => {
     setFreeDraw(false);
-
-    if (freeDraw) {
-      return;
-    }
-    checkDeletePoint();
-    const copy = stateArr.slice();
-    copy[i].x = e.target.attrs.x;
-    copy[i].y = e.target.attrs.y;
-    setStateArr(copy);
-  };
-  const handleDragMove = (e, stateArr, setStateArr, i, item) => {
-    console.log(item);
-    const copy = stateArr.slice();
-    console.log(copy);
-
-    copy[i].x = e.target.attrs.x;
-    copy[i].y = e.target.attrs.y;
-    setStateArr(copy);
-  };
-  const handleDragEnd = (e, stateArr, setStateArr, i, item) => {
-    console.log(item);
-    setFreeDraw(false);
-    setImages(arrCopy);
     const copy = stateArr.slice();
     copy[i].x = e.target.attrs.x;
     copy[i].y = e.target.attrs.y;
@@ -293,9 +268,9 @@ const KonvaCanvas = () => {
                     images={images}
                     setImages={setImages}
                     shapeProps={img}
-                    onDragStart={(e) =>
-                      handleDragStart(e, images, setImages, i, img)
-                    }
+                    onDragStart={(e) => {
+                      handleDragStart(e, images, setImages, i, img);
+                    }}
                     onDragMove={(e) =>
                       handleDragMove(e, images, setImages, i, img)
                     }
@@ -328,6 +303,7 @@ const KonvaCanvas = () => {
                     setConnectMode={setConnectMode}
                     connectedNodes={connectedNodes}
                     setConnectedNodes={setConnectedNodes}
+                    handleDrag={handleDrag}
                   />
                 );
               })}

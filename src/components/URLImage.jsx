@@ -37,20 +37,14 @@ const URLImage = ({
   isSelected ? !freeDraw : null;
   const trRef = useRef();
   const [isDragging, setIsDragging] = useState(false);
-  const [linesBeforeTransform, setLinesBeforeTransform] = useState([]);
-  const [nodeUpdater, setNodeUpdater] = useState([]);
+
   useEffect(() => {
     if (isSelected) {
       // we need to attach transformer manually
       trRef.current.nodes([imgRef.current] /*  || [textRef.current] */);
       trRef.current.getLayer().batchDraw();
     }
-    if (nodeUpdater.length === 2) {
-      setConnectedNodes((prevNodes) => [...prevNodes, nodeUpdater]);
-      setConnectMode(false);
-      setNodeUpdater([]);
-    }
-  }, [isSelected, nodeUpdater]);
+  }, [isSelected]);
   const SVG = image;
   const url = "data:image/svg+xml;base64," + window.btoa(SVG);
 
@@ -72,7 +66,6 @@ const URLImage = ({
           scaleY: 1.1,
         });
   };
-  console.log(connectedNodes);
 
   const handleDragEnd = (e) => {
     setFreeDraw(false);
@@ -110,9 +103,7 @@ const URLImage = ({
   const [img] = useImage(url);
 
   // console.log(connectedNodes);
-  const connectNodes = (element) => {
-    setNodeUpdater((prevNodes) => [...prevNodes, element]);
-  };
+
   const handleClickTap = (e, array) => {
     setFreeDraw(false);
 
@@ -121,8 +112,7 @@ const URLImage = ({
     } else if (freeDraw) {
       selectShape(null);
     } else if (connectMode) {
-      connectNodes(array[arrayPos]);
-      connectedNodes.push;
+      console.log("clicked " + e.target + array);
     } else selectShape(id);
   };
 
@@ -231,6 +221,7 @@ const URLImage = ({
           draggable={freeDraw ? "false" : "true"}
           onDragStart={handleDragStart}
           onDragEnd={handleDragEnd}
+
           onTransform={
             () => {
               if (lines.length >= 0) {

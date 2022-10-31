@@ -31,15 +31,6 @@ const KonvaCanvas = () => {
   const [freeDraw, setFreeDraw] = useState(false);
   const [connectMode, setConnectMode] = useState(false);
   const [connectedNodes, setConnectedNodes] = useState([]);
-  const updatePosition = (index, e) => {
-    setconnectedNodes((prevState) => {
-      let node = { ...prevState[index] };
-      node.xPosition = e.target.x();
-      node.yPosition = e.target.y();
-      prevState[index] = node;
-      return prevState.slice();
-    });
-  };
   const trRef = useRef();
   //ZOOM STUFF
   const [stageScale, setStageScale] = useState({
@@ -71,7 +62,7 @@ const KonvaCanvas = () => {
   };
 
 
-  const checkDeselect = (e) => {
+  const handleClickTap = (e) => {
     // deselect when clicked on empty area
     const clickedOnEmpty = e.target === e.target.getStage();
     if (clickedOnEmpty) {
@@ -202,13 +193,6 @@ const KonvaCanvas = () => {
     });
   };
 
-  {
-    console.log(
-      connectedNodes.map((node, i) => {
-        return {x: images[node].x,y: images[node].y}
-      })
-    );
-  }
   return (
     <>
       
@@ -224,8 +208,8 @@ const KonvaCanvas = () => {
           width={percentWidth}
           height={window.innerHeight}
           ref={stageRef}
-          onClick={checkDeselect}
-          onTap={checkDeselect}
+          onClick={(e)=>handleClickTap(e)}
+          onTap={(e)=>handleClickTap(e)}
           onMousemove={handleMouseMove}
           onMouseup={handleMouseUp}
           onMouseDown={handleMouseDown}
@@ -261,14 +245,7 @@ const KonvaCanvas = () => {
               />
             ))}
 
-            {connectedNodes.map((node, i) => (
-              <Line
-                points={[images[node].x, images[node].y]}
-                stroke="red"
-                strokeWidth={10}
-                key={i}
-              />
-            ))}
+            
             {images.map((img, i) => {
               return (
                 <URLImage
@@ -284,7 +261,7 @@ const KonvaCanvas = () => {
                   images={images}
                   setImages={setImages}
                   shapeProps={img}
-                  checkDeselect={checkDeselect}
+                  checkDeselect={handleClickTap}
                   selectedId={selectedId}
                   selectShape={selectShape}
                   isSelected={img.id === selectedId}
@@ -326,7 +303,7 @@ const KonvaCanvas = () => {
                   textAnnotations={textAnnotations}
                   setTextAnnotations={setTextAnnotations}
                   shapeProps={annotation}
-                  checkDeselect={checkDeselect}
+                  checkDeselect={handleClickTap}
                   selectedId={selectedId}
                   selectShape={selectShape}
                   isSelected={annotation.id === selectedId}
@@ -401,8 +378,6 @@ dings
             height: "100%",
             display: "flex",
             flexDirection: "column",
-            // justifyContent: "space-between",
-            // padding: "0.25rem",
           }}
         >
           <ControlPanel

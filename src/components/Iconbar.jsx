@@ -23,8 +23,6 @@ const Iconbar = ({ images, addImages, percentWidth, theme, stageRef, stageScale 
 
     const scale = stageScale.scale
 
-    console.log(stageScale);
-    console.log(stageRef)
 
     addImages({
       // id: images.at(-1).id + 1,
@@ -35,7 +33,7 @@ const Iconbar = ({ images, addImages, percentWidth, theme, stageRef, stageScale 
       name: name,
     });
   };
-  console.log(images);
+
 
   return (
     <>

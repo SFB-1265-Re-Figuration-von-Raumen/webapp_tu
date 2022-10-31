@@ -60,7 +60,7 @@ const KonvaCanvas = () => {
     pdf.save("canvas.pdf");
   };
 
-  const handleClickTap = (e) => {
+  const handleStageClick = (e) => {
     // deselect when clicked on empty area
     const clickedOnEmpty = e.target === e.target.getStage();
     if (clickedOnEmpty) {
@@ -68,8 +68,19 @@ const KonvaCanvas = () => {
       setIsEditing(false);
     }
   };
-  // e, images, setImages, i, img
-  const handleDrag = (e, stateArr, setStateArr, i, item) => {
+  const handleClickTap = (e, array, id) => {
+    setFreeDraw(false);
+
+    if (deleteMode) {
+      array.splice(arrayPos, 1);
+    } else if (freeDraw) {
+      selectShape(null);
+    } else if (connectMode) {
+      console.log("clicked " + e.target + array);
+    } else selectShape(id);
+  };
+
+  const handleDrag = (e, stateArr, setStateArr, i) => {
     setFreeDraw(false);
     const copy = stateArr.slice();
     copy[i].x = e.target.attrs.x;
@@ -213,8 +224,8 @@ const KonvaCanvas = () => {
             width={percentWidth}
             height={window.innerHeight}
             ref={stageRef}
-            onClick={(e) => handleClickTap(e)}
-            onTap={(e) => handleClickTap(e)}
+            onClick={(e) => handleStageClick(e)}
+            onTap={(e) => handleStageClick(e)}
             onMousemove={handleMouseMove}
             onMouseup={handleMouseUp}
             onMouseDown={handleMouseDown}
@@ -268,15 +279,6 @@ const KonvaCanvas = () => {
                     images={images}
                     setImages={setImages}
                     shapeProps={img}
-                    onDragStart={(e) => {
-                      handleDragStart(e, images, setImages, i, img);
-                    }}
-                    onDragMove={(e) =>
-                      handleDragMove(e, images, setImages, i, img)
-                    }
-                    onDragEnd={(e) =>
-                      handleDragEnd(e, images, setImages, i, img)
-                    }
                     checkDeselect={handleClickTap}
                     selectedId={selectedId}
                     selectShape={selectShape}
@@ -304,6 +306,7 @@ const KonvaCanvas = () => {
                     connectedNodes={connectedNodes}
                     setConnectedNodes={setConnectedNodes}
                     handleDrag={handleDrag}
+                    handleClickTap={handleClickTap}
                   />
                 );
               })}

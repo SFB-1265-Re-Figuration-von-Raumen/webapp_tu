@@ -34,6 +34,7 @@ const URLImage = ({
   connectedNodes,
   setConnectedNodes,
   handleDrag,
+  handleClickTap,
 }) => {
   isSelected ? !freeDraw : null;
   const trRef = useRef();
@@ -48,28 +49,7 @@ const URLImage = ({
   }, [isSelected]);
   const SVG = image;
   const url = "data:image/svg+xml;base64," + window.btoa(SVG);
-
-  const checkDeletePoint = () => {
-    setFreeDraw(false);
-  };
-
-  // console.log(nodeUpdater);
-
   const [img] = useImage(url);
-
-  // console.log(connectedNodes);
-
-  const handleClickTap = (e, array) => {
-    setFreeDraw(false);
-
-    if (deleteMode) {
-      array.splice(arrayPos, 1);
-    } else if (freeDraw) {
-      selectShape(null);
-    } else if (connectMode) {
-      console.log("clicked " + e.target + array);
-    } else selectShape(id);
-  };
 
   // create a useRef for the Text props
   const textRef = useRef(0);
@@ -105,19 +85,13 @@ const URLImage = ({
           borderStroke={"black"}
           fontSize={20}
           fontFamily={theme.typography.fontFamily}
-          height={undefined}
-          onDragStart={handleDrag}
-          onDragMove={handleDrag}
-          onDragEnd={handleDrag}
           // we offset the text on x axis according to the text width
-          offsetX={textRef.current.textWidth / 2}
           // offsetY={imgRef.current.attrs.offsetY}
           // next we need to offset the text on y axis according to the image height
           // how do we get the image height since we are using useImage hook?
-
-          // offsetY={img.height / -2}
+          offsetX={textRef.current.textWidth / 2 - textRef.current.textWidth}
+          offsetY={img ? -img.height : null}
           // this does not work!
-
           onDblClick={() => {
             setFreeDraw(false);
 
@@ -167,7 +141,7 @@ const URLImage = ({
           arrayPos={arrayPos}
           image={img}
           isSelected={id === selectedId}
-          onClick={(e) => handleClickTap(e, images)}
+          onClick={(e) => handleClickTap(e, images, id)}
           onTap={(e) => handleClickTap(e, images)}
           x={x}
           y={y}
@@ -184,57 +158,31 @@ const URLImage = ({
           onDragEnd={(e) => {
             handleDrag(e, images, setImages, arrayPos);
           }}
-          // onDragStart={(e) => {
-          //   const copy = images.slice();
-          //   copy[arrayPos].x = e.target.attrs.x;
-          //   copy[arrayPos].y = e.target.attrs.y;
-          //   setImages(copy);
-          // }}
-          // onDragMove={(e) => {
-          //   const copy = images.slice();
-          //   copy[arrayPos].x = e.target.attrs.x;
-          //   copy[arrayPos].y = e.target.attrs.y;
-          //   setImages(copy);
-          // }}
-          // onDragEnd={(e) => {
-          //   const copy = images.slice();
-          //   copy[arrayPos].x = e.target.attrs.x;
-          //   copy[arrayPos].y = e.target.attrs.y;
-          //   setImages(copy);
-          // }}
-          onTransform={
-            () => {
-              setFreeDraw(false);
-              const node = textRef.current;
-              const scaleX = node.scaleX();
-              const scaleY = node.scaleY();
+          onTransform={() => {
+            setFreeDraw(false);
+            const node = textRef.current;
+            const scaleX = node.scaleX();
+            const scaleY = node.scaleY();
 
-              onChange({
-                ...shapeProps,
-                x: node.x(),
-                y: node.y(),
-              });
+            onChange({
+              ...shapeProps,
+              x: node.x(),
+              y: node.y(),
+            });
 
-              // we will reset it back
-              node.scaleX(1);
-              node.scaleY(1);
-              onChange({
-                ...shapeProps,
-                x: node.x(),
-                y: node.y(),
-                fontSize: Math.max(5, node.width() * scaleX),
-                // set minimal value
-                width: Math.max(5, node.width() * scaleX),
-                height: Math.max(node.height() * scaleY),
-              });
-            }
-            // setAttrs({
-            //   width: Math.max(this.width() * this.scaleX(), 20),
-            //   height: Math.max(this.height() * this.scaleY(), 40),
-            //   scaleX: 1,
-            //   scaleY: 1,
-            // })
-          }
+            // we will reset it back
+            node.scaleX(1);
+            node.scaleY(1);
+            onChange({
+              ...shapeProps,
+              x: node.x(),
+              y: node.y(),
+              fontSize: Math.max(5, node.width() * scaleX),
+              // set minimal value
+              width: Math.max(5, node.width() * scaleX),
+              height: Math.max(node.height() * scaleY),
+            });
+          }}
           onTransformEnd={(e) => {
             setFreeDraw(false);
 
@@ -257,15 +205,6 @@ const URLImage = ({
               width: Math.max(5, node.width() * scaleX),
               height: Math.max(node.height() * scaleY),
             });
-
-            // const newLine = lines.slice();
-            // const lastLineGone = newLine.splice(1, -1);
-            // setLines((before) => [
-            //   ...(linesBeforeTransform
-            //     ? before === linesBeforeTransform
-            //     : before),
-            //   lastLineGone,
-            // ]);
           }}
         />
       </Group>

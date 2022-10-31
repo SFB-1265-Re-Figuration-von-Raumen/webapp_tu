@@ -36,7 +36,7 @@ const URLImage = ({
 }) => {
   isSelected ? !freeDraw : null;
   const trRef = useRef();
-  const [isDragging, setIsDragging] = useState(false);
+
 
   useEffect(() => {
     if (isSelected) {
@@ -52,52 +52,7 @@ const URLImage = ({
     setFreeDraw(false);
   };
 
-  const handleDragStart = (e) => {
-    setFreeDraw(false);
-    setIsDragging(true);
-    if (freeDraw) {
-      return;
-    }
-    checkDeletePoint();
-    isSelected || isDragging
-      ? null
-      : e.target.setAttrs({
-          scaleX: 1.1,
-          scaleY: 1.1,
-        });
-  };
 
-  const handleDragEnd = (e) => {
-    setFreeDraw(false);
-    setIsDragging(false);
-    isSelected || isDragging
-      ? null
-      : e.target.to({
-          duration: 0.2,
-          easing: Konva.Easings.EaseInOut,
-          scaleX: 1,
-          scaleY: 1,
-        });
-    onChange({
-      ...shapeProps,
-      x: e.target.x(),
-      y: e.target.y(),
-    });
-
-    // here we need to update the images state
-    // with the new x and y values
-    // for the current image
-    // respective to the index "arrayPos"
-    const idx = images.find((obj) => obj.id == id);
-    // console.log(idx);
-    const arrCopy = images.slice();
-    arrCopy.splice(images.indexOf(idx), 1);
-    idx.x = e.target.attrs.x;
-    idx.y = e.target.attrs.y;
-    arrCopy.push(idx);
-    setImages(arrCopy);
-    // savePosition(id, e.target.attrs.x, e.target.attrs.y);
-  };
   // console.log(nodeUpdater);
 
   const [img] = useImage(url);
@@ -123,7 +78,7 @@ const URLImage = ({
 
   return (
     <>
-      <Group draggable={freeDraw ? "false" : "true"} visible="true">
+      {/* <Group  visible="true" opacity={1}>
         <Text
           ref={textRef}
           {...shapeProps}
@@ -143,7 +98,7 @@ const URLImage = ({
           wrap={"word"}
           // onClick={id ? isSelected = id : isSelected = null}
 
-          draggable={freeDraw ? "false" : "true"}
+
           text={name.split(/(?=[A-Z])/).join(" ")}
           x={x}
           y={y}
@@ -151,8 +106,7 @@ const URLImage = ({
           fontSize={20}
           fontFamily={theme.typography.fontFamily}
           height={undefined}
-          onDragStart={handleDragStart}
-          onDragEnd={handleDragEnd}
+          
           // we offset the text on x axis according to the text width
           offsetX={textRef.current.textWidth / 2}
           // offsetY={imgRef.current.attrs.offsetY}
@@ -204,7 +158,7 @@ const URLImage = ({
               height: Math.max(node.height() * scaleY),
             });
           }}
-        />
+        /> */}
         <Image
           ref={imgRef}
           {...shapeProps}
@@ -215,13 +169,6 @@ const URLImage = ({
           onTap={(e) => handleClickTap(e, images)}
           x={x}
           y={y}
-          // I will use offset to set origin to the center of the image
-          // offsetX={imgRef.current.attrs.offsetX}
-          // offsetY={imgRef.current.attrs.offsetY}
-          draggable={freeDraw ? "false" : "true"}
-          onDragStart={handleDragStart}
-          onDragEnd={handleDragEnd}
-
           onTransform={
             () => {
               if (lines.length >= 0) {
@@ -291,8 +238,8 @@ const URLImage = ({
             // ]);
           }}
         />
-      </Group>
-      {!connectMode && isSelected && (
+      {/* </Group> */}
+      {/* {!connectMode && isSelected && (
         <Transformer
           ref={trRef}
           anchorCornerRadius={50}
@@ -313,7 +260,7 @@ const URLImage = ({
             return newBox;
           }}
         />
-      )}
+      )} */}
     </>
   );
 };

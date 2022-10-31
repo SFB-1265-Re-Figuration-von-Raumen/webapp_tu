@@ -10,7 +10,6 @@ import FreeDrawControls from "./FreeDrawControls";
 import { Box, Button, useTheme } from "@mui/material";
 import * as UIcons from "../assets/svg/UIcons/svgr_output/index";
 
-
 //  at the moment we need to find a way to position the image
 //  id in state when added. when we move an image, we want
 //  to update its x and y in images state.
@@ -42,25 +41,24 @@ const KonvaCanvas = () => {
   // Download Button Function for pngs // we dont need this anymore if we export pdf via external library
   // quickfix to get the current width and height of the stage --> how to do this better? @gg @alza
   // i tried stageRef.current.height() --> this gives me a smaller pdf than the actual stage size --> shrug Emoji
-  const pdfWidth= percentWidth // this is just how we calculate the width of our stage below 
-  const pdfHeight = window.innerHeight //this is just how we calculate the height of our stage below
+  const pdfWidth = percentWidth; // this is just how we calculate the width of our stage below
+  const pdfHeight = window.innerHeight; //this is just how we calculate the height of our stage below
   //handle the export of the Canvas Stage as a pdf
   const handleExport = () => {
     // This is the Old png export code
     //const uri = stageRef.current.toDataURL();
     //console.log(uri);
     //downloadURI(uri, 'Canvas.png');
-    const pdf = new jsPDF('l', 'px', [pdfWidth*2 , pdfHeight*2]); // times 2 just a quickfix atm so everything fits on pdf (lol)
+    const pdf = new jsPDF("l", "px", [pdfWidth * 2, pdfHeight * 2]); // times 2 just a quickfix atm so everything fits on pdf (lol)
     pdf.addImage(
-    stageRef.current.toDataURL({ pixelRatio: 2}), // pixel ratio bigger = better
-    0,
-    0,
-    pdfWidth,
-    pdfHeight
-);
-  pdf.save("canvas.pdf")
+      stageRef.current.toDataURL({ pixelRatio: 2 }), // pixel ratio bigger = better
+      0,
+      0,
+      pdfWidth,
+      pdfHeight
+    );
+    pdf.save("canvas.pdf");
   };
-
 
   const handleClickTap = (e) => {
     // deselect when clicked on empty area
@@ -69,6 +67,39 @@ const KonvaCanvas = () => {
       selectShape(null);
       setIsEditing(false);
     }
+  };
+  // e, images, setImages, i, img
+  const handleDragStart = (e, stateArr, setStateArr, i, item) => {
+    console.log(item);
+
+    setFreeDraw(false);
+
+    if (freeDraw) {
+      return;
+    }
+    checkDeletePoint();
+    const copy = stateArr.slice();
+    copy[i].x = e.target.attrs.x;
+    copy[i].y = e.target.attrs.y;
+    setStateArr(copy);
+  };
+  const handleDragMove = (e, stateArr, setStateArr, i, item) => {
+    console.log(item);
+    const copy = stateArr.slice();
+    console.log(copy);
+
+    copy[i].x = e.target.attrs.x;
+    copy[i].y = e.target.attrs.y;
+    setStateArr(copy);
+  };
+  const handleDragEnd = (e, stateArr, setStateArr, i, item) => {
+    console.log(item);
+    setFreeDraw(false);
+    setImages(arrCopy);
+    const copy = stateArr.slice();
+    copy[i].x = e.target.attrs.x;
+    copy[i].y = e.target.attrs.y;
+    setStateArr(copy);
   };
 
   const addImages = (obj) => {
@@ -195,137 +226,147 @@ const KonvaCanvas = () => {
 
   return (
     <>
-      
       <div className="konvaContainer">
-      <Fragment>
-        <Stage
-          draggable={freeDraw ? false : true}
-          onWheel={handleWheel}
-          scaleX={stageScale.scale}
-          scaleY={stageScale.scale}
-          x={stageScale.x}
-          y={stageScale.y}
-          width={percentWidth}
-          height={window.innerHeight}
-          ref={stageRef}
-          onClick={(e)=>handleClickTap(e)}
-          onTap={(e)=>handleClickTap(e)}
-          onMousemove={handleMouseMove}
-          onMouseup={handleMouseUp}
-          onMouseDown={handleMouseDown}
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleMouseUp}
-          // onDragStart={updateOrigin}
-        >
-          <Layer ref={layeRef}>
-            {lines.map((line, i) => (
-              <Line
-                key={i}
-                points={line.points}
-                stroke={line.color}
-                draggable={freeDraw ? false : true}
-                strokeWidth={line.strokeWidth}
-                tension={0.5}
-                lineCap="round"
-                lineJoin="round"
-                onClick={() => {
-                  if (deleteMode) {
-                    lines.splice(line, 1);
+        <Fragment>
+          <Stage
+            draggable={freeDraw ? false : true}
+            onWheel={handleWheel}
+            scaleX={stageScale.scale}
+            scaleY={stageScale.scale}
+            x={stageScale.x}
+            y={stageScale.y}
+            width={percentWidth}
+            height={window.innerHeight}
+            ref={stageRef}
+            onClick={(e) => handleClickTap(e)}
+            onTap={(e) => handleClickTap(e)}
+            onMousemove={handleMouseMove}
+            onMouseup={handleMouseUp}
+            onMouseDown={handleMouseDown}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleMouseUp}
+            // onDragStart={updateOrigin}
+          >
+            <Layer ref={layeRef}>
+              {lines.map((line, i) => (
+                <Line
+                  key={i}
+                  points={line.points}
+                  stroke={line.color}
+                  draggable={freeDraw ? false : true}
+                  strokeWidth={line.strokeWidth}
+                  tension={0.5}
+                  lineCap="round"
+                  lineJoin="round"
+                  onClick={() => {
+                    if (deleteMode) {
+                      lines.splice(line, 1);
+                    }
+                  }}
+                  onTap={() => {
+                    if (deleteMode) {
+                      lines.splice(line, 1);
+                    }
+                  }}
+                  globalCompositeOperation={
+                    line.tool === "eraser" ? "destination-out" : "source-over"
                   }
-                }}
-                onTap={() => {
-                  if (deleteMode) {
-                    lines.splice(line, 1);
-                  }
-                }}
-                globalCompositeOperation={
-                  line.tool === "eraser" ? "destination-out" : "source-over"
-                }
-              />
-            ))}
+                />
+              ))}
 
-            
-            {images.map((img, i) => {
-              return (
-                <URLImage
-                  image={img.icon}
-                  theme={theme}
-                  key={i}
-                  index={img}
-                  name={img.name}
-                  arrayPos={images.indexOf(img)}
-                  id={img.id}
-                  x={img.x}
-                  y={img.y}
-                  images={images}
-                  setImages={setImages}
-                  shapeProps={img}
-                  checkDeselect={handleClickTap}
-                  selectedId={selectedId}
-                  selectShape={selectShape}
-                  isSelected={img.id === selectedId}
-                  onChange={(newAttrs) => {
-                    const imgs = images.slice();
-                    imgs[i] = newAttrs;
-                    setImages(imgs);
-                  }}
-                  deleteMode={deleteMode}
-                  setDeleteMode={setDeleteMode}
-                  freeDraw={freeDraw}
-                  setFreeDraw={setFreeDraw}
-                  lines={lines}
-                  setLines={setLines}
-                  selectionRectRef={selectionRectRef}
-                  layeRef={layeRef}
-                  stageRef={stageRef}
-                  isEditing={isEditing}
-                  setIsEditing={setIsEditing}
-                  textAnnotations={textAnnotations}
-                  setTextAnnotations={setTextAnnotations}
-                  connectMode={connectMode}
-                  setConnectMode={setConnectMode}
-                  connectedNodes={connectedNodes}
-                  setConnectedNodes={setConnectedNodes}
-                />
-              );
-            })}
-            {textAnnotations.map((annotation, i) => {
-              return (
-                <TextModal
-                  theme={theme}
-                  text={annotation.text}
-                  key={i}
-                  id={annotation.id}
-                  x={annotation.x}
-                  y={annotation.y}
-                  arrayPos={textAnnotations.indexOf(annotation)}
-                  textAnnotations={textAnnotations}
-                  setTextAnnotations={setTextAnnotations}
-                  shapeProps={annotation}
-                  checkDeselect={handleClickTap}
-                  selectedId={selectedId}
-                  selectShape={selectShape}
-                  isSelected={annotation.id === selectedId}
-                  isEditing={isEditing}
-                  setIsEditing={setIsEditing}
-                  deleteMode={deleteMode}
-                  setDeleteMode={setDeleteMode}
-                  onChange={(newAttrs) => {
-                    const text = textAnnotations.slice();
-                    text[i] = newAttrs;
-                    setTextAnnotations(text);
-                  }}
-                  freeDraw={freeDraw}
-                  trRef={trRef}
-                  layeRef={layeRef}
-                  stageRef={stageRef}
-                  s
-                />
-              );
-            })}
-          </Layer>
-        </Stage>
+              {images.map((img, i) => {
+                console.log(img.x);
+
+                return (
+                  <URLImage
+                    image={img.icon}
+                    theme={theme}
+                    key={i}
+                    index={img}
+                    name={img.name}
+                    arrayPos={images.indexOf(img)}
+                    id={img.id}
+                    x={img.x}
+                    y={img.y}
+                    draggable
+                    images={images}
+                    setImages={setImages}
+                    shapeProps={img}
+                    onDragStart={(e) =>
+                      handleDragStart(e, images, setImages, i, img)
+                    }
+                    onDragMove={(e) =>
+                      handleDragMove(e, images, setImages, i, img)
+                    }
+                    onDragEnd={(e) =>
+                      handleDragEnd(e, images, setImages, i, img)
+                    }
+                    checkDeselect={handleClickTap}
+                    selectedId={selectedId}
+                    selectShape={selectShape}
+                    isSelected={img.id === selectedId}
+                    onChange={(newAttrs) => {
+                      const imgs = images.slice();
+                      imgs[i] = newAttrs;
+                      setImages(imgs);
+                    }}
+                    deleteMode={deleteMode}
+                    setDeleteMode={setDeleteMode}
+                    freeDraw={freeDraw}
+                    setFreeDraw={setFreeDraw}
+                    lines={lines}
+                    setLines={setLines}
+                    selectionRectRef={selectionRectRef}
+                    layeRef={layeRef}
+                    stageRef={stageRef}
+                    isEditing={isEditing}
+                    setIsEditing={setIsEditing}
+                    textAnnotations={textAnnotations}
+                    setTextAnnotations={setTextAnnotations}
+                    connectMode={connectMode}
+                    setConnectMode={setConnectMode}
+                    connectedNodes={connectedNodes}
+                    setConnectedNodes={setConnectedNodes}
+                  />
+                );
+              })}
+              {textAnnotations.map((annotation, i) => {
+                return (
+                  <TextModal
+                    theme={theme}
+                    text={annotation.text}
+                    key={i}
+                    id={annotation.id}
+                    x={annotation.x}
+                    y={annotation.y}
+                    arrayPos={textAnnotations.indexOf(annotation)}
+                    textAnnotations={textAnnotations}
+                    setTextAnnotations={setTextAnnotations}
+                    shapeProps={annotation}
+                    checkDeselect={handleClickTap}
+                    selectedId={selectedId}
+                    selectShape={selectShape}
+                    isSelected={annotation.id === selectedId}
+                    isEditing={isEditing}
+                    setIsEditing={setIsEditing}
+                    deleteMode={deleteMode}
+                    setDeleteMode={setDeleteMode}
+                    onChange={(newAttrs) => {
+                      const text = textAnnotations.slice();
+                      text[i] = newAttrs;
+                      setTextAnnotations(text);
+                    }}
+                    freeDraw={freeDraw}
+                    trRef={trRef}
+                    layeRef={layeRef}
+                    stageRef={stageRef}
+                    s
+                  />
+                );
+              })}
+            </Layer>
+          </Stage>
         </Fragment>
         <div
           className="zommContainer"
@@ -354,19 +395,21 @@ const KonvaCanvas = () => {
             />
           </Button>
         </div>
-        <div className="zommContainer"
+        <div
+          className="zommContainer"
           style={{
             position: "absolute",
             bottom: "2rem",
             left: "40rem",
             gap: ".5rem",
             display: "flex",
-          }}>
-      <div>
-      <Button variant="outlined" onClick={handleExport}>
-dings
-      </Button>
-      </div>
+          }}
+        >
+          <div>
+            <Button variant="outlined" onClick={handleExport}>
+              dings
+            </Button>
+          </div>
         </div>
       </div>
 

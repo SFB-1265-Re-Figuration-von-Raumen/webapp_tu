@@ -55,7 +55,7 @@ const AddIconButton = ({ theme }) => (
             <path
                 style={{
                     fill: "none",
-                    stroke: "#000",
+                    stroke: `${theme.palette.secondary.main}`,
                     strokeWidth: "1px",
                 }}
                 d="M37.69 17.37v25.27M50.33 30H25.05"

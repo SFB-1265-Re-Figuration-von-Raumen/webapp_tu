@@ -26,6 +26,12 @@ const FreeDrawControls = ({
         <MuiColorInput
           value={lineColor}
           onChange={(color) => setLineColor(color)}
+          // color={theme.palette.primary.main}
+          sx={{
+            "& .MuiInputBase-input": {
+              color: theme.palette.primary.main,
+            },
+          }}
         />
         <Slider
           size="small"

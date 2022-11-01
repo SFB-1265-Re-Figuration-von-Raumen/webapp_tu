@@ -33,8 +33,6 @@ const URLImage = ({
   const [nodeScale, setNodeScale] = useState({});
   console.log(nodeScale);
 
-  const [iconText, setIconText] = useState(name.split(/(?=[A-Z])/).join(" "));
-
   useEffect(() => {
     if (isSelected) {
       // we need to attach transformer manually
@@ -57,17 +55,17 @@ const URLImage = ({
           <TextInputIcon
             x={x}
             y={y}
-            iconText={iconText}
-            setIconText={setIconText}
             isEditing={isEditing}
             setIsEditing={setIsEditing}
             id={id}
             arrayPos={arrayPos}
             width={shapeProps.scaleX}
             height={shapeProps.scaleY}
-            text={iconText}
-            placeholder={iconText}
+            text={name}
+            placeholder={name}
             theme={theme}
+            images={images}
+            setImages={setImages}
           />
         )}
         <Text
@@ -78,9 +76,7 @@ const URLImage = ({
           onSelect={() => {
             selectShape(id);
           }}
-          fill={
-            isEditing ? "transparent" : theme.palette.primary.main
-          }
+          fill={isEditing ? "transparent" : theme.palette.primary.main}
           // lineCap={"butt"}
           // lineJoin={"bevel"}
           strokeEnabled={true}
@@ -97,7 +93,7 @@ const URLImage = ({
           onDragEnd={(e) => {
             handleDrag(e, images, setImages, arrayPos, id);
           }}
-          text={iconText}
+          text={name}
           x={x}
           y={y}
           // x={nodeScale ? x + nodeScale.x : x}
@@ -154,6 +150,15 @@ const URLImage = ({
               height: Math.max(node.height() * scaleY),
             });
           }}
+          // onDragStart={(e) => {
+          //   handleDrag(e, images, setImages, arrayPos);
+          // }}
+          // onDragMove={(e) => {
+          //   handleDrag(e, images, setImages, arrayPos);
+          // }}
+          // onDragEnd={(e) => {
+          //   handleDrag(e, images, setImages, arrayPos);
+          // }}
         />
         <Image
           ref={imgRef}

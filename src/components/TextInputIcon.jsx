@@ -1,3 +1,4 @@
+import { SetMealOutlined } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
 import { Html } from "react-konva-utils";
 
@@ -7,11 +8,11 @@ const TextInputIcon = ({
   id,
   isEditing,
   setIsEditing,
-  iconText,
-  setIconText,
-
-  palceholder,
+  arrayPos,
+  images,
+  setImages,
   theme,
+  name,
 }) => {
   useEffect(() => {
     // console.log(document.getElementById(`editInputOf:${id}`));
@@ -25,14 +26,16 @@ const TextInputIcon = ({
     isUpdated();
   }, [isEditing, id]);
 
-  const [input, setInput] = useState(iconText);
+  const [input, setInput] = useState(name);
   const RETURN_KEY = 13;
   const ESCAPE_KEY = 27;
   const handleEscapeKeys = (e) => {
     if ((e.keyCode === RETURN_KEY && !e.shiftKey) || e.keyCode === ESCAPE_KEY) {
-      console.log("keydown")
-      setIconText(input);
-      setIsEditing(false)
+      console.log("keydown");
+      const copy = images.slice();
+      copy[arrayPos].name = input;
+      setImages(copy);
+      setIsEditing(false);
     }
   };
 

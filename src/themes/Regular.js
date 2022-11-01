@@ -9,8 +9,8 @@ const theme = createTheme({
             light: "#f5f5f5",
         },
         secondary: {
-            // main: "#bbbbbb",
             main: "#000000",
+            bg: "#ffffff",
         },
     },
     typography: {

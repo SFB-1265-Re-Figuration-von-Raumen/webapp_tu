@@ -233,7 +233,7 @@ const KonvaCanvas = () => {
 
   return (
     <>
-      <div className="konvaContainer">
+      <div className="konvaContainer" style={{backgroundColor: theme.palette.secondary.canvas}}>
         <>
           <Stage
             draggable={freeDraw ? false : true}
@@ -253,7 +253,7 @@ const KonvaCanvas = () => {
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleMouseUp}
-            // onDragStart={updateOrigin}
+          // onDragStart={updateOrigin}
           >
             <Layer ref={layeRef}>
               {lines.map((line, i) => (
@@ -440,6 +440,7 @@ const KonvaCanvas = () => {
             height: "100%",
             display: "flex",
             flexDirection: "column",
+            backgroundColor: "secondary.bg"
           }}
         >
           <ControlPanel
@@ -455,6 +456,7 @@ const KonvaCanvas = () => {
             setIsEditing={setIsEditing}
             connectMode={connectMode}
             setConnectMode={setConnectMode}
+            theme={theme}
           />
           {freeDraw && (
             <FreeDrawControls

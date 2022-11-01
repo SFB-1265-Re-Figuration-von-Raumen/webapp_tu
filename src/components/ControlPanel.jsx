@@ -10,6 +10,7 @@ import {
   Grid,
 } from "@mui/material";
 import * as UIcons from "../assets/svg/UIcons/svgr_output/index";
+import theme from "../themes/SoftIce";
 
 const ControlPanel = ({
   textAnnotations,
@@ -24,6 +25,7 @@ const ControlPanel = ({
   isSelected,
   connectMode,
   setConnectMode,
+  theme,
 }) => {
   const [open, setOpen] = useState(false);
   const [textInput, setTextInput] = useState("");
@@ -31,6 +33,7 @@ const ControlPanel = ({
     x: percentWidth / 2,
     y: window.innerHeight / 2,
   };
+  console.log(connectMode);
 
   const handleClose = () => {
     setOpen(false);
@@ -61,33 +64,17 @@ const ControlPanel = ({
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
-        // height: "10%",
-        // borderBottom: "2px solid",
-        // borderColor: "primary.main",
-        // padding: "1rem",
       }}
     >
-      {/* <Card sx={{ display: "flex", justifyContent: "space-around" }}> */}
-
-      <Grid
-        container
-        sx={
-          {
-            // borderRight: "1px solid",
-            // borderColor: "primary.main",
-          }
-        }
-      >
+      <Grid container>
         <Grid
           item
-          xs={2}
+          // xs={2}
           sx={{
             borderRight: "1px solid",
             borderColor: "primary.main",
           }}
         >
-          {/* Z:\dev\gh\webapp_tu\public\svg\ux_icon_free-draw-mode.svg */}
-
           <Button
             onClick={() => {
               if (freeDraw) {
@@ -105,12 +92,13 @@ const ControlPanel = ({
             <UIcons.UxIconFreeDrawMode
               alt="Free Draw Mode"
               className="nav--button"
+              theme={theme}
             />
           </Button>
         </Grid>
         <Grid
           item
-          xs={2}
+          // xs={2}
           sx={{
             borderRight: "1px solid",
             borderColor: "primary.main",
@@ -120,25 +108,27 @@ const ControlPanel = ({
             style={{
               backgroundColor: `${connectMode ? "pink" : "transparent"}`,
             }}
+            onClick={() => {
+              if (connectMode) {
+                
+                setConnectMode(false);
+              } else {
+                setFreeDraw(false);
+                setDeleteMode(false);
+                setConnectMode(true);
+              }
+            }}
           >
             <UIcons.UxIconConnectionMode
               alt="Connection Mode"
               className="nav--button"
-              onClick={() => {
-                if (connectMode) {
-                  setConnectMode(false);
-                } else {
-                  setFreeDraw(false);
-                  setDeleteMode(false);
-                  setConnectMode(true);
-                }
-              }}
+              theme={theme}
             />
           </Button>
         </Grid>
         <Grid
           item
-          xs={2}
+          // xs={2}
           sx={{
             borderRight: "1px solid",
             borderColor: "primary.main",
@@ -157,12 +147,16 @@ const ControlPanel = ({
               backgroundColor: `${deleteMode ? "pink" : "transparent"}`,
             }}
           >
-            <UIcons.UxIconEraseMode alt="Erase Mode" className="nav--button" />
+            <UIcons.UxIconEraseMode
+              alt="Erase Mode"
+              className="nav--button"
+              theme={theme}
+            />
           </Button>
         </Grid>
         <Grid
           item
-          xs={2}
+          // xs={2}
           sx={{ borderRight: "1px solid", borderColor: "primary.main" }}
         >
           <Button
@@ -172,6 +166,7 @@ const ControlPanel = ({
             <UIcons.UxIconTextAnnotation
               alt="Text Annotation"
               className="nav--button"
+              theme={theme}
             />
           </Button>
 

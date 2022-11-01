@@ -26,7 +26,7 @@ const TextModal = ({
   selectionRectRef,
   handleDrag,
   handleClickTap,
-fromShapeId
+  fromShapeId,
 }) => {
   const shapeRef = useRef();
   const trRef = useRef();
@@ -51,8 +51,6 @@ fromShapeId
           x={x}
           y={y}
           text={text}
-          textAnnotations={textAnnotations}
-          setTextAnnotations={setTextAnnotations}
           isEditing={isEditing}
           setIsEditing={setIsEditing}
           id={id}
@@ -61,6 +59,7 @@ fromShapeId
           height={shapeProps.scaleY}
           placeholder={text}
           theme={theme}
+          name={name}
         />
       )}
       <Text
@@ -71,7 +70,7 @@ fromShapeId
         onClick={(e) => handleClickTap(e, textAnnotations, arrayPos, id)}
         onTap={(e) => handleClickTap(e, textAnnotations, arrayPos, id)}
         shadowBlur={fromShapeId ? 10 : null}
-        shadowColor={fromShapeId ? "pink" : null} 
+        shadowColor={fromShapeId ? "pink" : null}
         onSelect={() => {
           selectShape(id);
         }}

@@ -7,6 +7,7 @@ import * as orte from "../assets/svg/categories/spot/svgr_output/index";
 import * as atmos from "../assets/svg/categories/atmo/svgr_output/index";
 import AddIconButton from "./ui/AddIconButton";
 
+
 const svgArray = [aktis, orte, personen, atmos];
 const categories = ["AKTIVITÄTEN", "ORTE", "PERSONEN", "ATMOSPHÄREN"];
 
@@ -30,7 +31,7 @@ const Iconbar = ({ images, addImages, percentWidth, theme, stageRef, stageScale 
       icon: element.outerHTML,
       x: defaultPos.x / scale - stagePos.x / scale,
       y: defaultPos.y / scale - stagePos.y / scale,
-      name: name,
+      name: name.split(/(?=[A-Z])/).join(" "),
     });
   };
 
@@ -42,15 +43,14 @@ const Iconbar = ({ images, addImages, percentWidth, theme, stageRef, stageScale 
           <Box
             key={key}
             sx={{
-              // display: "flex",
-              // flexDirection: "ro w",
               borderTop: "1px solid",
               borderColor: "primary.main",
-              // padding: "0.25rem",
               height: "100%",
               display: "flex",
               flexDirection: "column",
-              // backgroundImage: "linear-gradient(to left, #000000, #ffffff)",
+              "&.iconBar__outer::after": {
+                background: `linear-gradient(to right, rgba(255,255,255,0) 70%, ${theme.palette.secondary.bg} 90%);`
+              }
             }}
             className="iconBar__outer"
           >
@@ -107,7 +107,8 @@ const Iconbar = ({ images, addImages, percentWidth, theme, stageRef, stageScale 
             </Box>
           </Box>
         </Grid>
-      ))}
+      ))
+      }
     </>
   );
 };

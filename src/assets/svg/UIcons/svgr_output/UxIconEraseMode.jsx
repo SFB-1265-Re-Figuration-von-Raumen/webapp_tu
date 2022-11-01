@@ -1,18 +1,15 @@
 import * as React from "react";
 
-const SvgUxIconEraseMode = (props) => (
+const SvgUxIconEraseMode = ({ theme }) => (
   <svg
     data-name="Ebene 1"
     xmlns="http://www.w3.org/2000/svg"
-    width="1em"
-    height="1em"
     viewBox="0 0 68.67 69.52"
-    {...props}
   >
     <path
       style={{
         fill: "none",
-        stroke: "#000",
+        stroke: `${theme.palette.primary.main}`,
         strokeLinecap: "round",
         strokeLinejoin: "round",
       }}
@@ -21,7 +18,7 @@ const SvgUxIconEraseMode = (props) => (
     <path
       style={{
         fill: "none",
-        stroke: "#000",
+        stroke: `${theme.palette.primary.main}`,
       }}
       d="M12.71 53.94h41.7"
     />
@@ -29,7 +26,7 @@ const SvgUxIconEraseMode = (props) => (
       d="M41.48 14.63a3.516 3.516 0 0 0-4.8 1.29L24.49 37.03c-.97 1.68-.4 3.83 1.29 4.8l13.79 7.96c1.68.97 3.83.39 4.8-1.29l12.19-21.11c.97-1.68.39-3.83-1.29-4.8l-13.79-7.96Z"
       style={{
         fill: "none",
-        stroke: "#000",
+        stroke: `${theme.palette.primary.main}`,
         strokeLinecap: "round",
         strokeLinejoin: "round",
       }}

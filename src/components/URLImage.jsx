@@ -30,7 +30,7 @@ const URLImage = ({
 }) => {
   isSelected ? !freeDraw : null;
   const trRef = useRef();
-  const [nodeScale, setNodeScale] = useState({});
+  const [nodeScale, setNodeScale] = useState(null);
   console.log(nodeScale);
 
   useEffect(() => {
@@ -47,6 +47,7 @@ const URLImage = ({
   // create a useRef for the Text props
   const textRef = useRef(0);
   const imgRef = useRef(0);
+// console.log(img.naturalWidth);
 
   return (
     <>
@@ -61,7 +62,7 @@ const URLImage = ({
             arrayPos={arrayPos}
             width={shapeProps.scaleX}
             height={shapeProps.scaleY}
-name={name}
+            name={name}
             theme={theme}
             images={images}
             setImages={setImages}
@@ -104,8 +105,7 @@ name={name}
           // offsetY={imgRef.current.attrs.offsetY}
           // next we need to offset the text on y axis according to the image height
           // how do we get the image height since we are using useImage hook?
-          offsetX={textRef.current.textWidth / 2 - textRef.current.textWidth}
-          offsetY={img ? -img.height : null}
+
           // this does not work!
           onDblClick={() => {
             setFreeDraw(false);
@@ -158,6 +158,8 @@ name={name}
           // onDragEnd={(e) => {
           //   handleDrag(e, images, setImages, arrayPos);
           // }}
+          offsetX={nodeScale ? nodeScale.width / 2 : 75}
+          offsetY={nodeScale ? nodeScale.height / 2 : 75}
         />
         <Image
           ref={imgRef}
@@ -184,6 +186,35 @@ name={name}
           onDragEnd={(e) => {
             handleDrag(e, images, setImages, arrayPos, id);
           }}
+          onTransformStart={() => {
+            setFreeDraw(false);
+            const node = textRef.current;
+            const scaleX = node.scaleX();
+            const scaleY = node.scaleY();
+
+            onChange({
+              ...shapeProps,
+              x: node.x(),
+              y: node.y(),
+            });
+
+            // we will reset it back
+            node.scaleX(1);
+            node.scaleY(1);
+            onChange({
+              ...shapeProps,
+              x: node.x(),
+              y: node.y(),
+              fontSize: Math.max(5, node.width() * scaleX),
+              // set minimal value
+              width: Math.max(5, node.width() * scaleX),
+              height: Math.max(node.height() * scaleY),
+            });
+            setNodeScale({
+              width: node.width(),
+              height: node.height(),
+            });
+          }}
           onTransform={() => {
             setFreeDraw(false);
             const node = textRef.current;
@@ -208,7 +239,10 @@ name={name}
               width: Math.max(5, node.width() * scaleX),
               height: Math.max(node.height() * scaleY),
             });
-            setNodeScale({ x: scaleX, y: scaleY });
+            setNodeScale({
+              width: node.width(),
+              height: node.height(),
+            });
           }}
           onTransformEnd={(e) => {
             setFreeDraw(false);
@@ -232,8 +266,14 @@ name={name}
               width: Math.max(5, node.width() * scaleX),
               height: Math.max(node.height() * scaleY),
             });
-            setNodeScale({ x: scaleX, y: scaleY });
+
+            setNodeScale({
+              width: node.width(),
+              height: node.height(),
+            });
           }}
+          offsetX={nodeScale ? nodeScale.width / 2 : 75}
+          offsetY={nodeScale ? nodeScale.height / 2 : 75}
         />
       </Group>
       {!connectMode && isSelected && (

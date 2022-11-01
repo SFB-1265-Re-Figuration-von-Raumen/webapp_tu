@@ -33,7 +33,7 @@ const ControlPanel = ({
     x: percentWidth / 2,
     y: window.innerHeight / 2,
   };
-  console.log(connectMode);
+
 
   const handleClose = () => {
     setOpen(false);

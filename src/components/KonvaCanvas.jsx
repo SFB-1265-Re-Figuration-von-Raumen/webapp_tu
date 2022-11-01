@@ -79,8 +79,7 @@ const KonvaCanvas = () => {
       setIsEditing(false);
     }
   };
-  console.log(images);
-  console.log(textAnnotations);
+  
 
   const handleClickTap = (e, array, arrayPos, id) => {
     setFreeDraw(false);
@@ -108,7 +107,6 @@ const KonvaCanvas = () => {
     const copy = stateArr.slice();
     copy[i].x = e.target.attrs.x;
     copy[i].y = e.target.attrs.y;
-    console.log(copy);
     setStateArr(copy);
   };
 
@@ -293,7 +291,7 @@ const KonvaCanvas = () => {
                 const radius = Math.min(20, Math.abs(height), Math.abs(width));
                 return (
                   <Line
-                  
+                  opacity={.5}
                     key={con.id}
                     dash={[20, 10]}
                     lineCap="round"

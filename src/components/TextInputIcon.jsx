@@ -31,7 +31,6 @@ const TextInputIcon = ({
   const ESCAPE_KEY = 27;
   const handleEscapeKeys = (e) => {
     if ((e.keyCode === RETURN_KEY && !e.shiftKey) || e.keyCode === ESCAPE_KEY) {
-      console.log("keydown");
       const copy = images.slice();
       copy[arrayPos].name = input;
       setImages(copy);

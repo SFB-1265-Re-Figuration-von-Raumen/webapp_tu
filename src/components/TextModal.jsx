@@ -44,6 +44,8 @@ const TextModal = ({
   // for the current Text
   // respective to the index "arrayPos"
 
+  console.log(shapeProps);
+
   return (
     <>
       {isSelected && isEditing && (
@@ -57,9 +59,11 @@ const TextModal = ({
           arrayPos={arrayPos}
           width={shapeProps.scaleX}
           height={shapeProps.scaleY}
-          placeholder={text}
           theme={theme}
-          name={name}
+          textAnnotations={textAnnotations}
+          setTextAnnotations={setTextAnnotations}
+          offsetX={shapeProps.width / 2 || 40 / 2}
+          offsetY={shapeProps.height / 2 || 40 / 2}
         />
       )}
       <Text
@@ -169,6 +173,8 @@ const TextModal = ({
             height: Math.max(node.height() * scaleY),
           });
         }}
+        offsetX={shapeProps.width / 2 || 40 / 2}
+        offsetY={shapeProps.height / 2 || 40 / 2}
       />
       {isSelected && (
         <>

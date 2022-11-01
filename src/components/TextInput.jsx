@@ -33,7 +33,7 @@ const TextInput = ({
   const ESCAPE_KEY = 27;
   const handleEscapeKeys = (e) => {
     if ((e.keyCode === RETURN_KEY && !e.shiftKey) || e.keyCode === ESCAPE_KEY) {
-      const newTextAnnotation = [...textAnnotations];
+      const newTextAnnotation = textAnnotations.slice();
       newTextAnnotation[arrayPos].text = input;
       setTextAnnotations(newTextAnnotation);
       setIsEditing(false);
@@ -45,10 +45,11 @@ const TextInput = ({
   };
 
   return (
-    <Html groupProps={{ x, y }} divProps={{ style: { opacity: 1 } }}>
+    <Html groupProps={{ x, y }} divProps={{ style: { opacity: 1 } }} >
       <textarea
         onChange={handleTextChange}
         onKeyDown={handleEscapeKeys}
+
         x={x}
         y={y}
         id={`editInputOf:${id}`}

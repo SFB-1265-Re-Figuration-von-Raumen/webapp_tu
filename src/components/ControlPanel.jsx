@@ -68,14 +68,10 @@ const ControlPanel = ({
 
       <Grid
         container
-        sx={{
-          // height: "10vh"
-          // height: "auto",
-        }}
       >
         <Grid
           item
-          // xs={3}
+          // xs={2}
           sx={{
             borderRight: "1px solid",
             borderColor: "primary.main",
@@ -94,7 +90,6 @@ const ControlPanel = ({
             }}
             style={{
               backgroundColor: `${freeDraw ? "pink" : "transparent"}`,
-              aspectRatio: "1/1",
             }}
           >
             <UIcons.UxIconFreeDrawMode
@@ -106,7 +101,7 @@ const ControlPanel = ({
         </Grid>
         <Grid
           item
-          xs={3}
+          // xs={2}
           sx={{
             borderRight: "1px solid",
             borderColor: "primary.main",
@@ -135,7 +130,7 @@ const ControlPanel = ({
         </Grid>
         <Grid
           item
-          // xs={3}
+          // xs={2}
           sx={{
             borderRight: "1px solid",
             borderColor: "primary.main",
@@ -159,7 +154,7 @@ const ControlPanel = ({
         </Grid>
         <Grid
           item
-          // xs={3}
+          // xs={2}
           sx={{ borderRight: "1px solid", borderColor: "primary.main" }}
         >
           <Button
@@ -212,7 +207,7 @@ const ControlPanel = ({
       </Grid>
       <Grid
         item
-        // xs={4}
+        xs={4}
         sx={{
           borderRight: "1px solid",
           borderColor: "primary.main",

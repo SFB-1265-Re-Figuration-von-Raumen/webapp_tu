@@ -71,7 +71,7 @@ const KonvaCanvas = () => {
       setIsEditing(false);
     }
   };
-  const handleClickTap = (e, array, id) => {
+  const handleClickTap = (e, array, arrayPos, id) => {
     setFreeDraw(false);
     if (deleteMode) {
       array.splice(arrayPos, 1);
@@ -81,13 +81,13 @@ const KonvaCanvas = () => {
       if (fromShapeId) {
         const newConnector = {
           from: fromShapeId,
-          to: array[id].id,
+          to: array[arraPos].id,
           id: connectors.length,
         };
         setConnectors(connectors.concat([newConnector]));
         setFromShapeId(null);
       } else {
-        setFromShapeId(array[id].id);
+        setFromShapeId(array[arrayPos].id);
       }
     } else selectShape(id);
   };

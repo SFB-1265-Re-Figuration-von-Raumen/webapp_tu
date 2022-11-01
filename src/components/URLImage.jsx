@@ -30,6 +30,7 @@ const URLImage = ({
   isSelected ? !freeDraw : null;
   const trRef = useRef();
   const [isDragging, setIsDragging] = useState(false);
+console.log(id);
 
   useEffect(() => {
     if (isSelected) {
@@ -46,6 +47,7 @@ const URLImage = ({
   const textRef = useRef(0);
   const imgRef = useRef(0);
   // console.log(imgRef);
+console.log(selectedId);
 
   return (
     <>
@@ -68,8 +70,17 @@ const URLImage = ({
           strokeEnabled={true}
           wrap={"word"}
           // onClick={id ? isSelected = id : isSelected = null}
-
+          
           draggable={freeDraw ? "false" : "true"}
+          onDragStart={(e) => {
+            handleDrag(e, images, setImages, arrayPos, id);
+          }}
+          onDragMove={(e) => {
+            handleDrag(e, images, setImages, arrayPos);
+          }}
+          onDragEnd={(e) => {
+            handleDrag(e, images, setImages, arrayPos);
+          }}
           text={name.split(/(?=[A-Z])/).join(" ")}
           x={x}
           y={y}

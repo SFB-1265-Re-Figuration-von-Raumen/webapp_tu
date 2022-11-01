@@ -10,6 +10,7 @@ import {
   Grid,
 } from "@mui/material";
 import * as UIcons from "../assets/svg/UIcons/svgr_output/index";
+import theme from "../themes/SoftIce";
 
 const ControlPanel = ({
   textAnnotations,
@@ -24,6 +25,7 @@ const ControlPanel = ({
   isSelected,
   connectMode,
   setConnectMode,
+  theme,
 }) => {
   const [open, setOpen] = useState(false);
   const [textInput, setTextInput] = useState("");
@@ -105,6 +107,7 @@ const ControlPanel = ({
             <UIcons.UxIconFreeDrawMode
               alt="Free Draw Mode"
               className="nav--button"
+              theme={theme}
             />
           </Button>
         </Grid>
@@ -133,6 +136,7 @@ const ControlPanel = ({
                   setConnectMode(true);
                 }
               }}
+              theme={theme}
             />
           </Button>
         </Grid>
@@ -157,7 +161,7 @@ const ControlPanel = ({
               backgroundColor: `${deleteMode ? "pink" : "transparent"}`,
             }}
           >
-            <UIcons.UxIconEraseMode alt="Erase Mode" className="nav--button" />
+            <UIcons.UxIconEraseMode alt="Erase Mode" className="nav--button" theme={theme} />
           </Button>
         </Grid>
         <Grid
@@ -172,6 +176,7 @@ const ControlPanel = ({
             <UIcons.UxIconTextAnnotation
               alt="Text Annotation"
               className="nav--button"
+              theme={theme}
             />
           </Button>
 

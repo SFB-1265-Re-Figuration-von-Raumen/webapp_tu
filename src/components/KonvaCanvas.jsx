@@ -443,6 +443,7 @@ const KonvaCanvas = () => {
             setIsEditing={setIsEditing}
             connectMode={connectMode}
             setConnectMode={setConnectMode}
+            theme={theme}
           />
           {freeDraw && (
             <FreeDrawControls

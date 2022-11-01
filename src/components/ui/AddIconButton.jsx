@@ -47,7 +47,6 @@ const AddIconButton = ({ theme }) => (
 4.24-1.24.61-.39 1.16-.86 1.63-1.39"
                     style={{
                         fill: "none",
-                        // stroke: "#7dd1a4",
                         stroke: `${theme.palette.primary.main}`,
                         strokeWidth: ".9px",
                     }}

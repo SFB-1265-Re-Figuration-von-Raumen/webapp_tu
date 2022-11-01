@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { Image, Transformer, Group, Text } from "react-konva";
 import useImage from "use-image";
+import TextInputIcon from "./TextInputIcon";
 
 const URLImage = ({
   theme,
@@ -29,11 +30,10 @@ const URLImage = ({
 }) => {
   isSelected ? !freeDraw : null;
   const trRef = useRef();
-  const [nodeScale, setNodeScale] = useState(null);
+  const [nodeScale, setNodeScale] = useState({});
   console.log(nodeScale);
-  
-  const [isDragging, setIsDragging] = useState(false);
 
+  const [iconText, setIconText] = useState(name.split(/(?=[A-Z])/).join(" "));
 
   useEffect(() => {
     if (isSelected) {
@@ -50,22 +50,36 @@ const URLImage = ({
   const textRef = useRef(0);
   const imgRef = useRef(0);
 
-
   return (
     <>
       <Group draggable={freeDraw ? "false" : "true"} visible="true">
+        {isEditing && (
+          <TextInputIcon
+            x={x}
+            y={y}
+            iconText={iconText}
+            setIconText={setIconText}
+            isEditing={isEditing}
+            setIsEditing={setIsEditing}
+            id={id}
+            arrayPos={arrayPos}
+            width={shapeProps.scaleX}
+            height={shapeProps.scaleY}
+            text={iconText}
+            placeholder={iconText}
+            theme={theme}
+          />
+        )}
         <Text
           ref={textRef}
           {...shapeProps}
           arrayPos={arrayPos}
           isSelected={id === selectedId}
-          // onClick={handleClickTap(textAnnotations)}
-          // onTap={handleClickTap(textAnnotations)}
           onSelect={() => {
             selectShape(id);
           }}
           fill={
-            isEditing && isSelected ? "transparent" : theme.palette.primary.main
+            isEditing ? "transparent" : theme.palette.primary.main
           }
           // lineCap={"butt"}
           // lineJoin={"bevel"}
@@ -83,11 +97,11 @@ const URLImage = ({
           onDragEnd={(e) => {
             handleDrag(e, images, setImages, arrayPos, id);
           }}
-          text={name.split(/(?=[A-Z])/).join(" ")}
+          text={iconText}
           x={x}
           y={y}
-          // x={nodeScale? x / nodeScale.x : x}
-          // y={nodeScale ? y / nodeScale.y : y}
+          // x={nodeScale ? x + nodeScale.x : x}
+          // y={nodeScale ? y + nodeScale.y : y}
           borderStroke={"black"}
           fontSize={20}
           fontFamily={theme.typography.fontFamily}
@@ -158,13 +172,13 @@ const URLImage = ({
           // offsetY={imgRef.current.attrs.offsetY}
           draggable={freeDraw ? "false" : "true"}
           onDragStart={(e) => {
-            handleDrag(e, images, setImages, arrayPos);
+            handleDrag(e, images, setImages, arrayPos, id);
           }}
           onDragMove={(e) => {
-            handleDrag(e, images, setImages, arrayPos);
+            handleDrag(e, images, setImages, arrayPos, id);
           }}
           onDragEnd={(e) => {
-            handleDrag(e, images, setImages, arrayPos);
+            handleDrag(e, images, setImages, arrayPos, id);
           }}
           onTransform={() => {
             setFreeDraw(false);
@@ -222,6 +236,7 @@ const URLImage = ({
         <Transformer
           ref={trRef}
           anchorCornerRadius={50}
+          borderDash={[20, 10]}
           enabledAnchors={[
             "top-left",
             "top-right",

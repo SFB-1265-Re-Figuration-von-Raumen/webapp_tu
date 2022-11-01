@@ -26,6 +26,7 @@ const TextModal = ({
   selectionRectRef,
   handleDrag,
   handleClickTap,
+fromShapeId
 }) => {
   const shapeRef = useRef();
   const trRef = useRef();
@@ -69,6 +70,8 @@ const TextModal = ({
         isSelected={id === selectedId}
         onClick={(e) => handleClickTap(e, textAnnotations, arrayPos, id)}
         onTap={(e) => handleClickTap(e, textAnnotations, arrayPos, id)}
+        shadowBlur={fromShapeId ? 10 : null}
+        shadowColor={fromShapeId ? "pink" : null} 
         onSelect={() => {
           selectShape(id);
         }}
@@ -88,13 +91,13 @@ const TextModal = ({
         fontFamily={theme.typography.fontFamily}
         draggable={freeDraw ? "false" : "true"}
         onDragStart={(e) => {
-          handleDrag(e, textAnnotations, setTextAnnotations, arrayPos);
+          handleDrag(e, textAnnotations, setTextAnnotations, arrayPos, id);
         }}
         onDragMove={(e) => {
-          handleDrag(e, textAnnotations, setTextAnnotations, arrayPos);
+          handleDrag(e, textAnnotations, setTextAnnotations, arrayPos, id);
         }}
         onDragEnd={(e) => {
-          handleDrag(e, textAnnotations, setTextAnnotations, arrayPos);
+          handleDrag(e, textAnnotations, setTextAnnotations, arrayPos, id);
         }}
         onDblClick={() => {
           setIsEditing(true);

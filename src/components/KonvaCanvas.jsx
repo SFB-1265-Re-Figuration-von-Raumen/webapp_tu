@@ -39,7 +39,6 @@ const KonvaCanvas = () => {
       const textsCopy = textAnnotations.slice();
       setTextAnnotations(textsCopy);
     };
-
   });
 
   const trRef = useRef();
@@ -82,7 +81,6 @@ const KonvaCanvas = () => {
   };
   console.log(images);
   console.log(textAnnotations);
-  
 
   const handleClickTap = (e, array, arrayPos, id) => {
     setFreeDraw(false);
@@ -107,8 +105,6 @@ const KonvaCanvas = () => {
 
   const handleDrag = (e, stateArr, setStateArr, i) => {
     setFreeDraw(false);
-    console.log(e);
-    
     const copy = stateArr.slice();
     copy[i].x = e.target.attrs.x;
     copy[i].y = e.target.attrs.y;
@@ -286,18 +282,22 @@ const KonvaCanvas = () => {
                 />
               ))}
               {connectors.map((con) => {
-                const from = images.find((s) => s.id === con.from) || textAnnotations.find((s) => s.id === con.from);
-                const to = images.find((s) => s.id === con.to) || textAnnotations.find((s) => s.id === con.to);
-
+                const from =
+                  images.find((s) => s.id === con.from) ||
+                  textAnnotations.find((s) => s.id === con.from);
+                const to =
+                  images.find((s) => s.id === con.to) ||
+                  textAnnotations.find((s) => s.id === con.to);
+                const width = from.x - to.x;
+                const height = from.y - to.y;
+                const radius = Math.min(20, Math.abs(height), Math.abs(width));
                 return (
                   <Line
+                  
                     key={con.id}
-                    points={[
-                      from.x ,
-                      from.y ,
-                      to.x ,
-                      to.y ,
-                    ]}
+                    dash={[20, 10]}
+                    lineCap="round"
+                    points={[from.x, from.y, to.x, to.y]}
                     stroke={theme.palette.primary.main}
                   />
                 );
@@ -380,6 +380,7 @@ const KonvaCanvas = () => {
                     stageRef={stageRef}
                     handleDrag={handleDrag}
                     handleClickTap={handleClickTap}
+                    fromShapeId={fromShapeId}
                   />
                 );
               })}

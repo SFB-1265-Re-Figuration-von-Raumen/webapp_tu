@@ -62,6 +62,7 @@ const KonvaCanvas = () => {
     pdf.save("canvas.pdf");
   };
 
+
   const handleStageClick = (e) => {
     // deselect when clicked on empty area
     const clickedOnEmpty = e.target === e.target.getStage();
@@ -278,8 +279,8 @@ const KonvaCanvas = () => {
                 return (
                   <Line
                     key={con.id}
-                    points={[from.x, from.y, to.x, to.y]}
-                    stroke="black"
+                    points={[(from.x + 100) , (from.y +100), (to.x +100), (to.y +100)]}
+                    stroke={theme.palette.primary.main}
                   />
                 );
               })}

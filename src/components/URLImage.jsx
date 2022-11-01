@@ -29,8 +29,11 @@ const URLImage = ({
 }) => {
   isSelected ? !freeDraw : null;
   const trRef = useRef();
+  const [nodeScale, setNodeScale] = useState(null);
+  console.log(nodeScale);
+  
   const [isDragging, setIsDragging] = useState(false);
-console.log(id);
+
 
   useEffect(() => {
     if (isSelected) {
@@ -46,8 +49,7 @@ console.log(id);
   // create a useRef for the Text props
   const textRef = useRef(0);
   const imgRef = useRef(0);
-  // console.log(imgRef);
-console.log(selectedId);
+
 
   return (
     <>
@@ -70,20 +72,22 @@ console.log(selectedId);
           strokeEnabled={true}
           wrap={"word"}
           // onClick={id ? isSelected = id : isSelected = null}
-          
+
           draggable={freeDraw ? "false" : "true"}
           onDragStart={(e) => {
             handleDrag(e, images, setImages, arrayPos, id);
           }}
           onDragMove={(e) => {
-            handleDrag(e, images, setImages, arrayPos);
+            handleDrag(e, images, setImages, arrayPos, id);
           }}
           onDragEnd={(e) => {
-            handleDrag(e, images, setImages, arrayPos);
+            handleDrag(e, images, setImages, arrayPos, id);
           }}
           text={name.split(/(?=[A-Z])/).join(" ")}
           x={x}
           y={y}
+          // x={nodeScale? x / nodeScale.x : x}
+          // y={nodeScale ? y / nodeScale.y : y}
           borderStroke={"black"}
           fontSize={20}
           fontFamily={theme.typography.fontFamily}
@@ -186,6 +190,7 @@ console.log(selectedId);
               width: Math.max(5, node.width() * scaleX),
               height: Math.max(node.height() * scaleY),
             });
+            setNodeScale({ x: scaleX, y: scaleY });
           }}
           onTransformEnd={(e) => {
             setFreeDraw(false);
@@ -209,6 +214,7 @@ console.log(selectedId);
               width: Math.max(5, node.width() * scaleX),
               height: Math.max(node.height() * scaleY),
             });
+            setNodeScale({ x: scaleX, y: scaleY });
           }}
         />
       </Group>

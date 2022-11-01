@@ -1,4 +1,4 @@
-import React, { useState, useRef, Fragment } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 import { Stage, Layer, Line, Rect, Transformer } from "react-konva";
 import { jsPDF } from "jspdf";
@@ -31,6 +31,16 @@ const KonvaCanvas = () => {
   const [connectMode, setConnectMode] = useState(false);
   const [fromShapeId, setFromShapeId] = useState(null);
   const [connectors, setConnectors] = React.useState([]);
+  useEffect(() => {
+    // console.log("useEffect");
+    const updateArr = () => {
+      const imagesCopy = images.slice();
+      setImages(imagesCopy);
+      const textsCopy = textAnnotations.slice();
+      setTextAnnotations(textsCopy);
+    };
+
+  });
 
   const trRef = useRef();
   //ZOOM STUFF
@@ -62,7 +72,6 @@ const KonvaCanvas = () => {
     pdf.save("canvas.pdf");
   };
 
-
   const handleStageClick = (e) => {
     // deselect when clicked on empty area
     const clickedOnEmpty = e.target === e.target.getStage();
@@ -71,17 +80,10 @@ const KonvaCanvas = () => {
       setIsEditing(false);
     }
   };
-  // const handleClickTap = (e, array) => {
-  //   setFreeDraw(false);
-  //   if (deleteMode) {
-  //     array.splice(arrayPos, 1);
-  //   } else if (freeDraw) {
-  //     selectShape(null);
-  //   } else if (connectMode) {
-  //     connectNodes(array[arrayPos]);
-  //     connectedNodes.push;
-  //   } else selectShape(id);
-  // };
+  console.log(images);
+  console.log(textAnnotations);
+  
+
   const handleClickTap = (e, array, arrayPos, id) => {
     setFreeDraw(false);
     if (deleteMode) {
@@ -105,9 +107,12 @@ const KonvaCanvas = () => {
 
   const handleDrag = (e, stateArr, setStateArr, i) => {
     setFreeDraw(false);
+    console.log(e);
+    
     const copy = stateArr.slice();
     copy[i].x = e.target.attrs.x;
     copy[i].y = e.target.attrs.y;
+    console.log(copy);
     setStateArr(copy);
   };
 
@@ -190,12 +195,11 @@ const KonvaCanvas = () => {
       isDrawing.current = true;
       const pos = e.target.getStage().getRelativePointerPosition();
       // setLines([...lines, { tool, points: [pos.x, pos.y] }]);
-      console.log(pos);
+
       const stage = e.target.getStage();
       const point = stage.getRelativePointerPosition();
       let lastLine = lines[lines.length - 1];
       // add point
-      console.log(lastLine);
 
       lastLine.points = lastLine.points.concat([point.x, point.y]);
       lastLine.strokeWidth = strokeSlide;
@@ -212,8 +216,6 @@ const KonvaCanvas = () => {
 
   const handleMouseUp = () => {
     if (freeDraw) {
-      console.log("hi");
-
       isDrawing.current = false;
     }
   };
@@ -236,7 +238,7 @@ const KonvaCanvas = () => {
   return (
     <>
       <div className="konvaContainer">
-        <Fragment>
+        <>
           <Stage
             draggable={freeDraw ? false : true}
             onWheel={handleWheel}
@@ -284,20 +286,23 @@ const KonvaCanvas = () => {
                 />
               ))}
               {connectors.map((con) => {
-                const from = images.find((s) => s.id === con.from);
-                const to = images.find((s) => s.id === con.to);
+                const from = images.find((s) => s.id === con.from) || textAnnotations.find((s) => s.id === con.from);
+                const to = images.find((s) => s.id === con.to) || textAnnotations.find((s) => s.id === con.to);
 
                 return (
                   <Line
                     key={con.id}
-                    points={[(from.x + 100) , (from.y +100), (to.x +100), (to.y +100)]}
+                    points={[
+                      from.x ,
+                      from.y ,
+                      to.x ,
+                      to.y ,
+                    ]}
                     stroke={theme.palette.primary.main}
                   />
                 );
               })}
               {images.map((img, i) => {
-                console.log(img.x);
-
                 return (
                   <URLImage
                     image={img.icon}
@@ -373,13 +378,14 @@ const KonvaCanvas = () => {
                     trRef={trRef}
                     layeRef={layeRef}
                     stageRef={stageRef}
-                    s
+                    handleDrag={handleDrag}
+                    handleClickTap={handleClickTap}
                   />
                 );
               })}
             </Layer>
           </Stage>
-        </Fragment>
+        </>
         <div
           className="zommContainer"
           style={{

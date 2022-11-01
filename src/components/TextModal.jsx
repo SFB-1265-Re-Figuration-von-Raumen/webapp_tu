@@ -24,9 +24,12 @@ const TextModal = ({
   layerRef,
   stageRef,
   selectionRectRef,
+  handleDrag,
+  handleClickTap,
 }) => {
   const shapeRef = useRef();
   const trRef = useRef();
+
   useEffect(() => {
     if (isSelected) {
       // we need to attach transformer manually
@@ -35,64 +38,10 @@ const TextModal = ({
     }
   }, [isSelected, isEditing]);
 
-  // console.log(arrayPos);
-
-  function savePosition(pos, x, y) {
-    console.log(`arrayPos is ${pos}, x is ${x}, y is ${y}`);
-
-    const newText = textAnnotations[pos];
-    console.log(newText);
-
-    newText.x = x;
-    newText.y = y;
-    const updatedTexts = Object.keys(textAnnotations).map((key, i) => {
-      if (key === pos) {
-        return newText;
-      }
-      return textAnnotations[key];
-    });
-    setTextAnnotations(updatedTexts);
-    console.log(textAnnotations);
-  }
-
-  const handleDragStart = (e) => {
-    isSelected
-      ? null
-      : e.target.setAttrs({
-          scaleX: 1.1,
-          scaleY: 1.1,
-        });
-  };
-  const handleDragEnd = (e) => {
-    isSelected
-      ? null
-      : e.target.to({
-          duration: 0.2,
-          easing: Konva.Easings.EaseInOut,
-          scaleX: 1,
-          scaleY: 1,
-        });
-    onChange({
-      ...shapeProps,
-      x: e.target.x(),
-      y: e.target.y(),
-    });
-
-    // here we need to update the Texts state
-    // with the new x and y values
-    // for the current Text
-    // respective to the index "arrayPos"
-
-    savePosition(e.target.attrs.arrayPos, e.target.attrs.x, e.target.attrs.y);
-  };
-  const handleClickTap = () => {
-    if (deleteMode) {
-      textAnnotations.splice(arrayPos, 1);
-    } else if (freeDraw) {
-      return;
-    }
-    selectShape(id);
-  };
+  // here we need to update the Texts state
+  // with the new x and y values
+  // for the current Text
+  // respective to the index "arrayPos"
 
   return (
     <>
@@ -118,8 +67,8 @@ const TextModal = ({
         {...shapeProps}
         arrayPos={arrayPos}
         isSelected={id === selectedId}
-        onClick={handleClickTap}
-        onTap={handleClickTap}
+        onClick={(e) => handleClickTap(e, textAnnotations, arrayPos, id)}
+        onTap={(e) => handleClickTap(e, textAnnotations, arrayPos, id)}
         onSelect={() => {
           selectShape(id);
         }}
@@ -131,16 +80,22 @@ const TextModal = ({
         strokeEnabled={true}
         wrap={"word"}
         // onClick={id ? isSelected = id : isSelected = null}
-        draggable={freeDraw ? "false" : "true"}
         // text={text}
         x={x}
         y={y}
         borderStroke={"black"}
         fontSize={20}
         fontFamily={theme.typography.fontFamily}
-        height={undefined}
-        onDragStart={handleDragStart}
-        onDragEnd={handleDragEnd}
+        draggable={freeDraw ? "false" : "true"}
+        onDragStart={(e) => {
+          handleDrag(e, textAnnotations, setTextAnnotations, arrayPos);
+        }}
+        onDragMove={(e) => {
+          handleDrag(e, textAnnotations, setTextAnnotations, arrayPos);
+        }}
+        onDragEnd={(e) => {
+          handleDrag(e, textAnnotations, setTextAnnotations, arrayPos);
+        }}
         onDblClick={() => {
           setIsEditing(true);
         }}
@@ -219,7 +174,12 @@ const TextModal = ({
             ref={trRef}
             padding={5}
             anchorCornerRadius={50}
-            enabledAnchors={["top-left", "bottom-left", "top-right", "bottom-right"]}
+            enabledAnchors={[
+              "top-left",
+              "bottom-left",
+              "top-right",
+              "bottom-right",
+            ]}
             borderStroke={theme.palette.primary.main}
             anchorStroke={theme.palette.primary.main}
             anchorSize={15}

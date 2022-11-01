@@ -224,7 +224,12 @@ const KonvaCanvas = () => {
 
   return (
     <>
-      <div className="konvaContainer">
+      <div
+        className="konvaContainer"
+        style={{
+          backgroundColor: theme.palette.secondary.canvas
+        }}
+      >
         <Fragment>
           <Stage
             draggable={freeDraw ? false : true}
@@ -244,7 +249,7 @@ const KonvaCanvas = () => {
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleMouseUp}
-            // onDragStart={updateOrigin}
+          // onDragStart={updateOrigin}
           >
             <Layer ref={layeRef}>
               {lines.map((line, i) => (
@@ -279,7 +284,7 @@ const KonvaCanvas = () => {
                 return (
                   <Line
                     key={con.id}
-                    points={[(from.x + 100) , (from.y +100), (to.x +100), (to.y +100)]}
+                    points={[(from.x + 100), (from.y + 100), (to.x + 100), (to.y + 100)]}
                     stroke={theme.palette.primary.main}
                   />
                 );
@@ -422,6 +427,7 @@ const KonvaCanvas = () => {
             height: "100%",
             display: "flex",
             flexDirection: "column",
+            backgroundColor: "secondary.bg"
           }}
         >
           <ControlPanel

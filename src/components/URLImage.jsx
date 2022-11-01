@@ -49,7 +49,18 @@ const URLImage = ({
 
   return (
     <>
-      <Group draggable={freeDraw ? "false" : "true"} visible="true">
+      <Group
+        draggable={freeDraw ? "false" : "true"}
+        visible="true"
+        onDragStart={(e) => {
+          handleDrag(e, images, setImages, arrayPos);
+        }}
+        onDragMove={(e) => {
+          handleDrag(e, images, setImages, arrayPos);
+        }}
+        onDragEnd={(e) => {
+          handleDrag(e, images, setImages, arrayPos);
+        }}>
         <Text
           ref={textRef}
           {...shapeProps}
@@ -125,6 +136,15 @@ const URLImage = ({
               height: Math.max(node.height() * scaleY),
             });
           }}
+        // onDragStart={(e) => {
+        //   handleDrag(e, images, setImages, arrayPos);
+        // }}
+        // onDragMove={(e) => {
+        //   handleDrag(e, images, setImages, arrayPos);
+        // }}
+        // onDragEnd={(e) => {
+        //   handleDrag(e, images, setImages, arrayPos);
+        // }}
         />
         <Image
           ref={imgRef}
@@ -142,15 +162,15 @@ const URLImage = ({
           // offsetX={imgRef.current.attrs.offsetX}
           // offsetY={imgRef.current.attrs.offsetY}
           draggable={freeDraw ? "false" : "true"}
-          onDragStart={(e) => {
-            handleDrag(e, images, setImages, arrayPos);
-          }}
-          onDragMove={(e) => {
-            handleDrag(e, images, setImages, arrayPos);
-          }}
-          onDragEnd={(e) => {
-            handleDrag(e, images, setImages, arrayPos);
-          }}
+          // onDragStart={(e) => {
+          //   handleDrag(e, images, setImages, arrayPos);
+          // }}
+          // onDragMove={(e) => {
+          //   handleDrag(e, images, setImages, arrayPos);
+          // }}
+          // onDragEnd={(e) => {
+          //   handleDrag(e, images, setImages, arrayPos);
+          // }}
           onTransform={() => {
             setFreeDraw(false);
             const node = textRef.current;

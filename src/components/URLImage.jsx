@@ -143,8 +143,8 @@ console.log(selectedId);
           arrayPos={arrayPos}
           image={img}
           isSelected={id === selectedId}
-          onClick={(e) => handleClickTap(e, images, arrayPos)}
-          onTap={(e) => handleClickTap(e, images, arrayPos)}
+          onClick={(e) => handleClickTap(e, images, arrayPos, id)}
+          onTap={(e) => handleClickTap(e, images, arrayPos, id)}
           x={x}
           y={y}
           shadowBlur={fromShapeId ? 10 : null}

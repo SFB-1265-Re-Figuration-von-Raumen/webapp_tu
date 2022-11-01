@@ -63,32 +63,20 @@ const ControlPanel = ({
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
-        // height: "10%",
-        // borderBottom: "2px solid",
-        // borderColor: "primary.main",
-        // padding: "1rem",
       }}
     >
-      {/* <Card sx={{ display: "flex", justifyContent: "space-around" }}> */}
 
       <Grid
         container
-        sx={
-          {
-            // borderRight: "1px solid",
-            // borderColor: "primary.main",
-          }
-        }
       >
         <Grid
           item
-          xs={2}
+          // xs={2}
           sx={{
             borderRight: "1px solid",
             borderColor: "primary.main",
           }}
         >
-          {/* Z:\dev\gh\webapp_tu\public\svg\ux_icon_free-draw-mode.svg */}
 
           <Button
             onClick={() => {
@@ -113,7 +101,7 @@ const ControlPanel = ({
         </Grid>
         <Grid
           item
-          xs={2}
+          // xs={2}
           sx={{
             borderRight: "1px solid",
             borderColor: "primary.main",
@@ -142,7 +130,7 @@ const ControlPanel = ({
         </Grid>
         <Grid
           item
-          xs={2}
+          // xs={2}
           sx={{
             borderRight: "1px solid",
             borderColor: "primary.main",
@@ -166,7 +154,7 @@ const ControlPanel = ({
         </Grid>
         <Grid
           item
-          xs={2}
+          // xs={2}
           sx={{ borderRight: "1px solid", borderColor: "primary.main" }}
         >
           <Button

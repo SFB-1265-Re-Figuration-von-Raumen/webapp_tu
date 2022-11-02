@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Slider, Select, MenuItem } from "@mui/material";
 import { Box } from "@mui/system";
 import { MuiColorInput } from "mui-color-input";
+
 const FreeDrawControls = ({
   theme,
   strokeSlide,
@@ -24,8 +25,17 @@ const FreeDrawControls = ({
           <MenuItem value="eraser">Erase</MenuItem>
         </Select> */}
         <MuiColorInput
+          variant="outlined"
           value={lineColor}
           onChange={(color) => setLineColor(color)}
+          sx={{
+            "& .MuiInputBase-input": {
+              color: theme.palette.primary.main,
+              // border: `1px solid ${theme.palette.primary.main}`,
+              // outline: "none",
+              // outline: theme.palette.primary.main,
+            },
+          }}
         />
         <Slider
           size="small"

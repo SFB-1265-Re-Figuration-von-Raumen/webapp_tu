@@ -49,7 +49,7 @@ const Iconbar = ({ images, addImages, percentWidth, theme, stageRef, stageScale 
               display: "flex",
               flexDirection: "column",
               "&.iconBar__outer::after": {
-                background: `linear-gradient(to right, rgba(255,255,255,0) 70%, ${theme.palette.secondary.bg} 90%);`
+                background: `linear-gradient(to right, rgba(255,255,255,0) 70%, ${theme.palette.secondary.bg} 100%);`
               }
             }}
             className="iconBar__outer"
@@ -80,15 +80,10 @@ const Iconbar = ({ images, addImages, percentWidth, theme, stageRef, stageScale 
                     <div
                       key={key}
                       style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        margin: "0 0.25rem",
-                        borderRadius: "20px",
                         backgroundColor: theme.palette.primary.light,
-                        aspectRatio: "1/1",
                         border: `1px solid ${theme.palette.primary.dark}`,
                       }}
+                      className="iconWrapper"
                     >
                       <Icon
                         onClick={(e) => {

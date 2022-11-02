@@ -88,11 +88,13 @@ const ControlPanel = ({
             style={{
               backgroundColor: `${freeDraw ? "pink" : "transparent"}`,
             }}
+            className="navButton"
           >
             <UIcons.UxIconFreeDrawMode
               alt="Free Draw Mode"
-              className="nav--button"
               theme={theme}
+              width={null}
+              height={null}
             />
           </Button>
         </Grid>
@@ -118,11 +120,13 @@ const ControlPanel = ({
                 setConnectMode(true);
               }
             }}
+            className="navButton"
           >
             <UIcons.UxIconConnectionMode
               alt="Connection Mode"
-              className="nav--button"
               theme={theme}
+              width={null}
+              height={null}
             />
           </Button>
         </Grid>
@@ -146,11 +150,13 @@ const ControlPanel = ({
             style={{
               backgroundColor: `${deleteMode ? "pink" : "transparent"}`,
             }}
+            className="navButton"
           >
             <UIcons.UxIconEraseMode
               alt="Erase Mode"
-              className="nav--button"
               theme={theme}
+              width={null}
+              height={null}
             />
           </Button>
         </Grid>
@@ -162,11 +168,13 @@ const ControlPanel = ({
           <Button
             onClick={handleOpen}
             style={{ backgroundColor: `${isEditing ? "pink" : "transparent"}` }}
+            className="navButton"
           >
             <UIcons.UxIconTextAnnotation
               alt="Text Annotation"
-              className="nav--button"
               theme={theme}
+              width={null}
+              height={null}
             />
           </Button>
 

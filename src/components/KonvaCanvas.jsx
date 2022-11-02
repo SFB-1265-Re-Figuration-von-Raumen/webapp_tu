@@ -420,13 +420,12 @@ const KonvaCanvas = () => {
             left: "40rem",
             gap: ".5rem",
             display: "flex",
-          }}
-        >
-          <div>
-            <Button variant="outlined" onClick={handleExport}>
-              dings
-            </Button>
-          </div>
+          }}>
+      <div>
+      <Button variant="outlined" onClick={handleExport}>
+          Export Canvas
+      </Button>
+      </div>
         </div>
       </div>
 

@@ -79,7 +79,7 @@ const KonvaCanvas = () => {
       setIsEditing(false);
     }
   };
-  
+
 
   const handleClickTap = (e, array, arrayPos, id) => {
     setFreeDraw(false);
@@ -231,7 +231,7 @@ const KonvaCanvas = () => {
 
   return (
     <>
-      <div className="konvaContainer" style={{backgroundColor: theme.palette.secondary.canvas}}>
+      <div className="konvaContainer" style={{ backgroundColor: theme.palette.secondary.canvas }}>
         <>
           <Stage
             draggable={freeDraw ? false : true}
@@ -291,7 +291,7 @@ const KonvaCanvas = () => {
                 const radius = Math.min(20, Math.abs(height), Math.abs(width));
                 return (
                   <Line
-                  opacity={.5}
+                    opacity={.5}
                     key={con.id}
                     dash={[20, 10]}
                     lineCap="round"
@@ -395,7 +395,7 @@ const KonvaCanvas = () => {
             display: "flex",
           }}
         >
-          <Button onClick={handleZoomOut}>
+          <Button variant="outlined" color="secondary" onClick={handleZoomOut}>
             <UIcons.UxIconZoomOut
               alt="minus zoom"
               className="zoomyZoom"
@@ -403,7 +403,7 @@ const KonvaCanvas = () => {
               height={null}
             />
           </Button>
-          <Button onClick={handleZoomIn}>
+          <Button variant="outlined" color="secondary" onClick={handleZoomIn}>
             <UIcons.UxIconZoomIn
               alt="plus zoom"
               className="zoomyZoom"
@@ -411,21 +411,11 @@ const KonvaCanvas = () => {
               height={null}
             />
           </Button>
-        </div>
-        <div
-          className="zommContainer"
-          style={{
-            position: "absolute",
-            bottom: "2rem",
-            left: "40rem",
-            gap: ".5rem",
-            display: "flex",
-          }}>
-      <div>
-      <Button variant="outlined" onClick={handleExport}>
-          Export Canvas
-      </Button>
-      </div>
+          <div className="export--btn">
+            <Button variant="outlined" color="secondary" onClick={handleExport}>
+              Export Canvas
+            </Button>
+          </div>
         </div>
       </div>
 

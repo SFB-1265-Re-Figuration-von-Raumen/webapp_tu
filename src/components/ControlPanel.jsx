@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
   Dialog,
-  DialogActions,
+  DialogActions,          
   DialogContent,
   DialogContentText,
   TextField,
@@ -110,7 +110,6 @@ const ControlPanel = ({
             }}
             onClick={() => {
               if (connectMode) {
-                
                 setConnectMode(false);
               } else {
                 setFreeDraw(false);

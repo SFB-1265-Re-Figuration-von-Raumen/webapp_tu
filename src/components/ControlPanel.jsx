@@ -86,7 +86,7 @@ const ControlPanel = ({
               }
             }}
             style={{
-              backgroundColor: `${freeDraw ? "pink" : "transparent"}`,
+              backgroundColor: `${freeDraw ? theme.palette.secondary.canvas : "transparent"}`,
             }}
             className="navButton"
           >
@@ -108,7 +108,7 @@ const ControlPanel = ({
         >
           <Button
             style={{
-              backgroundColor: `${connectMode ? "pink" : "transparent"}`,
+              backgroundColor: `${connectMode ? theme.palette.secondary.canvas : "transparent"}`,
             }}
             onClick={() => {
               if (connectMode) {
@@ -147,7 +147,7 @@ const ControlPanel = ({
               }
             }}
             style={{
-              backgroundColor: `${deleteMode ? "pink" : "transparent"}`,
+              backgroundColor: `${deleteMode ? theme.palette.secondary.canvas : "transparent"}`,
             }}
             className="navButton"
           >
@@ -166,7 +166,7 @@ const ControlPanel = ({
         >
           <Button
             onClick={handleOpen}
-            style={{ backgroundColor: `${isEditing ? "pink" : "transparent"}` }}
+            style={{ backgroundColor: `${isEditing ? theme.palette.secondary.canvas : "transparent"}` }}
             className="navButton"
           >
             <UIcons.UxIconTextAnnotation

@@ -34,7 +34,7 @@ const ThemeSelector = () => {
                         borderColor: "#000000",
                         color: "#000000",
                     }}
-                    onClick={() => { setTheme("softice") }}>Soft Ice</Button>
+                    onClick={() => { setTheme("softice") }}>Dark</Button>
                 <Button
                     sx={{
                         fontFamily: "Ark-Es",

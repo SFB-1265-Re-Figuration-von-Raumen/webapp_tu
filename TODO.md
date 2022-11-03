@@ -1,7 +1,6 @@
 # TODO
 
--- FreeDraw : Position wrong when zoomed in or out
--- We need Icon for favicon
--- We need button icon for PDF export
--- Secondary font either for all themes or space theme
--- New name for softIce dark or just dark mode?
+-- We need Icon for favicon >> made in workshop
+-- We need button icon for PDF export >> idk
+-- Secondary font either for all themes or space theme >> maybe laters
+-- New name for softIce dark or just dark mode? >> We use DARKMODE

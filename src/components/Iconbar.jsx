@@ -68,7 +68,9 @@ const Iconbar = ({ images, addImages, percentWidth, theme, stageRef, stageScale 
                 height: "100%",
               }}
             >
-              <AddIconButton theme={theme} />
+
+              {/* <AddIconButton theme={theme} /> */}
+
               <ScrollContainer
                 className={`scroll-container iconToolbarRow`}
                 id="xDragToolbar"

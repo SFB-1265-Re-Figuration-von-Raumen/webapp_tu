@@ -84,7 +84,21 @@ const KonvaCanvas = () => {
   const handleClickTap = (e, array, arrayPos, id) => {
     setFreeDraw(false);
     if (deleteMode) {
+
+      if (array === connectors) {
+        if (e.target = "Line") {
+          connectors.splice(arrayPos, 1)
+        }
+      }
+
+      const filteredConnectors = connectors.filter((connector) => {
+        return connector.from !== id && connector.to !== id;
+      });
+
+      setConnectors(filteredConnectors);
+
       array.splice(arrayPos, 1);
+
     } else if (freeDraw) {
       selectShape(null);
     } else if (connectMode) {
@@ -297,6 +311,7 @@ const KonvaCanvas = () => {
                     lineCap="round"
                     points={[from.x, from.y, to.x, to.y]}
                     stroke={theme.palette.primary.main}
+                    onClick={(e) => handleClickTap(e, connectors, con.id, con.id)}
                   />
                 );
               })}

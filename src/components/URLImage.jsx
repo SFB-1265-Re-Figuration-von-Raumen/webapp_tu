@@ -24,6 +24,7 @@ const URLImage = ({
   isEditing,
   setIsEditing,
   connectMode,
+  setConnectMode,
   handleDrag,
   handleClickTap,
   fromShapeId,
@@ -49,6 +50,35 @@ const URLImage = ({
   const imgRef = useRef(0);
   // console.log(img.naturalWidth);
 
+  const handleTransform = (ref) => {
+    setFreeDraw(false);
+    const node = ref.current;
+    const scaleX = node.scaleX();
+    const scaleY = node.scaleY();
+
+    onChange({
+      ...shapeProps,
+      x: node.x(),
+      y: node.y(),
+    });
+
+    // we will reset it back
+    node.scaleX(1);
+    node.scaleY(1);
+    onChange({
+      ...shapeProps,
+      x: node.x(),
+      y: node.y(),
+      fontSize: Math.max(5, node.width() * scaleX),
+      // set minimal value
+      width: Math.max(5, node.width() * scaleX),
+      height: Math.max(node.height() * scaleY),
+    });
+    img.width = node.width();
+    img.height = node.height();
+  }
+
+
   return (
     <>
       <Group draggable={freeDraw ? "false" : "true"} visible="true">
@@ -60,8 +90,6 @@ const URLImage = ({
           isSelected={id === selectedId}
           onClick={(e) => handleClickTap(e, images, arrayPos, id)}
           onTap={(e) => handleClickTap(e, images, arrayPos, id)}
-          x={x}
-          y={y}
           shadowBlur={fromShapeId ? 60 : null}
           shadowColor={fromShapeId ? theme.palette.primary.main : null}
           draggable={freeDraw ? "false" : "true"}
@@ -74,105 +102,17 @@ const URLImage = ({
           onDragEnd={(e) => {
             handleDrag(e, images, setImages, arrayPos, id);
           }}
-          onTransformStart={() => {
-            setFreeDraw(false);
-            const node = imgRef.current;
-            const scaleX = node.scaleX();
-            const scaleY = node.scaleY();
 
-            onChange({
-              ...shapeProps,
-              x: node.x(),
-              y: node.y(),
-            });
-
-            // we will reset it back
-            node.scaleX(1);
-            node.scaleY(1);
-            onChange({
-              ...shapeProps,
-              x: node.x(),
-              y: node.y(),
-              fontSize: Math.max(5, node.width() * scaleX),
-              // set minimal value
-              width: Math.max(5, node.width() * scaleX),
-              height: Math.max(node.height() * scaleY),
-            });
-            img.width = node.width();
-            img.height = node.height();
-            // setNodeScale({
-            //   width: node.width(),
-            //   height: node.height(),
-            // });
-          }}
-          onTransform={() => {
-            setFreeDraw(false);
-            const node = imgRef.current;
-            const scaleX = node.scaleX();
-            const scaleY = node.scaleY();
-
-            onChange({
-              ...shapeProps,
-              x: node.x(),
-              y: node.y(),
-            });
-
-            // we will reset it back
-            node.scaleX(1);
-            node.scaleY(1);
-            onChange({
-              ...shapeProps,
-              x: node.x(),
-              y: node.y(),
-              fontSize: Math.max(5, node.width() * scaleX),
-              // set minimal value
-              width: Math.max(5, node.width() * scaleX),
-              height: Math.max(node.height() * scaleY),
-            });
-            img.width = node.width();
-            img.height = node.height();
-            // setNodeScale({
-            //   width: node.width(),
-            //   height: node.height(),
-            // });
-          }}
-          onTransformEnd={(e) => {
-            setFreeDraw(false);
-
-            // transformer is changing scale of the node
-            // and NOT its width or height
-            // but in the store we have only width and height
-            // to match the data better we will reset scale on transform end
-            const node = imgRef.current;
-            const scaleX = node.scaleX();
-            const scaleY = node.scaleY();
-
-            // we will reset it back
-            node.scaleX(1);
-            node.scaleY(1);
-            onChange({
-              ...shapeProps,
-              x: node.x(),
-              y: node.y(),
-              // set minimal value
-              width: Math.max(5, node.width() * scaleX),
-              height: Math.max(node.height() * scaleY),
-            });
-
-            img.width = node.width();
-            img.height = node.height();
-            // setNodeScale({
-            //   width: node.width(),
-            //   height: node.height(),
-            // });
-          }}
-        // offsetX={nodeScale ? nodeScale.width / 2 : 75}
-        // offsetY={nodeScale ? nodeScale.height / 2 : 75}
+          onTransformStart={() => handleTransform(imgRef)}
+          onTransform={() => handleTransform(imgRef)}
+          onTransformEnd={() => handleTransform(imgRef)}
+          offsetX={img ? img.width / 2 : null}
+          offsetY={img ? img.height / 2 : null}
+          x={x}
+          y={y}
         />
         {isEditing && isSelected && (
           <TextInputIcon
-            x={img ? x + img.width / 2 : x}
-            y={img ? y + img.height : y}
             isEditing={isEditing}
             setIsEditing={setIsEditing}
             id={id}
@@ -183,8 +123,10 @@ const URLImage = ({
             theme={theme}
             images={images}
             setImages={setImages}
-            offsetX={img ? img.width * -0.005 / 2 : null}
-            offsetY={img ? img.height * -0.001 / 2 : null}
+            x={img ? x + img.width * -0.3 : x}
+            y={img ? y + img.height / 3 : y}
+            offsetX={img ? img.width * -0.005 : null}
+            offsetY={img ? img.height * -0.001 : null}
           />
         )}
         <Text
@@ -197,15 +139,12 @@ const URLImage = ({
           onClick={() => {
             setIsEditing(true)
             selectShape(id)
+            setConnectMode(false)
           }}
           isSelected={id === selectedId}
           fill={isEditing && isSelected ? "transparent" : theme.palette.primary.main}
-          // lineCap={"butt"}
-          // lineJoin={"bevel"}
           strokeEnabled={true}
           wrap={"word"}
-          // onClick={id ? isSelected = id : isSelected = null}
-
           draggable={freeDraw ? "false" : "true"}
           onDragStart={(e) => {
             handleDrag(e, images, setImages, arrayPos, id);
@@ -217,19 +156,9 @@ const URLImage = ({
             handleDrag(e, images, setImages, arrayPos, id);
           }}
           text={name}
-          x={img ? x + img.width / 2 : x}
-          y={img ? y + img.height : y}
-          // x={nodeScale ? x + nodeScale.x : x}
-          // y={nodeScale ? y + nodeScale.y : y}
           borderStroke={"black"}
           fontSize={20}
           fontFamily={theme.typography.fontFamily}
-          // we offset the text on x axis according to the text width
-          // offsetY={imgRef.current.attrs.offsetY}
-          // next we need to offset the text on y axis according to the image height
-          // how do we get the image height since we are using useImage hook?
-
-          // this does not work!
           onDblClick={() => {
             setFreeDraw(false);
 
@@ -240,41 +169,10 @@ const URLImage = ({
 
             setIsEditing(true);
           }}
-          onTransformEnd={() => {
-            setFreeDraw(false);
-
-            //   // transformer is changing scale of the node
-            //   // and NOT its width or height
-            //   // but in the store we have only width and height
-            //   // to match the data better we will reset scale on transform end
-            const node = textRef.current;
-            const scaleX = node.scaleX();
-            const scaleY = node.scaleY();
-
-            node.scaleX(1);
-            node.scaleY(1);
-            // onChange({
-            //   ...shapeProps,
-            //   x: node.x(),
-            //   y: node.y(),
-            //   // set minimal value
-            //   // width: Math.max(5, node.width() * scaleX),
-            //   // height: Math.max(node.height() * scaleY),
-            // });
-            // //   // we will reset it back
-            onChange({
-              ...shapeProps,
-              x: node.x(),
-              y: node.y(),
-              fontSize: Math.max(5, node.width() * scaleX),
-              // set minimal value
-              width: Math.max(5, node.width() * scaleX),
-              height: Math.max(node.height() * scaleY),
-            });
-          }}
+          x={img ? x + img.width * -0.3 : x}
+          y={img ? y + img.height / 3 : y}
           offsetX={img ? img.width * -0.005 : null}
-          offsetY={img ? img.height * -0.001 : null
-          }
+          offsetY={img ? img.height * -0.001 : null}
         />
 
       </Group>

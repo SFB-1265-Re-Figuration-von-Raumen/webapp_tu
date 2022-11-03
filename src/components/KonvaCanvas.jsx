@@ -31,15 +31,15 @@ const KonvaCanvas = () => {
   const [connectMode, setConnectMode] = useState(false);
   const [fromShapeId, setFromShapeId] = useState(null);
   const [connectors, setConnectors] = React.useState([]);
-  useEffect(() => {
-    // console.log("useEffect");
-    const updateArr = () => {
-      const imagesCopy = images.slice();
-      setImages(imagesCopy);
-      const textsCopy = textAnnotations.slice();
-      setTextAnnotations(textsCopy);
-    };
-  });
+  // useEffect(() => {
+  //   // console.log("useEffect");
+  //   const updateArr = () => {
+  //     const imagesCopy = images.slice();
+  //     setImages(imagesCopy);
+  //     const textsCopy = textAnnotations.slice();
+  //     setTextAnnotations(textsCopy);
+  //   };
+  // });
 
   const trRef = useRef();
   //ZOOM STUFF
@@ -300,6 +300,8 @@ const KonvaCanvas = () => {
                 const to =
                   images.find((s) => s.id === con.to) ||
                   textAnnotations.find((s) => s.id === con.to);
+
+                console.log(from)
                 const width = from.x - to.x;
                 const height = from.y - to.y;
                 const radius = Math.min(20, Math.abs(height), Math.abs(width));
@@ -312,6 +314,7 @@ const KonvaCanvas = () => {
                     points={[from.x, from.y, to.x, to.y]}
                     stroke={theme.palette.primary.main}
                     onClick={(e) => handleClickTap(e, connectors, con.id, con.id)}
+                  // offsetX={img.width}
                   />
                 );
               })}

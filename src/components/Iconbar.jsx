@@ -12,11 +12,7 @@ const svgArray = [aktis, orte, personen, atmos];
 const categories = ["AKTIVITÄTEN", "ORTE", "PERSONEN", "ATMOSPHÄREN"];
 
 
-const Iconbar = ({ images, addImages, percentWidth, theme, stageRef, stageScale }) => {
-  const defaultPos = {
-    x: percentWidth / 2,
-    y: window.innerHeight / 2,
-  };
+const Iconbar = ({ images, addImages, percentWidth, defaultPos, theme, stageRef, stageScale }) => {
 
   const toggleClick = (icon, key, name) => {
     const stagePos = stageRef.current.getAbsolutePosition();

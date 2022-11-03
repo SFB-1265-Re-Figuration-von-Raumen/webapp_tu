@@ -17,11 +17,18 @@ import * as UIcons from "../assets/svg/UIcons/svgr_output/index";
 const KonvaCanvas = () => {
   const theme = useTheme();
   const stageRef = useRef();
+  console.log(stageRef)
   const layeRef = useRef();
   const selectionRectRef = useRef();
   const Konva = window.Konva;
   const isSelected = useState(null);
+
   const percentWidth = (window.innerWidth / 100) * 70;
+  const defaultPos = {
+    x: percentWidth / 2,
+    y: window.innerHeight / 2,
+  };
+
   const [images, setImages] = useState([]);
   const [textAnnotations, setTextAnnotations] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
@@ -229,17 +236,23 @@ const KonvaCanvas = () => {
   };
 
   const handleZoomIn = () => {
+    const stagePos = stageRef.current.getAbsolutePosition();
     setStageScale({
       scale: stageScale.scale + 0.1,
-      x: stageScale.x + 0.1,
-      y: stageScale.y + 0.1,
+      // x: stageScale.x + 0.1,
+      // y: stageScale.y + 0.1,
+      x: stagePos.x / stageScale.scale,
+      y: stagePos.y / stageScale.scale,
     });
   };
   const handleZoomOut = () => {
+    const stagePos = stageRef.current.getAbsolutePosition();
     setStageScale({
       scale: stageScale.scale - 0.1,
-      x: stageScale.x - 0.1,
-      y: stageScale.y - 0.1,
+      // x: stageScale.x - 0.1,
+      // y: stageScale.y - 0.1,
+      x: stagePos.x / stageScale.scale,
+      y: stagePos.y / stageScale.scale,
     });
   };
 
@@ -483,6 +496,7 @@ const KonvaCanvas = () => {
             addImages={addImages}
             percentWidth={percentWidth}
             stageScale={stageScale}
+            defaultPos={defaultPos}
           />
         </Box>
       </div>

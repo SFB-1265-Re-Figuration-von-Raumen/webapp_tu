@@ -59,7 +59,6 @@ const Iconbar = ({ images, addImages, percentWidth, defaultPos, theme, stageRef,
                 display: "flex",
                 flexDirection: "row",
                 alignItems: "center",
-                // borderLeft: "1px solid",
                 overflowX: "hidden",
                 height: "100%",
               }}

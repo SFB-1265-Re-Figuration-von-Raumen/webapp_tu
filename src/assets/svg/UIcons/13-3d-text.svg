@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="uuid-de1221bb-65f1-4877-a83c-298ab0791b97" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" width="68.67" height="69.52" viewBox="0 0 68.67 69.52">
+  <path d="M40.62,15.66H20.81c-4.35,0-7.88,3.53-7.88,7.88v25.48c0,4.35,3.53,7.88,7.88,7.88h25.48c4.35,0,7.88-3.53,7.88-7.88V29.2" style="fill: none; stroke: #000; stroke-width: .9px;"/>
+  <polyline points="59.51 10.32 43.8 26.26 33.32 36.88" style="fill: none; stroke: #000;"/>
+  <line x1="47.14" y1="10.18" x2="59.86" y2="10.18" style="fill: none; stroke: #000;"/>
+  <line x1="59.51" y1="22.43" x2="59.51" y2="9.7" style="fill: none; stroke: #000;"/>
+</svg>

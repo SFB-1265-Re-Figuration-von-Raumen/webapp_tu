@@ -19,3 +19,4 @@ export { default as UxIconTextAnnotation } from "./UxIconTextAnnotation";
 export { default as UxIconTextAnnotationContour } from "./UxIconTextAnnotationContour";
 export { default as UxIconZoomIn } from "./UxIconZoomIn";
 export { default as UxIconZoomOut } from "./UxIconZoomOut";
+export { default as UxIconExport } from "./133DText"

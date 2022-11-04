@@ -327,6 +327,7 @@ const KonvaCanvas = () => {
                     points={[from.x, from.y, to.x, to.y]}
                     stroke={theme.palette.primary.main}
                     onClick={(e) => handleClickTap(e, connectors, con.id, con.id)}
+                    onTap={(e) => handleClickTap(e, connectors, con.id, con.id)}
                   // offsetX={img.width}
                   />
                 );

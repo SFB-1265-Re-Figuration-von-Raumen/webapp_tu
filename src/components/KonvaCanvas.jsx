@@ -17,7 +17,7 @@ import * as UIcons from "../assets/svg/UIcons/svgr_output/index";
 const KonvaCanvas = () => {
   const theme = useTheme();
   const stageRef = useRef();
-  console.log(stageRef)
+  console.log(stageRef);
   const layeRef = useRef();
   const selectionRectRef = useRef();
   const Konva = window.Konva;
@@ -47,7 +47,9 @@ const KonvaCanvas = () => {
   //     setTextAnnotations(textsCopy);
   //   };
   // });
-
+  useEffect(() => {
+    setFromShapeId(null);
+  }, [!connectMode]);
   const trRef = useRef();
   //ZOOM STUFF
   const [stageScale, setStageScale] = useState({
@@ -87,14 +89,12 @@ const KonvaCanvas = () => {
     }
   };
 
-
   const handleClickTap = (e, array, arrayPos, id) => {
     setFreeDraw(false);
     if (deleteMode) {
-
       if (array === connectors) {
-        if (e.target = "Line") {
-          connectors.splice(arrayPos, 1)
+        if ((e.target = "Line")) {
+          connectors.splice(arrayPos, 1);
         }
       }
 
@@ -105,7 +105,6 @@ const KonvaCanvas = () => {
       setConnectors(filteredConnectors);
 
       array.splice(arrayPos, 1);
-
     } else if (freeDraw) {
       selectShape(null);
     } else if (connectMode) {
@@ -120,7 +119,9 @@ const KonvaCanvas = () => {
       } else {
         setFromShapeId(array[arrayPos].id);
       }
-    } else selectShape(id);
+    } else {
+      selectShape(id);
+    }
   };
 
   const handleDrag = (e, stateArr, setStateArr, i) => {
@@ -258,7 +259,10 @@ const KonvaCanvas = () => {
 
   return (
     <>
-      <div className="konvaContainer" style={{ backgroundColor: theme.palette.secondary.canvas }}>
+      <div
+        className="konvaContainer"
+        style={{ backgroundColor: theme.palette.secondary.canvas }}
+      >
         <>
           <Stage
             draggable={freeDraw ? false : true}
@@ -278,7 +282,7 @@ const KonvaCanvas = () => {
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleMouseUp}
-          // onDragStart={updateOrigin}
+            // onDragStart={updateOrigin}
           >
             <Layer ref={layeRef}>
               {lines.map((line, i) => (
@@ -314,21 +318,23 @@ const KonvaCanvas = () => {
                   images.find((s) => s.id === con.to) ||
                   textAnnotations.find((s) => s.id === con.to);
 
-                console.log(from)
+                console.log(from);
                 const width = from.x - to.x;
                 const height = from.y - to.y;
                 const radius = Math.min(20, Math.abs(height), Math.abs(width));
                 return (
                   <Line
-                    opacity={.5}
+                    opacity={0.5}
                     key={con.id}
                     dash={[20, 10]}
                     lineCap="round"
                     points={[from.x, from.y, to.x, to.y]}
                     stroke={theme.palette.primary.main}
-                    onClick={(e) => handleClickTap(e, connectors, con.id, con.id)}
+                    onClick={(e) =>
+                      handleClickTap(e, connectors, con.id, con.id)
+                    }
                     onTap={(e) => handleClickTap(e, connectors, con.id, con.id)}
-                  // offsetX={img.width}
+                    // offsetX={img.width}
                   />
                 );
               })}
@@ -405,12 +411,14 @@ const KonvaCanvas = () => {
                       setTextAnnotations(text);
                     }}
                     freeDraw={freeDraw}
+                    setFreeDraw={setFreeDraw}
                     trRef={trRef}
                     layeRef={layeRef}
                     stageRef={stageRef}
                     handleDrag={handleDrag}
                     handleClickTap={handleClickTap}
                     fromShapeId={fromShapeId}
+                    connectMode={connectMode}
                   />
                 );
               })}
@@ -459,7 +467,7 @@ const KonvaCanvas = () => {
             height: "100%",
             display: "flex",
             flexDirection: "column",
-            backgroundColor: "secondary.bg"
+            backgroundColor: "secondary.bg",
           }}
         >
           <ControlPanel

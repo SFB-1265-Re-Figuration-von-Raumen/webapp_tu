@@ -31,8 +31,10 @@ const URLImage = ({
 }) => {
   isSelected ? !freeDraw : null;
   const trRef = useRef();
-  const [nodeScale, setNodeScale] = useState(null);
-  console.log(nodeScale);
+
+const [isTransforming, setIsTransforming] = useState(false)
+
+
 
   useEffect(() => {
     if (isSelected) {
@@ -52,16 +54,12 @@ const URLImage = ({
 
   const handleTransform = (ref) => {
     setFreeDraw(false);
+    setIsTransforming(true)
     const node = ref.current;
     const scaleX = node.scaleX();
     const scaleY = node.scaleY();
-
-    onChange({
-      ...shapeProps,
-      x: node.x(),
-      y: node.y(),
-    });
-
+    
+    
     // we will reset it back
     node.scaleX(1);
     node.scaleY(1);
@@ -76,6 +74,7 @@ const URLImage = ({
     });
     img.width = node.width();
     img.height = node.height();
+    setIsTransforming(false)
   }
 
 
@@ -92,7 +91,7 @@ const URLImage = ({
           onTap={(e) => handleClickTap(e, images, arrayPos, id)}
           shadowBlur={fromShapeId ? 60 : null}
           shadowColor={fromShapeId ? theme.palette.primary.main : null}
-          draggable={freeDraw ? "false" : "true"}
+          draggable={freeDraw || isTransforming ? "false" : "true"}
           onDragStart={(e) => {
             handleDrag(e, images, setImages, arrayPos, id);
           }}
@@ -143,9 +142,8 @@ const URLImage = ({
           }}
           isSelected={id === selectedId}
           fill={isEditing && isSelected ? "transparent" : theme.palette.primary.main}
-          strokeEnabled={true}
+
           wrap={"word"}
-          draggable={freeDraw ? "false" : "true"}
           onDragStart={(e) => {
             handleDrag(e, images, setImages, arrayPos, id);
           }}
@@ -156,7 +154,6 @@ const URLImage = ({
             handleDrag(e, images, setImages, arrayPos, id);
           }}
           text={name}
-          borderStroke={"black"}
           fontSize={20}
           fontFamily={theme.typography.fontFamily}
           onDblClick={() => {
@@ -181,6 +178,7 @@ const URLImage = ({
           ref={trRef}
           anchorCornerRadius={50}
           borderDash={[20, 10]}
+          centeredScaling={true}
           enabledAnchors={[
             "top-left",
             "top-right",

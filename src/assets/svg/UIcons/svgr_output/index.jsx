@@ -1,3 +1,4 @@
+export { default as Svg133DText } from "./133DText";
 export { default as BringToFront } from "./BringToFront";
 export { default as MoveToBack } from "./MoveToBack";
 export { default as UxIconConnectionMode } from "./UxIconConnectionMode";

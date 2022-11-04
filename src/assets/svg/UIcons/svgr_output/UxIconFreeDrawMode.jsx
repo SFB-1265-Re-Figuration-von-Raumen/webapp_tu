@@ -1,17 +1,19 @@
 import * as React from "react";
 
-const SvgUxIconFreeDrawMode = ({theme}) => (
+const SvgUxIconFreeDrawMode = (props) => (
   <svg
     data-name="Ebene 1"
     xmlns="http://www.w3.org/2000/svg"
+    width="1em"
+    height="1em"
     viewBox="0 0 68.67 69.52"
-    // {...props}
+    {...props}
   >
     <path
       transform="rotate(-65.5 33.6 25.26)"
       style={{
         fill: "none",
-        stroke: `${theme.palette.primary.main}`,
+        stroke: "#1d1d1b",
         strokeLinecap: "round",
         strokeLinejoin: "round",
       }}
@@ -20,8 +22,7 @@ const SvgUxIconFreeDrawMode = ({theme}) => (
     <path
       style={{
         fill: "none",
-        // stroke: "#1d1d1b",
-        stroke: `${theme.palette.primary.main}`,
+        stroke: "#1d1d1b",
         strokeLinecap: "round",
         strokeLinejoin: "round",
       }}

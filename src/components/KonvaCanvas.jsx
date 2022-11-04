@@ -454,13 +454,7 @@ const KonvaCanvas = () => {
           </Button>
           <div className="export--btn">
             <Button variant="outlined" color="secondary" onClick={handleExport}>
-              <span style={{color: theme.palette.primary.main}}>Export</span>
-              <UIcons.Svg133DText
-                alt="Export Button"
-                className="zoomyZoom"
-                width={null}
-                height={null}
-              />
+              Export Canvas
             </Button>
           </div>
         </div>

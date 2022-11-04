@@ -62,6 +62,7 @@ const TextInput = ({
           fontSize: "20px",
           outline: "none",
           resize: "none",
+          textAlign: "center"
         }}
       />
     </Html>

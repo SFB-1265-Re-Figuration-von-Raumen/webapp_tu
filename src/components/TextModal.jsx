@@ -28,6 +28,7 @@ const TextModal = ({
   handleDrag,
   handleClickTap,
   fromShapeId,
+  annotation,
 }) => {
   const shapeRef = useRef();
   const trRef = useRef();
@@ -46,48 +47,52 @@ const TextModal = ({
   // respective to the index "arrayPos"
 
   console.log(shapeProps);
-const handleTransform = (ref) => {
-  const node = ref.current;
-  const scaleX = node.scaleX();
-  const scaleY = node.scaleY();
+  const handleTransform = (ref) => {
+    const node = ref.current;
+    const scaleX = node.scaleX();
+    const scaleY = node.scaleY();
 
-
-
-  // we will reset it back
-  node.scaleX(1);
-  node.scaleY(1);
-  onChange({
-    ...shapeProps,
-    x: node.x(),
-    y: node.y(),
-    fontSize: Math.max(5, node.width() * scaleX),
-    // set minimal value
-    width: Math.max(5, node.width() * scaleX),
-    height: Math.max(100, node.height() * scaleY),
-  });
-  // ref.width = node.width()
-  // ref.height = node.height()
-}
-
+    // we will reset it back
+    node.scaleX(1);
+    node.scaleY(1);
+    onChange({
+      ...shapeProps,
+      x: node.x(),
+      y: node.y(),
+      fontSize: Math.max(5, node.width() * scaleX),
+      // set minimal value
+      width: Math.max(5, node.width() * scaleX),
+      height: Math.max(100, node.height() * scaleY),
+    });
+    ref.width = node.width()
+    ref.height = node.height()
+  };
+  console.log(shapeRef);
 
   return (
     <>
       {isSelected && isEditing && (
         <TextInput
-          x={x}
-          y={y}
+          x={
+            shapeRef.current.attrs.x - shapeRef.current.textWidth * 1.3
+              
+          }
+          y={
+             shapeRef.current.attrs.y - shapeRef.current.textHeight / 4
+
+          }
           text={text}
           isEditing={isEditing}
           setIsEditing={setIsEditing}
           id={id}
           arrayPos={arrayPos}
-          // width={shapeProps.width}
-          // height={shapeProps.height}
+          width={shapeProps.width}
+          height={shapeProps.height}
           theme={theme}
           textAnnotations={textAnnotations}
           setTextAnnotations={setTextAnnotations}
-          offsetX={shapeRef ? shapeRef.width / 2 * -0.05 : null}
-          offsetY={shapeRef ? shapeRef.height / 2 * -0.05 : null}
+          offsetX={shapeRef ? shapeRef.current.textWidth / 2 : null}
+          offsetY={shapeRef ? shapeRef.current.textHeight / 2 : null}
         />
       )}
       <Text
@@ -105,19 +110,18 @@ const handleTransform = (ref) => {
         fill={
           isEditing && isSelected ? "transparent" : theme.palette.primary.main
         }
+        borderStroke={`2px solid ${theme.palette.primary.main}`}
         // lineCap={"butt"}
         lineJoin={"bevel"}
         wrap={"word"}
         align={"center"}
-        
         // onClick={id ? isSelected = id : isSelected = null}
         // text={text}
         x={x}
         y={y}
         height={undefined}
         offsetX={shapeProps.width / 2 || null}
-        offsetY={shapeProps.height / 2 || null}
-        borderStroke={"black"}
+        offsetY={shapeRef.height / 2 || null}
         fontSize={20}
         fontFamily={theme.typography.fontFamily}
         draggable={freeDraw ? "false" : "true"}
@@ -136,9 +140,9 @@ const handleTransform = (ref) => {
         onDblTap={() => {
           setIsEditing(true);
         }}
-        onTransformStart={()=>handleTransform(shapeRef)}
-        onTransform={()=>handleTransform(shapeRef)}
-        onTransformEnd={()=>handleTransform(shapeRef)}
+        onTransformStart={() => handleTransform(shapeRef)}
+        onTransform={() => handleTransform(shapeRef)}
+        onTransformEnd={() => handleTransform(shapeRef)}
       />
       {isSelected && (
         <>
@@ -146,11 +150,7 @@ const handleTransform = (ref) => {
             ref={trRef}
             padding={5}
             anchorCornerRadius={50}
-            enabledAnchors={[
-              "middle-left",
-              "middle-right",
-              
-            ]}
+            enabledAnchors={["middle-left", "middle-right"]}
             borderStroke={theme.palette.primary.main}
             anchorStroke={theme.palette.primary.main}
             anchorSize={15}
@@ -162,7 +162,6 @@ const handleTransform = (ref) => {
               }
               return newBox;
             }}
-
           />
         </>
       )}

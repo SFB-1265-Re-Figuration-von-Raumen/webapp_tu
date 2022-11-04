@@ -390,6 +390,7 @@ const KonvaCanvas = () => {
                     theme={theme}
                     text={annotation.text}
                     key={i}
+                    annotation={annotation}
                     id={annotation.id}
                     x={annotation.x}
                     y={annotation.y}

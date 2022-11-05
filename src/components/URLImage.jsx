@@ -28,13 +28,12 @@ const URLImage = ({
   handleDrag,
   handleClickTap,
   fromShapeId,
+  stageScale,
 }) => {
   isSelected ? !freeDraw : null;
   const trRef = useRef();
 
-const [isTransforming, setIsTransforming] = useState(false)
-
-
+  const [isTransforming, setIsTransforming] = useState(false);
 
   useEffect(() => {
     if (isSelected) {
@@ -54,12 +53,11 @@ const [isTransforming, setIsTransforming] = useState(false)
 
   const handleTransform = (ref) => {
     setFreeDraw(false);
-    setIsTransforming(true)
+    setIsTransforming(true);
     const node = ref.current;
     const scaleX = node.scaleX();
     const scaleY = node.scaleY();
-    
-    
+
     // we will reset it back
     node.scaleX(1);
     node.scaleY(1);
@@ -74,13 +72,12 @@ const [isTransforming, setIsTransforming] = useState(false)
     });
     img.width = node.width();
     img.height = node.height();
-    setIsTransforming(false)
-  }
-
+    setIsTransforming(false);
+  };
 
   return (
     <>
-      <Group draggable={freeDraw ? "false" : "true"} visible="true">
+      <Group draggable={freeDraw ? "false" : "true"} visible={true}>
         <Image
           ref={imgRef}
           {...shapeProps}
@@ -101,7 +98,6 @@ const [isTransforming, setIsTransforming] = useState(false)
           onDragEnd={(e) => {
             handleDrag(e, images, setImages, arrayPos, id);
           }}
-
           onTransformStart={() => handleTransform(imgRef)}
           onTransform={() => handleTransform(imgRef)}
           onTransformEnd={() => handleTransform(imgRef)}
@@ -136,13 +132,14 @@ const [isTransforming, setIsTransforming] = useState(false)
             selectShape(id);
           }}
           onClick={() => {
-            setIsEditing(true)
-            selectShape(id)
-            setConnectMode(false)
+            setIsEditing(true);
+            selectShape(id);
+            setConnectMode(false);
           }}
           isSelected={id === selectedId}
-          fill={isEditing && isSelected ? "transparent" : theme.palette.primary.main}
-
+          fill={
+            isEditing && isSelected ? "transparent" : theme.palette.primary.main
+          }
           wrap={"word"}
           onDragStart={(e) => {
             handleDrag(e, images, setImages, arrayPos, id);
@@ -171,7 +168,6 @@ const [isTransforming, setIsTransforming] = useState(false)
           offsetX={img ? img.width * -0.005 : null}
           offsetY={img ? img.height * -0.001 : null}
         />
-
       </Group>
       {!connectMode && isSelected && (
         <Transformer

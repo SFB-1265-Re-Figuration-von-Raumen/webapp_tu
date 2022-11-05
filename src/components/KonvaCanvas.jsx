@@ -140,31 +140,6 @@ const KonvaCanvas = () => {
     setImages((current) => [...current, obj]);
   };
 
-  function handleWheel(e) {
-    e.evt.preventDefault();
-
-    const scaleBy = 1.02;
-    const stage = e.target.getStage();
-    const oldScale = stage.scaleX();
-    const mousePointTo = {
-      x: stage.getRelativePointerPosition().x / oldScale - stage.x() / oldScale,
-      y: stage.getRelativePointerPosition().y / oldScale - stage.y() / oldScale,
-    };
-
-    const newScale = e.evt.deltaY < 0 ? oldScale * scaleBy : oldScale / scaleBy;
-
-    setStageScale({
-      scale: newScale,
-      x:
-        (stage.getRelativePointerPosition().x / newScale - mousePointTo.x) *
-        newScale,
-      y:
-        (stage.getRelativePointerPosition().y / newScale - mousePointTo.y) *
-        newScale,
-    });
-  }
-  // END OF ZOOM FUNCTIONS
-
   // PENTOOL ##############################
 
   const [tool, setTool] = useState("pen");
@@ -236,24 +211,68 @@ const KonvaCanvas = () => {
     }
   };
 
-  const handleZoomIn = () => {
-    const stagePos = stageRef.current.getAbsolutePosition();
+  function handleWheel(e) {
+    e.evt.preventDefault();
+
+    const scaleBy = 1.02;
+    const stage = e.target.getStage();
+    // console.log(stage);
+    console.log(stage.getRelativePointerPosition());
+
+    const oldScale = stage.scaleX();
+
+    const mousePointTo = {
+      x: stage.getRelativePointerPosition().x / oldScale - stage.x() / oldScale,
+      y: stage.getRelativePointerPosition().y / oldScale - stage.y() / oldScale,
+    };
+
+    const newScale = e.evt.deltaY < 0 ? oldScale * scaleBy : oldScale / scaleBy;
+
     setStageScale({
-      scale: stageScale.scale + 0.1,
-      // x: stageScale.x + 0.1,
-      // y: stageScale.y + 0.1,
-      x: stagePos.x / stageScale.scale,
-      y: stagePos.y / stageScale.scale,
+      scale: newScale,
+      x:
+        (stage.getRelativePointerPosition().x / newScale - mousePointTo.x) *
+        newScale,
+      y:
+        (stage.getRelativePointerPosition().y / newScale - mousePointTo.y) *
+        newScale,
+    });
+  }
+  // END OF ZOOM FUNCTIONS
+  const handleZoomIn = (e) => {
+    const stage = stageRef.current.attrs;
+    console.log(stage.x);
+    console.log(stage.y);
+    console.log(stage.scaleX);
+    console.log(stage.width + stage.x / stage.scaleX);
+    console.log(stage.height + stage.y / stage.scaleY);
+    const centerStage = {
+      x: stage.width / 2 - stage.x / stage.scaleX,
+      y: stage.height / 2 - stage.y / stage.scaleY,
+    };
+    const newScale = stage.scaleX * 1.05;
+    setStageScale({
+      scale: newScale,
+      x: (centerStage.x / newScale - centerStage.x) * newScale,
+      y: (centerStage.y / newScale - centerStage.y) * newScale,
     });
   };
-  const handleZoomOut = () => {
-    const stagePos = stageRef.current.getAbsolutePosition();
+  const handleZoomOut = (e) => {
+    const stage = stageRef.current.attrs;
+    console.log(stage.x);
+    console.log(stage.y);
+    console.log(stage.scaleX);
+    console.log(stage.width + stage.x / stage.scaleX);
+    console.log(stage.height + stage.y / stage.scaleY);
+    const centerStage = {
+      x: stage.width / 2 - stage.x / stage.scaleX,
+      y: stage.height / 2 - stage.y / stage.scaleY,
+    };
+    const newScale = stage.scaleX / 1.05  ;
     setStageScale({
-      scale: stageScale.scale - 0.1,
-      // x: stageScale.x - 0.1,
-      // y: stageScale.y - 0.1,
-      x: stagePos.x / stageScale.scale,
-      y: stagePos.y / stageScale.scale,
+      scale: newScale,
+      x: (centerStage.x / newScale - centerStage.x) * newScale,
+      y: (centerStage.y / newScale - centerStage.y) * newScale,
     });
   };
 
@@ -436,7 +455,12 @@ const KonvaCanvas = () => {
             display: "flex",
           }}
         >
-          <Button variant="outlined" color="secondary" onClick={handleZoomOut}>
+          <Button
+            variant="outlined"
+            color="secondary"
+            onClick={(e) => handleZoomOut(e)}
+            onMouseDown={(e) => (e ? handleZoomOut(e) : null)}
+          >
             <UIcons.UxIconZoomOut
               alt="minus zoom"
               className="zoomyZoom"
@@ -444,23 +468,28 @@ const KonvaCanvas = () => {
               height={null}
             />
           </Button>
-          <Button variant="outlined" color="secondary" onClick={handleZoomIn}>
+          <Button
+            variant="outlined"
+            color="secondary"
+            onClick={(e) => handleZoomIn(e)}
+          >
             <UIcons.UxIconZoomIn
               alt="plus zoom"
               className="zoomyZoom"
               width={null}
               height={null}
-              />
+            />
           </Button>
           <div className="export--btn">
             <Button variant="outlined" color="secondary" onClick={handleExport}>
-              <span style={{color: theme.palette.primary.main}}>Export</span>
-<UIcons.UxIconExport
-              alt="epxort"
-              className="zoomyZoom"
-              width={null}
-              height={null}
-/>            </Button>
+              <span style={{ color: theme.palette.primary.main }}>Export</span>
+              <UIcons.UxIconExport
+                alt="epxort"
+                className="zoomyZoom"
+                width={null}
+                height={null}
+              />{" "}
+            </Button>
           </div>
         </div>
       </div>

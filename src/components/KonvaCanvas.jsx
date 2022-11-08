@@ -161,7 +161,7 @@ const KonvaCanvas = () => {
     console.log(touch1);
     console.log(touch2);
 
-    const stage = stageRef.getStage();
+    const stage = stageRef.current.target.getStage();
     console.log(stage);
 
     if (touch1 && touch2) {

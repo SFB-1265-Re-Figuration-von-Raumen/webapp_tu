@@ -1,6 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
-
-import { Stage, Layer, Line, Rect, Transformer } from "react-konva";
+import {
+  Stage,
+  Layer,
+  Line,
+  Rect,
+  Transformer
+} from "react-konva";
 import { jsPDF } from "jspdf";
 import URLImage from "./URLImage";
 import Iconbar from "./Iconbar";
@@ -364,7 +369,6 @@ const KonvaCanvas = () => {
             onTouchStart={handleTouchStart}
             onTouchMove={(e) => handleTouchMove(e)}
             onTouchEnd={() => handleTouchEnd()}
-            m
             // onDragStart={updateOrigin}
           >
             <Layer ref={layeRef}>

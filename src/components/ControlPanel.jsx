@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
   Dialog,
-  DialogActions,          
+  DialogActions,
   DialogContent,
   DialogContentText,
   TextField,
@@ -33,7 +33,6 @@ const ControlPanel = ({
     x: percentWidth / 2,
     y: window.innerHeight / 2,
   };
-
 
   const handleClose = () => {
     setOpen(false);
@@ -86,7 +85,9 @@ const ControlPanel = ({
               }
             }}
             style={{
-              backgroundColor: `${freeDraw ? theme.palette.secondary.canvas : "transparent"}`,
+              backgroundColor: `${
+                freeDraw ? theme.palette.secondary.canvas : "transparent"
+              }`,
             }}
             className="navButton"
           >
@@ -108,7 +109,9 @@ const ControlPanel = ({
         >
           <Button
             style={{
-              backgroundColor: `${connectMode ? theme.palette.secondary.canvas : "transparent"}`,
+              backgroundColor: `${
+                connectMode ? theme.palette.secondary.canvas : "transparent"
+              }`,
             }}
             onClick={() => {
               if (connectMode) {
@@ -147,7 +150,9 @@ const ControlPanel = ({
               }
             }}
             style={{
-              backgroundColor: `${deleteMode ? theme.palette.secondary.canvas : "transparent"}`,
+              backgroundColor: `${
+                deleteMode ? theme.palette.secondary.canvas : "transparent"
+              }`,
             }}
             className="navButton"
           >
@@ -166,7 +171,11 @@ const ControlPanel = ({
         >
           <Button
             onClick={handleOpen}
-            style={{ backgroundColor: `${isEditing ? theme.palette.secondary.canvas : "transparent"}` }}
+            style={{
+              backgroundColor: `${
+                isEditing ? theme.palette.secondary.canvas : "transparent"
+              }`,
+            }}
             className="navButton"
           >
             <UIcons.UxIconTextAnnotation
@@ -177,7 +186,11 @@ const ControlPanel = ({
             />
           </Button>
 
-          <Dialog open={open} onClose={handleClose}>
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            PaperProps={{ sx:{ position: "fixed", top: "2vh", right: "35vw"} }}
+          >
             <DialogContent>
               <DialogContentText>
                 Füge eine Beschreibung hinzu:

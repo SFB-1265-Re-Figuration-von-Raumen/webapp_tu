@@ -281,7 +281,7 @@ const KonvaCanvas = () => {
         return;
       }
     }
-    handleTouchEnd(e);
+    handlePinchZoom(e);
   };
 
   function handleWheel(e) {

@@ -138,7 +138,86 @@ const KonvaCanvas = () => {
       : (obj.id = obj.id + `1`);
     setImages((current) => [...current, obj]);
   };
+  // pinch zoom
 
+  function getDistance(p1, p2) {
+    return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2));
+  }
+
+  function getCenter(p1, p2) {
+    return {
+      x: (p1.x + p2.x) / 2,
+      y: (p1.y + p2.y) / 2,
+    };
+  }
+  let lastCenter = null;
+  let lastDist = 0;
+  const handlePinchZoom = (e) => {
+    e.evt.preventDefault();
+    var touch1 = e.evt.touches[0];
+    var touch2 = e.evt.touches[1];
+    const stage = stageRef;
+    if (touch1 && touch2) {
+      // if the stage was under Konva's drag&drop
+      // we need to stop it, and implement our own pan logic with two pointers
+      if (stage.isDragging()) {
+        stage.stopDrag();
+      }
+
+      var p1 = {
+        x: touch1.clientX,
+        y: touch1.clientY,
+      };
+      var p2 = {
+        x: touch2.clientX,
+        y: touch2.clientY,
+      };
+
+      if (!lastCenter) {
+        lastCenter = getCenter(p1, p2);
+        return;
+      }
+      var newCenter = getCenter(p1, p2);
+
+      var dist = getDistance(p1, p2);
+
+      if (!lastDist) {
+        lastDist = dist;
+      }
+
+      // local coordinates of center point
+      var pointTo = {
+        x: (newCenter.x - stage.x()) / stage.scaleX(),
+        y: (newCenter.y - stage.y()) / stage.scaleX(),
+      };
+
+      var scale = stage.scaleX() * (dist / lastDist);
+
+      stage.scaleX(scale);
+      stage.scaleY(scale);
+
+      // calculate new position of the stage
+      var dx = newCenter.x - lastCenter.x;
+      var dy = newCenter.y - lastCenter.y;
+
+      var newPos = {
+        x: newCenter.x - pointTo.x * scale + dx,
+        y: newCenter.y - pointTo.y * scale + dy,
+      };
+
+      stage.position(newPos);
+
+      lastDist = dist;
+      lastCenter = newCenter;
+    }
+  };
+  const handleTouchEnd = () => {
+    lastDist = 0;
+    lastCenter = null;
+    if (freeDraw) {
+      isDrawing.current = false;
+    }
+  };
   // PENTOOL ##############################
 
   const [tool, setTool] = useState("pen");
@@ -202,12 +281,7 @@ const KonvaCanvas = () => {
         return;
       }
     }
-  };
-
-  const handleMouseUp = () => {
-    if (freeDraw) {
-      isDrawing.current = false;
-    }
+    handleTouchEnd(e);
   };
 
   function handleWheel(e) {
@@ -216,7 +290,6 @@ const KonvaCanvas = () => {
     const scaleBy = 1.02;
     const stage = e.target.getStage();
     // console.log(stage);
-
 
     const oldScale = stage.scaleX();
 
@@ -267,7 +340,7 @@ const KonvaCanvas = () => {
       x: stage.width / 2 - stage.x / stage.scaleX,
       y: stage.height / 2 - stage.y / stage.scaleY,
     };
-    const newScale = stage.scaleX / 1.05  ;
+    const newScale = stage.scaleX / 1.05;
     setStageScale({
       scale: newScale,
       x: (centerStage.x / newScale - centerStage.x) * newScale,
@@ -295,11 +368,11 @@ const KonvaCanvas = () => {
             onClick={(e) => handleStageClick(e)}
             onTap={(e) => handleStageClick(e)}
             onMousemove={handleMouseMove}
-            onMouseup={handleMouseUp}
+            onMouseup={(e) => handleTouchEnd(e)}
             onMouseDown={handleMouseDown}
             onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleMouseUp}
+            onTouchMove={(e) => handleTouchMove(e)}
+            onTouchEnd={() => handleTouchEnd()}
             // onDragStart={updateOrigin}
           >
             <Layer ref={layeRef}>
@@ -455,7 +528,7 @@ const KonvaCanvas = () => {
           }}
         >
           <Button
-            variant="outlined"
+            letiant="outlined"
             color="secondary"
             onClick={(e) => handleZoomOut(e)}
             onMouseDown={(e) => (e ? handleZoomOut(e) : null)}
@@ -468,7 +541,7 @@ const KonvaCanvas = () => {
             />
           </Button>
           <Button
-            variant="outlined"
+            letiant="outlined"
             color="secondary"
             onClick={(e) => handleZoomIn(e)}
           >
@@ -480,7 +553,7 @@ const KonvaCanvas = () => {
             />
           </Button>
           <div className="export--btn">
-            <Button variant="outlined" color="secondary" onClick={handleExport}>
+            <Button letiant="outlined" color="secondary" onClick={handleExport}>
               <span style={{ color: theme.palette.primary.main }}>Export</span>
               <UIcons.UxIconExport
                 alt="epxort"

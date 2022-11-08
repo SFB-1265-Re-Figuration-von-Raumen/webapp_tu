@@ -154,13 +154,21 @@ const KonvaCanvas = () => {
   let lastDist = 0;
   const handlePinchZoom = (e) => {
     e.evt.preventDefault();
+    console.log(e);
+
     var touch1 = e.evt.touches[0];
     var touch2 = e.evt.touches[1];
-    const stage = stageRef;
+    console.log(touch1);
+    console.log(touch2);
+
+    const stage = stageRef.getStage();
+    console.log(stage);
+
     if (touch1 && touch2) {
       // if the stage was under Konva's drag&drop
       // we need to stop it, and implement our own pan logic with two pointers
       if (stage.isDragging()) {
+        console.log("is Dragging");
         stage.stopDrag();
       }
 
@@ -373,6 +381,7 @@ const KonvaCanvas = () => {
             onTouchStart={handleTouchStart}
             onTouchMove={(e) => handleTouchMove(e)}
             onTouchEnd={() => handleTouchEnd()}
+            m
             // onDragStart={updateOrigin}
           >
             <Layer ref={layeRef}>

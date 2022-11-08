@@ -156,8 +156,8 @@ const KonvaCanvas = () => {
     e.evt.preventDefault();
     console.log(e);
 
-    var touch1 = e.evt.touches[0];
-    var touch2 = e.evt.touches[1];
+    let touch1 = e.evt.touches[0];
+    let touch2 = e.evt.touches[1];
     console.log(touch1);
     console.log(touch2);
 
@@ -172,11 +172,11 @@ const KonvaCanvas = () => {
         stage.stopDrag();
       }
 
-      var p1 = {
+      let p1 = {
         x: touch1.clientX,
         y: touch1.clientY,
       };
-      var p2 = {
+      let p2 = {
         x: touch2.clientX,
         y: touch2.clientY,
       };
@@ -185,36 +185,42 @@ const KonvaCanvas = () => {
         lastCenter = getCenter(p1, p2);
         return;
       }
-      var newCenter = getCenter(p1, p2);
+      let newCenter = getCenter(p1, p2);
 
-      var dist = getDistance(p1, p2);
+      let dist = getDistance(p1, p2);
 
       if (!lastDist) {
         lastDist = dist;
       }
 
       // local coordinates of center point
-      var pointTo = {
+      let pointTo = {
         x: (newCenter.x - stage.x()) / stage.scaleX(),
         y: (newCenter.y - stage.y()) / stage.scaleX(),
       };
 
-      var scale = stage.scaleX() * (dist / lastDist);
+      let scale = stage.scaleX() * (dist / lastDist);
 
-      stage.scaleX(scale);
-      stage.scaleY(scale);
+      // stage.scaleX(scale);
+      // stage.scaleY(scale);
 
       // calculate new position of the stage
-      var dx = newCenter.x - lastCenter.x;
-      var dy = newCenter.y - lastCenter.y;
+      let dx = newCenter.x - lastCenter.x;
+      let dy = newCenter.y - lastCenter.y;
 
-      var newPos = {
+      let newPos = {
         x: newCenter.x - pointTo.x * scale + dx,
         y: newCenter.y - pointTo.y * scale + dy,
       };
 
-      stage.position(newPos);
-
+      // stage.position(newPos);
+      setStageScale({
+        scale: scale,
+        x: newPos.x,
+        y: newPos.y,
+      });
+      console.log(stageScale);
+      
       lastDist = dist;
       lastCenter = newCenter;
     }

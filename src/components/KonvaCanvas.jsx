@@ -37,15 +37,7 @@ const KonvaCanvas = () => {
   const [connectMode, setConnectMode] = useState(false);
   const [fromShapeId, setFromShapeId] = useState(null);
   const [connectors, setConnectors] = React.useState([]);
-  // useEffect(() => {
-  //   // console.log("useEffect");
-  //   const updateArr = () => {
-  //     const imagesCopy = images.slice();
-  //     setImages(imagesCopy);
-  //     const textsCopy = textAnnotations.slice();
-  //     setTextAnnotations(textsCopy);
-  //   };
-  // });
+
   useEffect(() => {
     setFromShapeId(null);
   }, [!connectMode]);
@@ -154,15 +146,11 @@ const KonvaCanvas = () => {
   let lastDist = 0;
   const handlePinchZoom = (e) => {
     e.evt.preventDefault();
-    console.log(e);
 
     let touch1 = e.evt.touches[0];
     let touch2 = e.evt.touches[1];
-    console.log(touch1);
-    console.log(touch2);
 
     const stage = e.target.getStage();
-    console.log(stage);
 
     if (touch1 && touch2) {
       // if the stage was under Konva's drag&drop
@@ -220,7 +208,7 @@ const KonvaCanvas = () => {
         y: newPos.y,
       });
       console.log(stageScale);
-      
+
       lastDist = dist;
       lastCenter = newCenter;
     }
@@ -303,7 +291,6 @@ const KonvaCanvas = () => {
 
     const scaleBy = 1.02;
     const stage = e.target.getStage();
-    // console.log(stage);
 
     const oldScale = stage.scaleX();
 
@@ -327,11 +314,6 @@ const KonvaCanvas = () => {
   // END OF ZOOM FUNCTIONS
   const handleZoomIn = (e) => {
     const stage = stageRef.current.attrs;
-    // console.log(stage.x);
-    // console.log(stage.y);
-    // console.log(stage.scaleX);
-    // console.log(stage.width + stage.x / stage.scaleX);
-    // console.log(stage.height + stage.y / stage.scaleY);
     const centerStage = {
       x: stage.width / 2 - stage.x / stage.scaleX,
       y: stage.height / 2 - stage.y / stage.scaleY,
@@ -345,11 +327,6 @@ const KonvaCanvas = () => {
   };
   const handleZoomOut = (e) => {
     const stage = stageRef.current.attrs;
-    // console.log(stage.x);
-    // console.log(stage.y);
-    // console.log(stage.scaleX);
-    // console.log(stage.width + stage.x / stage.scaleX);
-    // console.log(stage.height + stage.y / stage.scaleY);
     const centerStage = {
       x: stage.width / 2 - stage.x / stage.scaleX,
       y: stage.height / 2 - stage.y / stage.scaleY,
@@ -424,7 +401,6 @@ const KonvaCanvas = () => {
                   images.find((s) => s.id === con.to) ||
                   textAnnotations.find((s) => s.id === con.to);
 
-                // console.log(from);
                 const width = from.x - to.x;
                 const height = from.y - to.y;
                 const radius = Math.min(20, Math.abs(height), Math.abs(width));

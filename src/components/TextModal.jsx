@@ -46,7 +46,7 @@ const TextModal = ({
   // for the current Text
   // respective to the index "arrayPos"
 
-  console.log(shapeProps);
+  // console.log(shapeProps);
   const handleTransform = (ref) => {
     const node = ref.current;
     const scaleX = node.scaleX();
@@ -67,7 +67,7 @@ const TextModal = ({
     ref.width = node.width()
     ref.height = node.height()
   };
-  console.log(shapeRef);
+  // console.log(shapeRef);
 
   return (
     <>

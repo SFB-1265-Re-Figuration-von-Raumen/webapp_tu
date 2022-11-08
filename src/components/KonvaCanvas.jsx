@@ -17,7 +17,6 @@ import * as UIcons from "../assets/svg/UIcons/svgr_output/index";
 const KonvaCanvas = () => {
   const theme = useTheme();
   const stageRef = useRef();
-  console.log(stageRef);
   const layeRef = useRef();
   const selectionRectRef = useRef();
   const Konva = window.Konva;
@@ -217,7 +216,7 @@ const KonvaCanvas = () => {
     const scaleBy = 1.02;
     const stage = e.target.getStage();
     // console.log(stage);
-    console.log(stage.getRelativePointerPosition());
+
 
     const oldScale = stage.scaleX();
 
@@ -241,11 +240,11 @@ const KonvaCanvas = () => {
   // END OF ZOOM FUNCTIONS
   const handleZoomIn = (e) => {
     const stage = stageRef.current.attrs;
-    console.log(stage.x);
-    console.log(stage.y);
-    console.log(stage.scaleX);
-    console.log(stage.width + stage.x / stage.scaleX);
-    console.log(stage.height + stage.y / stage.scaleY);
+    // console.log(stage.x);
+    // console.log(stage.y);
+    // console.log(stage.scaleX);
+    // console.log(stage.width + stage.x / stage.scaleX);
+    // console.log(stage.height + stage.y / stage.scaleY);
     const centerStage = {
       x: stage.width / 2 - stage.x / stage.scaleX,
       y: stage.height / 2 - stage.y / stage.scaleY,
@@ -259,11 +258,11 @@ const KonvaCanvas = () => {
   };
   const handleZoomOut = (e) => {
     const stage = stageRef.current.attrs;
-    console.log(stage.x);
-    console.log(stage.y);
-    console.log(stage.scaleX);
-    console.log(stage.width + stage.x / stage.scaleX);
-    console.log(stage.height + stage.y / stage.scaleY);
+    // console.log(stage.x);
+    // console.log(stage.y);
+    // console.log(stage.scaleX);
+    // console.log(stage.width + stage.x / stage.scaleX);
+    // console.log(stage.height + stage.y / stage.scaleY);
     const centerStage = {
       x: stage.width / 2 - stage.x / stage.scaleX,
       y: stage.height / 2 - stage.y / stage.scaleY,
@@ -337,7 +336,7 @@ const KonvaCanvas = () => {
                   images.find((s) => s.id === con.to) ||
                   textAnnotations.find((s) => s.id === con.to);
 
-                console.log(from);
+                // console.log(from);
                 const width = from.x - to.x;
                 const height = from.y - to.y;
                 const radius = Math.min(20, Math.abs(height), Math.abs(width));

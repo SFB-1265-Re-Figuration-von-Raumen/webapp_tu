@@ -7,3 +7,4 @@ export { default as Lehrer } from "./Lehrer";
 export { default as Oma } from "./Oma";
 export { default as Opa } from "./Opa";
 export { default as Schwester } from "./Schwester";
+export { default as PersonA } from "./PersonA";

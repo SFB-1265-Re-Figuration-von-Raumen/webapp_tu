@@ -7,3 +7,5 @@ export { default as Schule } from "./Schule";
 export { default as Sport } from "./Sport";
 export { default as Urlaub } from "./Urlaub";
 export { default as ZuHause } from "./ZuHause";
+export { default as OrtA } from "./OrtA";
+export { default as OrtB } from "./OrtB";

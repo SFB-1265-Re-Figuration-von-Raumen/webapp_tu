@@ -27,7 +27,8 @@ const Iconbar = ({ images, addImages, percentWidth, defaultPos, theme, stageRef,
       icon: element.outerHTML,
       x: defaultPos.x / scale - stagePos.x / scale,
       y: defaultPos.y / scale - stagePos.y / scale,
-      name: name.split(/(?=[A-Z])/).join(" "),
+      name: "dein titel"
+      // name: name.split(/(?=[A-Z])/).join(" "),
     });
   };
 
